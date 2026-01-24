@@ -50,8 +50,8 @@ TextStyle getBoldStyle({double fontSize = FontSize.s20, required Color color}) {
 // semibold style
 
 TextStyle getSemiBoldStyle(
-    {double fontSize = FontSize.s16, required Color color}) {
-  return _getTextStyle(fontSize, FontWeightManager.bold, color );
+    {double fontSize = FontSize.s20, required Color color}) {
+  return _getTextStyle(fontSize, FontWeightManager.semiBold, color );
 }
 
 TextStyle getTextWithLine() {
