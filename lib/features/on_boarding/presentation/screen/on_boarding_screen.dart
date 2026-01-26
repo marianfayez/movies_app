@@ -15,52 +15,55 @@ class OnboardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = PageController();
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF202020),
-      body: BlocBuilder<OnboardingBloc, OnboardingState>(
-        builder: (context, state) {
-          return Column(
-            children: [
-              Expanded(
-                child: PageView(
-                  controller: controller,
-                  onPageChanged: (index) {
-                    context
-                        .read<OnboardingBloc>()
-                        .add(OnboardingPageChanged(index));
-                  },
-                  children: [
-                    const OnboardingFirstPage(),
-                    OnboardingPage(
-                      image: Assets.images.onBoarding2,
-                      title: "Find Your Next Favorite Movie Here",
-                      body: "Get access to a huge library of movies to suit all tastes. You will surely like it.",
-                    ),
-                     OnboardingPage(
-                      image: Assets.images.onBoarding3,
-                      title: "Watch Anywhere",
-                      body: "Enjoy movies anytime",
-                    ),
-                     OnboardingPage(
-                      image: Assets.images.onBoarding4,
-                      title: "Save Favorites",
-                      body: "Create your watchlist",
-                    ),
-                     OnboardingPage(
-                      image: Assets.images.onBoarding5,
-                      title: "Get Started",
-                      body: "Let’s begin your journey",
-                    ),
-                  ],
+    return BlocProvider(
+      create: (context) => OnboardingBloc(),
+      child: Scaffold(
+        backgroundColor: const Color(0xFF202020),
+        body: BlocBuilder<OnboardingBloc, OnboardingState>(
+          builder: (context, state) {
+            return Column(
+              children: [
+                Expanded(
+                  child: PageView(
+                    controller: controller,
+                    onPageChanged: (index) {
+                      context
+                          .read<OnboardingBloc>()
+                          .add(OnboardingPageChanged(index));
+                    },
+                    children: [
+                      OnboardingFirstPage(controller: controller,),
+                      OnboardingPage(
+                        image: Assets.images.onBoarding2,
+                        title: "Find Your Next Favorite Movie Here",
+                        body: "Get access to a huge library of movies to suit all tastes. You will surely like it.",
+                      ),
+                      OnboardingPage(
+                        image: Assets.images.onBoarding3,
+                        title: "Watch Anywhere",
+                        body: "Enjoy movies anytime",
+                      ),
+                      OnboardingPage(
+                        image: Assets.images.onBoarding4,
+                        title: "Save Favorites",
+                        body: "Create your watchlist",
+                      ),
+                      OnboardingPage(
+                        image: Assets.images.onBoarding5,
+                        title: "Get Started",
+                        body: "Let’s begin your journey",
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              OnboardingButtons(
-                currentPage: state.currentPage,
-                controller: controller,
-              ),
-            ],
-          );
-        },
+                // OnboardingButtons(
+                //   currentPage: state.currentPage,
+                //   controller: controller,
+                // ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

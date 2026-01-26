@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/core/resources/color_manager.dart';
+import 'package:movies_app/core/resources/styles_manager.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -6,7 +9,7 @@ class OnboardingPage extends StatelessWidget {
   final String title;
   final String body;
 
-   OnboardingPage({
+   const OnboardingPage({
     super.key,
     required this.image,
     required this.title,
@@ -17,18 +20,14 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 40),
-        image.image(height: 300),
+         SizedBox(height: 40.h),
+        image.image(height: 300.h),
         const Spacer(),
         Text(
           title,
-          style: const TextStyle(
-            color: Color(0xFFE2BE7F),
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
+          style: getBoldTitleStyle(color: ColorManager.white)
         ),
-        const SizedBox(height: 12),
+         SizedBox(height: 12.h),
         Text(
           body,
           textAlign: TextAlign.center,

@@ -13,15 +13,16 @@ class Button extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: ColorManager.primary,
+        minimumSize: const Size(double.infinity, 48),
+        backgroundColor: ColorManager.secondary,
         padding: EdgeInsets.symmetric(vertical: 8.w),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
         ),),
       onPressed: (){
-        onTab;
+        onTab();
       },
-      child: Text(text,style: getSemiBoldStyle(color: ColorManager.primary)),
+      child: Text(text,style: getSemiBoldStyle(color: Colors.black)),
     );
   }
 }
