@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_bloc.dart';
 import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_event.dart';
 import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_state.dart';
-import 'package:movies_app/features/on_boarding/presentation/screen/OnboardingButtons.dart';
 import 'package:movies_app/features/on_boarding/presentation/screen/OnboardingFirstPage.dart';
 import 'package:movies_app/features/on_boarding/presentation/screen/OnboardingPage.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 
 class OnboardingScreen extends StatelessWidget {
+
   const OnboardingScreen({super.key});
 
   @override
@@ -34,25 +34,36 @@ class OnboardingScreen extends StatelessWidget {
                     children: [
                       OnboardingFirstPage(controller: controller,),
                       OnboardingPage(
+                        controller: controller,
+                        image: Assets.images.onBoarding1,
+                        title: "Discover Movies",
+                        body: "Explore a vast collection of movies in all qualities and genres. Find your next favorite film with ease.",
+                      ),
+                      OnboardingPage(
+                        controller: controller,
                         image: Assets.images.onBoarding2,
-                        title: "Find Your Next Favorite Movie Here",
-                        body: "Get access to a huge library of movies to suit all tastes. You will surely like it.",
+                        title: "Explore All Genres",
+                        body: "Discover movies from every genre, in all available qualities. Find something new and exciting to watch every day.",
                       ),
                       OnboardingPage(
+                        controller: controller,
                         image: Assets.images.onBoarding3,
-                        title: "Watch Anywhere",
-                        body: "Enjoy movies anytime",
+                        title: "Create Watchlists",
+                        body: "Save movies to your watchlist to keep track of what you want to watch next. Enjoy films in various qualities and genres.",
                       ),
                       OnboardingPage(
+                        controller: controller,
                         image: Assets.images.onBoarding4,
-                        title: "Save Favorites",
-                        body: "Create your watchlist",
+                        title: "Rate, Review, and Learn",
+                        body: "Share your thoughts on the movies you've watched. Dive deep into film details and help others discover great movies with your reviews.",
                       ),
                       OnboardingPage(
+                        controller: controller,
                         image: Assets.images.onBoarding5,
-                        title: "Get Started",
-                        body: "Let’s begin your journey",
+                        title: "Start Watching Now",
+                        body: "",
                       ),
+
                     ],
                   ),
                 ),

@@ -6,23 +6,38 @@ import 'package:movies_app/core/resources/styles_manager.dart';
 class Button extends StatelessWidget {
   Function onTab;
   String text;
+  final Color textColor;
+  final bool isOutlined;
 
-  Button({required this.text, required this.onTab, super.key});
+  Button({required this.text,
+    required this.onTab, // default
+    this.textColor = Colors.black,
+    this.isOutlined = false,
+    super.key});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(
+      style: isOutlined ? ElevatedButton.styleFrom(
         minimumSize: const Size(double.infinity, 48),
-        backgroundColor: ColorManager.secondary,
-        padding: EdgeInsets.symmetric(vertical: 8.w),
+        backgroundColor: Colors.black,
+        padding: EdgeInsets.symmetric(vertical: 8.h),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
-        ),),
-      onPressed: (){
+          side: BorderSide(color: textColor, width: 2),
+        ),
+      ) : ElevatedButton.styleFrom(
+        minimumSize: const Size(double.infinity, 48),
+        backgroundColor: ColorManager.secondary,
+        padding: EdgeInsets.symmetric(vertical: 8.h),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+      ),
+      onPressed: () {
         onTab();
       },
-      child: Text(text,style: getSemiBoldStyle(color: Colors.black)),
+      child: Text(text, style: getSemiBoldStyle(color: textColor)),
     );
   }
 }

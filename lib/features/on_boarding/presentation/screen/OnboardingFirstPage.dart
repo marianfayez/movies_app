@@ -21,14 +21,21 @@ class OnboardingFirstPage extends StatelessWidget {
         Positioned.fill(child: Assets.images.moviesPostersGroup.image(fit: BoxFit.cover)),
         Positioned.fill(
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
                 colors: [
-                  Colors.black.withOpacity(0.85),
-                  Colors.black.withOpacity(0.4),
-                  Colors.transparent,
+                  Color.fromRGBO(30, 30, 30, 0),
+                  Color.fromRGBO(18, 19, 18, 0.5),
+                  Color.fromRGBO(18, 19, 18, 0.91),
+                  Color(0xFF121312),
+                ],
+                stops: [
+                  0.0,
+                  0.39,
+                  0.675,
+                  1.0,
                 ],
               ),
             ),
@@ -54,6 +61,11 @@ class OnboardingFirstPage extends StatelessWidget {
                SizedBox(height: 16.h),
                Button(
                  onTab: () {
+                   controller.animateToPage(
+                     1,
+                     duration: const Duration(milliseconds: 300),
+                     curve: Curves.easeInOut,
+                   );
                    context
                        .read<OnboardingBloc>()
                        .add(const OnboardingPageChanged(1));
