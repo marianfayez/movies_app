@@ -1,9 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/constants_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
+import 'package:movies_app/core/routes/auto_route.dart';
+import 'package:movies_app/core/routes/auto_route.gr.dart';
 import 'package:movies_app/core/widgets/button.dart';
 import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_bloc.dart';
 import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_event.dart';
@@ -101,7 +104,7 @@ class OnboardingPage extends StatelessWidget {
                     Button(
                       text: "Finish",
                       onTab: () {
-                        // Navigate to Home
+                        context.pushRoute(SignInRoute());
                       },
                     ),
                     SizedBox(height: 12.h),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,7 +12,6 @@ class BuildTextField extends StatefulWidget {
     this.controller,
     this.focusNode,
     this.nextFocus,
-    this.label,
     this.hint,
     this.isObscured = false,
     this.iconData,
@@ -26,14 +24,15 @@ class BuildTextField extends StatefulWidget {
     this.validation,
     this.onTap,
     this.maxLines,
-    this.prefixIcon, this.borderBackgroundColor, this.suffixIcon,
+    this.prefixIcon,
+    this.borderBackgroundColor,
+    this.suffixIcon,
   });
 
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final FocusNode? nextFocus;
   final bool isObscured;
-  final String? label;
   final String? hint;
   final TextInputType textInputType;
   final IconData? iconData;
@@ -62,42 +61,30 @@ class _BuildTextFieldState extends State<BuildTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        widget.label != null
-            ? Padding(
-                padding: const EdgeInsets.only(
-                     top: 2),
-                child: Text(
-                  widget.label!,
-                  style: widget.labelTextStyle ??
-                      getRegularStyle2(color: ColorManager.white)
-                ),
-              )
-            : const SizedBox(),
         Container(
           margin: const EdgeInsets.only(top: 5),
           decoration: BoxDecoration(
-            color: widget.backgroundColor ??
-                ColorManager.primary.withOpacity(.15),
-            borderRadius: BorderRadius.circular(8.r),
-            border: Border.all(color: widget.borderBackgroundColor ?? ColorManager.primary )
-          ),
+              color: widget.backgroundColor ??
+                  ColorManager.primary.withOpacity(.15),
+              borderRadius: BorderRadius.circular(8.r),
+              border: Border.all(
+                  color: widget.borderBackgroundColor ?? ColorManager.primary)),
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: TextFormField(
             maxLines: widget.maxLines ?? 1,
             controller: widget.controller,
             focusNode: widget.focusNode,
             readOnly: widget.readOnly,
-            style: getMediumStyle(color: ColorManager.primary)
-                .copyWith(fontSize: FontSize.s12.sp),
+            style: getRegularStyle2(color: ColorManager.white),
             obscureText: hidden,
             keyboardType: widget.textInputType,
             obscuringCharacter: '*',
-            cursorColor: widget.cursorColor ?? ColorManager.primary,
+            cursorColor: widget.cursorColor ?? ColorManager.white,
             onTap: widget.onTap,
             onEditingComplete: () {
               if (widget.nextFocus != null) {
                 FocusScope.of(context).requestFocus(widget.nextFocus);
-              }else{
+              } else {
                 FocusScope.of(context).unfocus(); // يقفل الكيبورد فعليًا
               }
             },
@@ -132,14 +119,13 @@ class _BuildTextFieldState extends State<BuildTextField> {
                       iconSize: 24,
                       splashRadius: 1.r,
                       isSelected: !hidden,
-                      color: widget.cursorColor,
+                      color: Colors.white,
                       selectedIcon: const Icon(Icons.remove_red_eye_rounded),
-                      icon: Icon(CupertinoIcons.eye_fill),
+                      icon: const Icon(Icons.visibility_off_sharp),
                     )
                   : widget.suffixIcon,
               hintStyle: widget.hintTextStyle ??
-                  getRegularStyle(color: ColorManager.grey)
-                      .copyWith(fontSize: 18.sp),
+                  getRegularStyle2(color: ColorManager.white),
               border: InputBorder.none,
               enabledBorder: InputBorder.none,
               errorStyle: TextStyle(

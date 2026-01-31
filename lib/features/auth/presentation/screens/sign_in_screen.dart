@@ -72,9 +72,8 @@ class SignInScreen extends StatelessWidget {
                         height: 70.h,
                       ),
                       BuildTextField(
-                        backgroundColor: ColorManager.white,
+                        backgroundColor: ColorManager.grey,
                         hint: 'Email',
-                        label: 'User name',
                         controller: emailController,
                         textInputType: TextInputType.emailAddress,
                         validation: AppValidators.validateEmail,
@@ -83,9 +82,8 @@ class SignInScreen extends StatelessWidget {
                         height: 28.h,
                       ),
                       BuildTextField(
-                        backgroundColor: ColorManager.white,
-                        hint: 'enter your password',
-                        label: 'Password',
+                        backgroundColor: ColorManager.grey,
+                        hint: 'Password',
                         controller: passwordController,
                         isObscured: true,
                         textInputType: TextInputType.text,
@@ -135,8 +133,8 @@ class SignInScreen extends StatelessWidget {
                         children: [
                           Text(
                             'Don’t have an account?',
-                            style: getSemiBoldStyle(color: ColorManager.white)
-                                .copyWith(fontSize: FontSize.s16.sp),
+                            style: getRegular2(color: ColorManager.white)
+
                           ),
                           SizedBox(
                             width: 8.w,
@@ -145,8 +143,7 @@ class SignInScreen extends StatelessWidget {
                             onTap: () => context.pushRoute(SignUpRoute()),
                             child: Text(
                               'Create Account',
-                              style: getSemiBoldStyle(color: ColorManager.white)
-                                  .copyWith(fontSize: FontSize.s16.sp),
+                              style: getRegular2(color: ColorManager.secondary)
                             ),
                           ),
                         ],

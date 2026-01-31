@@ -69,10 +69,6 @@ class OnboardingScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                // OnboardingButtons(
-                //   currentPage: state.currentPage,
-                //   controller: controller,
-                // ),
               ],
             );
           },

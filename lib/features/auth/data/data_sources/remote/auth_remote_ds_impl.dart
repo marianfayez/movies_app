@@ -11,7 +11,9 @@ import 'package:movies_app/features/auth/data/models/sign_up_request_model.dart'
 @Injectable(as: AuthRemoteDs)
 class AuthRemoteDsImpl implements AuthRemoteDs {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  final FirebaseUserRemoteDS _userDS = FirebaseUserRemoteDS();
+  final FirebaseUserRemoteDS _userDS;
+  AuthRemoteDsImpl( this._userDS);
+
 
   @override
   Future<FirebaseAuthModel> logIn(

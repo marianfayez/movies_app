@@ -5,4 +5,6 @@ abstract class AuthRemoteDs {
   Future<FirebaseAuthModel> signUp({required FirebaseSignUpRequestModel request});
 
   Future<FirebaseAuthModel> logIn({required String email, required String password});
+  Future<void> forgetPassword(String email);
+  Future<void> logOut();
 }

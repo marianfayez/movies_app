@@ -14,6 +14,10 @@ import 'package:injectable/injectable.dart' as _i526;
 import 'features/auth/data/data_sources/remote/auth_remote_ds.dart' as _i981;
 import 'features/auth/data/data_sources/remote/auth_remote_ds_impl.dart'
     as _i393;
+import 'features/auth/data/data_sources/remote/firebase_user_remote_ds.dart'
+    as _i888;
+import 'features/auth/data/data_sources/remote/firebase_user_remote_ds_impl.dart'
+    as _i9;
 import 'features/auth/data/repositories/auth_repo_impl.dart' as _i426;
 import 'features/auth/domain/repositories/auth_repo.dart' as _i416;
 import 'features/auth/domain/use_cases/log_in_use_case.dart' as _i871;
@@ -31,7 +35,10 @@ extension GetItInjectableX on _i174.GetIt {
       environment,
       environmentFilter,
     );
-    gh.factory<_i981.AuthRemoteDs>(() => _i393.AuthRemoteDsImpl());
+    gh.factory<_i888.FirebaseUserRemoteDS>(
+        () => _i9.FirebaseUserRemoteDSImpl());
+    gh.factory<_i981.AuthRemoteDs>(
+        () => _i393.AuthRemoteDsImpl(gh<_i888.FirebaseUserRemoteDS>()));
     gh.factory<_i416.AuthRepo>(
         () => _i426.AuthRepoImpl(gh<_i981.AuthRemoteDs>()));
     gh.factory<_i871.LogInUseCase>(

@@ -74,7 +74,6 @@ class SignUpScreen extends StatelessWidget {
                       BuildTextField(
                         backgroundColor: ColorManager.white,
                         hint: 'enter your full name',
-                        label: 'Full Name',
                         controller: nameController,
                         textInputType: TextInputType.name,
                         validation: AppValidators.validateFullName,
@@ -85,7 +84,6 @@ class SignUpScreen extends StatelessWidget {
                       BuildTextField(
                         hint: 'enter your email address',
                         backgroundColor: ColorManager.white,
-                        label: 'E-mail address',
                         controller: emailController,
                         validation: AppValidators.validateEmail,
                         textInputType: TextInputType.emailAddress,
@@ -96,7 +94,6 @@ class SignUpScreen extends StatelessWidget {
                       BuildTextField(
                         hint: 'enter your password',
                         backgroundColor: ColorManager.white,
-                        label: 'password',
                         controller: passwordController,
                         validation: AppValidators.validatePassword,
                         isObscured: true,
@@ -108,7 +105,6 @@ class SignUpScreen extends StatelessWidget {
                       BuildTextField(
                         hint: 'confirm your password',
                         backgroundColor: ColorManager.white,
-                        label: 'Confirm Password',
                         controller: rePasswordController,
                         validation: (val) =>
                             AppValidators.validateConfirmPassword(
@@ -122,7 +118,6 @@ class SignUpScreen extends StatelessWidget {
                       BuildTextField(
                         hint: 'enter your mobile number',
                         backgroundColor: ColorManager.white,
-                        label: 'Mobile Number',
                         controller: mobileController,
                         validation: AppValidators.validatePhoneNumber,
                         textInputType: TextInputType.phone,
