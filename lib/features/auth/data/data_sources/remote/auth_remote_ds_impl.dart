@@ -1,53 +1,100 @@
-import 'package:dio/dio.dart';
-import 'package:e_commerce_app/core/api/api_manager.dart';
-import 'package:e_commerce_app/core/resources/endpoints.dart';
-import 'package:e_commerce_app/features/auth/data/data_sources/remote/auth_remote_ds.dart';
-import 'package:e_commerce_app/features/auth/data/models/auth_model.dart';
-import 'package:e_commerce_app/features/auth/data/models/sign_up_request_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
+import 'package:movies_app/core/failuers/remote_failuers.dart';
+import 'package:movies_app/features/auth/data/data_sources/remote/auth_remote_ds.dart';
+import 'package:movies_app/features/auth/data/data_sources/remote/firebase_user_remote_ds.dart';
+import 'package:movies_app/features/auth/data/models/auth_model.dart';
+import 'package:movies_app/features/auth/data/models/firebase_sign_up_request_model.dart';
+import 'package:movies_app/features/auth/data/models/sign_up_request_model.dart';
 
 @Injectable(as: AuthRemoteDs)
-class AuthRemoteDsImpl implements AuthRemoteDs{
-
-  ApiManager apiManager;
-  AuthRemoteDsImpl(this.apiManager);
+class AuthRemoteDsImpl implements AuthRemoteDs {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseUserRemoteDS _userDS = FirebaseUserRemoteDS();
 
   @override
-  Future<AuthModel> signUp({SignUpRequestModel? request}) async{
-
+  Future<FirebaseAuthModel> logIn(
+      {required String email, required String password}) async {
     try {
-      final response = await apiManager.postData(
-         EndPoints.signUp,
-        data: request!.toJson(),
+      final credential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
       );
-      return AuthModel.fromJson(response.data);
-    } on DioException catch (e) {
-      final errorMessage = e.error?.toString() ?? 'Unknown error occurred';
-      throw Exception(errorMessage); // or rethrow with ServerFailure if using Either
-    }
 
+      final user = credential.user!;
+      final firebaseUser = await _userDS.getUser(user.uid);
+
+      return FirebaseAuthModel(
+          uid: user.uid, email: user.email!, user: firebaseUser);
+    } on FirebaseAuthException catch (e) {
+      String message;
+      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+        message = 'Email or password is not valid';
+      } else {
+        message = e.message ?? 'Something went wrong';
+      }
+      throw RemoteFailures(message);
+    } catch (e) {
+      throw RemoteFailures(e.toString());
+    }
   }
 
   @override
-  Future<AuthModel> logIn({String? email, String? password}) async{
+  Future<FirebaseAuthModel> signUp(
+      {required FirebaseSignUpRequestModel request}) async {
     try {
-      final response = await apiManager.postData(
-        EndPoints.login,
-        data:{
-          "email":email,
-          "password":password
-        }
-
+      final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: request.email,
+        password: request.password,
       );
-      print(response.data);
-      return AuthModel.fromJson(response.data);
 
-    } on DioException catch (e) {
-      final errorMessage = e.error?.toString() ?? 'Unknown error occurred';
-      throw Exception(errorMessage); // or rethrow with ServerFailure if using Either
+      final user = credential.user!;
+
+      final firebaseUser = FirebaseUserModel(
+        id: user.uid,
+        name: request.name,
+        email: request.email,
+        phone: request.phone,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+      );
+
+      await _userDS.addUser(firebaseUser);
+
+      return FirebaseAuthModel(
+        uid: user.uid,
+        email: user.email!,
+        user: firebaseUser,
+      );
+    } on FirebaseAuthException catch (e) {
+      String message;
+      if (e.code == 'weak-password') {
+        message = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        message = 'The account already exists for that email.';
+      } else {
+        message = e.message ?? 'Something went wrong';
+      }
+      throw RemoteFailures(message);
+    } catch (e) {
+      throw RemoteFailures(e.toString());
     }
-
+  }
+  Future<void> forgetPassword(String email) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw RemoteFailures(e.message);
+    } catch (e) {
+      throw RemoteFailures(e.toString());
+    }
   }
 
-
+  Future<void> logOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (e) {
+      throw RemoteFailures(e.toString());
+    }
+  }
 }

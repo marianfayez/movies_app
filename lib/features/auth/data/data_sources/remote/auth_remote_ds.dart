@@ -1,9 +1,8 @@
-import 'package:e_commerce_app/features/auth/data/models/auth_model.dart';
-import 'package:e_commerce_app/features/auth/data/models/sign_up_request_model.dart';
+import 'package:movies_app/features/auth/data/models/auth_model.dart';
+import 'package:movies_app/features/auth/data/models/firebase_sign_up_request_model.dart';
 
-abstract class AuthRemoteDs{
+abstract class AuthRemoteDs {
+  Future<FirebaseAuthModel> signUp({required FirebaseSignUpRequestModel request});
 
-  Future<AuthModel>signUp({SignUpRequestModel? request});
-  Future<AuthModel>logIn({String? email,String? password});
-
+  Future<FirebaseAuthModel> logIn({required String email, required String password});
 }

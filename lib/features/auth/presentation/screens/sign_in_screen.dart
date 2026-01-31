@@ -1,20 +1,18 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:e_commerce_app/core/api/api_manager.dart';
-import 'package:e_commerce_app/core/resources/assets.gen.dart';
-import 'package:e_commerce_app/core/resources/color_manager.dart';
-import 'package:e_commerce_app/core/resources/font_manager.dart';
-import 'package:e_commerce_app/core/resources/styles_manager.dart';
-import 'package:e_commerce_app/core/routes/auto_route.gr.dart';
-import 'package:e_commerce_app/core/widgets/custom_elevated_button.dart';
-import 'package:e_commerce_app/core/widgets/main_text_field.dart';
-import 'package:e_commerce_app/core/widgets/validators.dart';
-import 'package:e_commerce_app/di.dart';
-import 'package:e_commerce_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movies_app/core/resources/color_manager.dart';
+import 'package:movies_app/core/resources/font_manager.dart';
+import 'package:movies_app/core/resources/styles_manager.dart';
+import 'package:movies_app/core/routes/auto_route.gr.dart';
+import 'package:movies_app/core/widgets/custom_elevated_button.dart';
+import 'package:movies_app/core/widgets/main_text_field.dart';
+import 'package:movies_app/core/widgets/validators.dart';
+import 'package:movies_app/di.dart';
+import 'package:movies_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:movies_app/gen/assets.gen.dart';
 
 @RoutePage()
 class SignInScreen extends StatelessWidget {
@@ -52,7 +50,7 @@ class SignInScreen extends StatelessWidget {
                       ],
                     ));
           } else if (state.logInRequestState == RequestState.success) {
-            context.router.replaceAll([MainRoute()]);
+            // context.router.replaceAll([MainRoute()]);
 
           }
         },
@@ -69,26 +67,13 @@ class SignInScreen extends StatelessWidget {
                       SizedBox(
                         height: 40.h,
                       ),
-                      Center(child: SvgPicture.asset(Assets.svgImages.route)),
+                      Center(child: Assets.images.splashLogo.image()),
                       SizedBox(
-                        height: 40.h,
-                      ),
-                      Text(
-                        'Welcome Back To Route',
-                        style: getBoldStyle(color: ColorManager.white)
-                            .copyWith(fontSize: FontSize.s24.sp),
-                      ),
-                      Text(
-                        'Please sign in with your mail',
-                        style: getLightStyle(color: ColorManager.white)
-                            .copyWith(fontSize: FontSize.s16.sp),
-                      ),
-                      SizedBox(
-                        height: 40.h,
+                        height: 70.h,
                       ),
                       BuildTextField(
                         backgroundColor: ColorManager.white,
-                        hint: 'enter your name',
+                        hint: 'Email',
                         label: 'User name',
                         controller: emailController,
                         textInputType: TextInputType.emailAddress,
@@ -117,7 +102,7 @@ class SignInScreen extends StatelessWidget {
                               child: Text(
                                 'Forget password?',
                                 style: getMediumStyle(color: ColorManager.white)
-                                    .copyWith(fontSize: FontSize.s18.sp),
+                                    .copyWith(fontSize: FontSize.s12.sp),
                               )),
                         ],
                       ),

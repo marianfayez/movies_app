@@ -1,26 +1,39 @@
-class SignUpRequestModel {
-  String? name;
-  String? email;
-  String? password;
-  String? rePassword;
-  String? phone;
+class FirebaseUserModel {
+  FirebaseUserModel({
+    required this.id,
+    required this.name,
+    required this.email,
+    this.phone,
+    this.role = 'user',
+    required this.createdAt,
+  });
 
-  SignUpRequestModel({
-      this.name, 
-      this.email, 
-      this.password, 
-      this.rePassword, 
-      this.phone,});
+  final String id; // Firebase UID
+  final String name;
+  final String email;
+  final String? phone;
+  final String role;
+  final int createdAt;
 
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['rePassword'] = this.rePassword;
-    data['phone'] = this.phone;
-    return data;
+  factory FirebaseUserModel.fromJson(Map<String, dynamic> json) {
+    return FirebaseUserModel(
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      phone: json['phone'],
+      role: json['role'] ?? 'user',
+      createdAt: json['createdAt'],
+    );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'role': role,
+      'createdAt': createdAt,
+    };
+  }
 }

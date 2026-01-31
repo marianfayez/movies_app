@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 class FontConstants {
   static const String fontFamily = "Inter";
+  static const String fontFamily2 = "Roboto";
+
 }
 
 class FontWeightManager {

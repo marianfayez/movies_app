@@ -4,14 +4,14 @@ enum RequestState{init,loading,error,success}
 
  class AuthState {
 
-AuthModel? authModel;
+FirebaseAuthModel? authModel;
 RequestState? requestState;
 RequestState? logInRequestState;
 RouteFailures? routeFailures;
 
 AuthState({this.routeFailures,this.requestState,this.logInRequestState,this.authModel});
 
-AuthState copyWith({AuthModel? authModel,
+AuthState copyWith({FirebaseAuthModel? authModel,
 RequestState? requestState,
 RouteFailures? routeFailures,
   RequestState? logInRequestState,

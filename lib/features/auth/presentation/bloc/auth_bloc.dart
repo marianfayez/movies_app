@@ -1,12 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
-import 'package:e_commerce_app/core/failuers/failuers.dart';
-import 'package:e_commerce_app/features/auth/data/models/auth_model.dart';
-import 'package:e_commerce_app/features/auth/data/models/sign_up_request_model.dart';
-import 'package:e_commerce_app/features/auth/domain/use_cases/log_in_use_case.dart';
-import 'package:e_commerce_app/features/auth/domain/use_cases/sign_up_use_cases.dart';
 import 'package:injectable/injectable.dart';
-import 'package:meta/meta.dart';
+import 'package:movies_app/core/failuers/failuers.dart';
+import 'package:movies_app/features/auth/data/models/auth_model.dart';
+import 'package:movies_app/features/auth/data/models/firebase_sign_up_request_model.dart';
+import 'package:movies_app/features/auth/domain/use_cases/log_in_use_case.dart';
+import 'package:movies_app/features/auth/domain/use_cases/sign_up_use_cases.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';

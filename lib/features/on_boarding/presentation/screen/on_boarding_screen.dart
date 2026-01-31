@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:movies_app/features/on_boarding/presentation/screen/OnboardingFi
 import 'package:movies_app/features/on_boarding/presentation/screen/OnboardingPage.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 
+@RoutePage()
 class OnboardingScreen extends StatelessWidget {
 
   const OnboardingScreen({super.key});
