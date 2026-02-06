@@ -59,7 +59,7 @@ class OnboardingPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: getBoldTitleStyle(color: ColorManager.white)),
                 ],
-                if (currentPage > 1 && currentPage < lastPageIndex) ...[
+                if (currentPage >= 1 && currentPage < lastPageIndex) ...[
                   Text(title,
                       textAlign: TextAlign.center,
                       style: getBoldTitleStyle(color: ColorManager.white)),
@@ -79,7 +79,7 @@ class OnboardingPage extends StatelessWidget {
                             curve: Curves.easeInOut,
                           );
                         }),
-                  if (currentPage > 1 && currentPage < lastPageIndex) ...[
+                  if (currentPage >= 1 && currentPage < lastPageIndex) ...[
                     Button(
                         text: "Next",
                         onTab: () {

@@ -30,6 +30,7 @@ dependencies:
   firebase_core: ^4.4.0
   cloud_firestore: ^6.1.2
   firebase_auth: ^6.1.4
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -45,3 +46,5 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
+    - assets/icons/
+

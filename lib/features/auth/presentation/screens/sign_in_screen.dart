@@ -3,10 +3,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
-import 'package:movies_app/core/resources/font_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
 import 'package:movies_app/core/routes/auto_route.gr.dart';
+import 'package:movies_app/core/widgets/button.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/main_text_field.dart';
 import 'package:movies_app/core/widgets/validators.dart';
@@ -51,7 +52,6 @@ class SignInScreen extends StatelessWidget {
                     ));
           } else if (state.logInRequestState == RequestState.success) {
             // context.router.replaceAll([MainRoute()]);
-
           }
         },
         builder: (context, state) {
@@ -72,6 +72,10 @@ class SignInScreen extends StatelessWidget {
                         height: 70.h,
                       ),
                       BuildTextField(
+                        prefixIcon: const Icon(
+                          Icons.email,
+                          color: Colors.white,
+                        ),
                         backgroundColor: ColorManager.grey,
                         hint: 'Email',
                         controller: emailController,
@@ -79,9 +83,13 @@ class SignInScreen extends StatelessWidget {
                         validation: AppValidators.validateEmail,
                       ),
                       SizedBox(
-                        height: 28.h,
+                        height: 22.h,
                       ),
                       BuildTextField(
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: Colors.white,
+                        ),
                         backgroundColor: ColorManager.grey,
                         hint: 'Password',
                         controller: passwordController,
@@ -97,33 +105,24 @@ class SignInScreen extends StatelessWidget {
                           const Spacer(),
                           GestureDetector(
                               onTap: () {},
-                              child: Text(
-                                'Forget password?',
-                                style: getMediumStyle(color: ColorManager.white)
-                                    .copyWith(fontSize: FontSize.s12.sp),
-                              )),
+                              child: Text('Forget password?',
+                                  style: getRegular2(
+                                      color: ColorManager.secondary))),
                         ],
                       ),
                       SizedBox(
-                        height: 60.h,
+                        height: 32.h,
                       ),
-                      Center(
-                        child: SizedBox(
-                          // width: MediaQuery.of(context).size.width * .8,
-                          child: CustomElevatedButton(
-                            // borderRadius: AppSize.s8,
-                            isStadiumBorder: false,
-                            label: 'Login',
-                            backgroundColor: ColorManager.white,
-                            textStyle: getBoldStyle(
-                                color: ColorManager.primary, fontSize: 18),
-                            onTap: () {
-                              BlocProvider.of<AuthBloc>(context).add(LogInEvent(
-                                  emailController.text,
-                                  passwordController.text));
-                            },
-                          ),
-                        ),
+                      CustomElevatedButton(
+                        isStadiumBorder: false,
+                        backgroundColor: ColorManager.secondary,
+                        textStyle: getRegularStyle2(color: ColorManager.primary),
+                        label: 'Login',
+                        onTap: () {
+                          BlocProvider.of<AuthBloc>(context).add(LogInEvent(
+                              emailController.text,
+                              passwordController.text));
+                        },
                       ),
                       SizedBox(
                         height: 30.h,
@@ -131,22 +130,60 @@ class SignInScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Don’t have an account?',
-                            style: getRegular2(color: ColorManager.white)
-
-                          ),
+                          Text('Don’t have an account?',
+                              style: getRegular2(color: ColorManager.white)),
                           SizedBox(
                             width: 8.w,
                           ),
                           GestureDetector(
                             onTap: () => context.pushRoute(SignUpRoute()),
-                            child: Text(
-                              'Create Account',
-                              style: getRegular2(color: ColorManager.secondary)
-                            ),
+                            child: Text('Create Account',
+                                style:
+                                    getRegular2(color: ColorManager.secondary)),
                           ),
                         ],
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              child: Divider(
+                            color: ColorManager.secondary,
+                            thickness: 1,
+                            indent: 30,
+                            endIndent: 20,
+                          )),
+                          Center(
+                              child: Text(
+                            "OR",
+                            style: getRegular2(color: ColorManager.secondary),
+                          )),
+                          Expanded(
+                              child: Divider(
+                            color: ColorManager.secondary,
+                            thickness: 1,
+                            indent: 20,
+                            endIndent: 30,
+                          )),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 28.h,
+                      ),
+                      CustomElevatedButton(
+                        prefixIcon: Assets.images.google.image(width: 25.w,height: 25.h),
+                        isStadiumBorder: false,
+                        backgroundColor: ColorManager.secondary,
+                        textStyle: getRegularStyle2(color: ColorManager.primary),
+                        label: 'Login With Google',
+                        onTap: () {
+                          BlocProvider.of<AuthBloc>(context).add(LogInEvent(
+                              emailController.text,
+                              passwordController.text));
+                          },
                       )
                     ],
                   ),

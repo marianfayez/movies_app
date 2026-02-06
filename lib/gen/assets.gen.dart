@@ -16,6 +16,9 @@ class $AssetsImagesGen {
   AssetGenImage get moviesPostersGroup =>
       const AssetGenImage('assets/images/Movies Posters Group.png');
 
+  /// File path: assets/images/google.png
+  AssetGenImage get google => const AssetGenImage('assets/images/google.png');
+
   /// File path: assets/images/on_boarding1.png
   AssetGenImage get onBoarding1 =>
       const AssetGenImage('assets/images/on_boarding1.png');
@@ -47,6 +50,7 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         moviesPostersGroup,
+        google,
         onBoarding1,
         onBoarding2,
         onBoarding3,
