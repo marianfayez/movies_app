@@ -16,6 +16,36 @@ class $AssetsImagesGen {
   AssetGenImage get moviesPostersGroup =>
       const AssetGenImage('assets/images/Movies Posters Group.png');
 
+  /// File path: assets/images/email.png
+  AssetGenImage get email => const AssetGenImage('assets/images/email.png');
+
+  /// File path: assets/images/gamer0.png
+  AssetGenImage get gamer0 => const AssetGenImage('assets/images/gamer0.png');
+
+  /// File path: assets/images/gamer1.png
+  AssetGenImage get gamer1 => const AssetGenImage('assets/images/gamer1.png');
+
+  /// File path: assets/images/gamer2.png
+  AssetGenImage get gamer2 => const AssetGenImage('assets/images/gamer2.png');
+
+  /// File path: assets/images/gamer3.png
+  AssetGenImage get gamer3 => const AssetGenImage('assets/images/gamer3.png');
+
+  /// File path: assets/images/gamer4.png
+  AssetGenImage get gamer4 => const AssetGenImage('assets/images/gamer4.png');
+
+  /// File path: assets/images/gamer5.png
+  AssetGenImage get gamer5 => const AssetGenImage('assets/images/gamer5.png');
+
+  /// File path: assets/images/gamer6.png
+  AssetGenImage get gamer6 => const AssetGenImage('assets/images/gamer6.png');
+
+  /// File path: assets/images/gamer7.png
+  AssetGenImage get gamer7 => const AssetGenImage('assets/images/gamer7.png');
+
+  /// File path: assets/images/gamer8.png
+  AssetGenImage get gamer8 => const AssetGenImage('assets/images/gamer8.png');
+
   /// File path: assets/images/google.png
   AssetGenImage get google => const AssetGenImage('assets/images/google.png');
 
@@ -43,13 +73,34 @@ class $AssetsImagesGen {
   AssetGenImage get onBoarding6 =>
       const AssetGenImage('assets/images/on_boarding6.png');
 
+  /// File path: assets/images/password.png
+  AssetGenImage get password =>
+      const AssetGenImage('assets/images/password.png');
+
+  /// File path: assets/images/phone.png
+  AssetGenImage get phone => const AssetGenImage('assets/images/phone.png');
+
   /// File path: assets/images/splash_logo.png
   AssetGenImage get splashLogo =>
       const AssetGenImage('assets/images/splash_logo.png');
 
+  /// File path: assets/images/🦆 icon _Identification_.png
+  AssetGenImage get aIconIdentification =>
+      const AssetGenImage('assets/images/🦆 icon _Identification_.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         moviesPostersGroup,
+        email,
+        gamer0,
+        gamer1,
+        gamer2,
+        gamer3,
+        gamer4,
+        gamer5,
+        gamer6,
+        gamer7,
+        gamer8,
         google,
         onBoarding1,
         onBoarding2,
@@ -57,7 +108,10 @@ class $AssetsImagesGen {
         onBoarding4,
         onBoarding5,
         onBoarding6,
-        splashLogo
+        password,
+        phone,
+        splashLogo,
+        aIconIdentification
       ];
 }
 

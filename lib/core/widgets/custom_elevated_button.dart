@@ -13,9 +13,11 @@ class CustomElevatedButton extends StatelessWidget {
   final void Function() onTap;
   final TextStyle? textStyle;
   final bool isStadiumBorder;
+  final bool isOutlined;
 
   const CustomElevatedButton(
       {super.key,
+        this.isOutlined=false,
       this.prefixIcon,
       this.textStyle,
       this.isStadiumBorder = true,
@@ -28,11 +30,19 @@ class CustomElevatedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        style: ElevatedButton.styleFrom(
+        style: isOutlined?ElevatedButton.styleFrom(
+          minimumSize: const Size(double.infinity, 48),
+          backgroundColor: Colors.black,
+          padding: EdgeInsets.symmetric(vertical: 8.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.r),
+            side: BorderSide(color: ColorManager.secondary, width: 2),
+          ),
+        ):ElevatedButton.styleFrom(
           shape: isStadiumBorder
               ? const StadiumBorder()
               : RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(17.r)),
+              borderRadius: BorderRadius.circular(17.r)),
           backgroundColor: backgroundColor ?? ColorManager.primary,
           padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 14.h),
         ),

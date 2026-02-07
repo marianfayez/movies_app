@@ -7,4 +7,6 @@ abstract class AuthRemoteDs {
   Future<FirebaseAuthModel> logIn({required String email, required String password});
   Future<void> forgetPassword(String email);
   Future<void> logOut();
+  Future<FirebaseAuthModel> logInWithGoogle();
+
 }

@@ -11,3 +11,4 @@ class LogInEvent extends AuthEvent{
   String password;
   LogInEvent(this.email,this.password);
 }
+class LogInWithGoogleEvent extends AuthEvent {}

@@ -5,11 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/constants_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
-import 'package:movies_app/core/routes/auto_route.dart';
 import 'package:movies_app/core/routes/auto_route.gr.dart';
-import 'package:movies_app/core/widgets/button.dart';
+import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_bloc.dart';
-import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_event.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -71,29 +69,38 @@ class OnboardingPage extends StatelessWidget {
                 SizedBox(height: 16.h),
                 Column(children: [
                   if (currentPage == 1)
-                    Button(
-                        text: "Next",
-                        onTab: () {
+                    CustomElevatedButton(
+                        textStyle: getSemiBoldStyle(color: Colors.black),
+                        backgroundColor: ColorManager.secondary,
+                        isStadiumBorder: false,
+                        label: "Next",
+                        onTap: () {
                           controller.nextPage(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,
                           );
                         }),
-                  if (currentPage >= 1 && currentPage < lastPageIndex) ...[
-                    Button(
-                        text: "Next",
-                        onTab: () {
+                  if (currentPage > 1 && currentPage < lastPageIndex) ...[
+                    CustomElevatedButton(
+                        textStyle: getSemiBoldStyle(color: Colors.black),
+                        backgroundColor: ColorManager.secondary,
+                        isStadiumBorder: false,
+                        label: "Next",
+                        onTap: () {
                           controller.nextPage(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,
                           );
                         }),
                     SizedBox(height: 16.h),
-                    Button(
-                        text: "Back",
-                        textColor: ColorManager.secondary,
+                    CustomElevatedButton(
                         isOutlined: true,
-                        onTab: () {
+                        textStyle:
+                            getSemiBoldStyle(color: ColorManager.secondary),
+                        backgroundColor: ColorManager.secondary,
+                        isStadiumBorder: false,
+                        label: "Back",
+                        onTap: () {
                           controller.previousPage(
                             duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut,
@@ -101,24 +108,28 @@ class OnboardingPage extends StatelessWidget {
                         }),
                   ],
                   if (currentPage == lastPageIndex) ...[
-                    Button(
-                      text: "Finish",
-                      onTab: () {
-                        context.pushRoute(SignInRoute());
-                      },
-                    ),
+                    CustomElevatedButton(
+                        textStyle: getSemiBoldStyle(color: Colors.black),
+                        backgroundColor: ColorManager.secondary,
+                        isStadiumBorder: false,
+                        label: "Finish",
+                        onTap: () {
+                          context.pushRoute(SignInRoute());
+                        }),
                     SizedBox(height: 12.h),
-                    Button(
-                      text: "Back",
-                      textColor: ColorManager.secondary,
-                      isOutlined: true,
-                      onTab: () {
-                        controller.previousPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                    ),
+                    CustomElevatedButton(
+                        isOutlined: true,
+                        textStyle:
+                            getSemiBoldStyle(color: ColorManager.secondary),
+                        backgroundColor: ColorManager.secondary,
+                        isStadiumBorder: false,
+                        label: "Back",
+                        onTap: () {
+                          controller.previousPage(
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        }),
                   ],
                 ]),
               ],

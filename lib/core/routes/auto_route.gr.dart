@@ -74,13 +74,10 @@ class SignInRouteArgs {
 
 /// generated route for
 /// [_i3.SignUpScreen]
-class SignUpRoute extends _i5.PageRouteInfo<SignUpRouteArgs> {
-  SignUpRoute({
-    _i6.Key? key,
-    List<_i5.PageRouteInfo>? children,
-  }) : super(
+class SignUpRoute extends _i5.PageRouteInfo<void> {
+  const SignUpRoute({List<_i5.PageRouteInfo>? children})
+      : super(
           SignUpRoute.name,
-          args: SignUpRouteArgs(key: key),
           initialChildren: children,
         );
 
@@ -89,22 +86,9 @@ class SignUpRoute extends _i5.PageRouteInfo<SignUpRouteArgs> {
   static _i5.PageInfo page = _i5.PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<SignUpRouteArgs>(orElse: () => const SignUpRouteArgs());
-      return _i3.SignUpScreen(key: args.key);
+      return const _i3.SignUpScreen();
     },
   );
-}
-
-class SignUpRouteArgs {
-  const SignUpRouteArgs({this.key});
-
-  final _i6.Key? key;
-
-  @override
-  String toString() {
-    return 'SignUpRouteArgs{key: $key}';
-  }
 }
 
 /// generated route for

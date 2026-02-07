@@ -3,11 +3,15 @@ class FirebaseSignUpRequestModel {
     required this.name,
     required this.email,
     required this.password,
-    this.phone,
+    required this.phone,
+    required this.avatarId,
+
   });
 
   final String name;
   final String email;
   final String password;
   final String? phone;
+  final int avatarId;
+
 }

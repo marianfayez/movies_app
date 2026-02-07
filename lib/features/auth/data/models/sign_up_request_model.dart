@@ -5,6 +5,7 @@ class FirebaseUserModel {
     required this.email,
     this.phone,
     this.role = 'user',
+    required this.avatarId,
     required this.createdAt,
   });
 
@@ -14,6 +15,7 @@ class FirebaseUserModel {
   final String? phone;
   final String role;
   final int createdAt;
+  final int avatarId;
 
   factory FirebaseUserModel.fromJson(Map<String, dynamic> json) {
     return FirebaseUserModel(
@@ -23,6 +25,8 @@ class FirebaseUserModel {
       phone: json['phone'],
       role: json['role'] ?? 'user',
       createdAt: json['createdAt'],
+      avatarId: json['avatarId'],
+
     );
   }
 
@@ -34,6 +38,7 @@ class FirebaseUserModel {
       'phone': phone,
       'role': role,
       'createdAt': createdAt,
+      'avatarId': avatarId,
     };
   }
 }

@@ -12,4 +12,6 @@ class LogInUseCase {
   LogInUseCase(this.authRepo);
 
   Future<Either<RouteFailures,FirebaseAuthModel>>call(String email,String password)=>authRepo.logIn(email: email, password: password);
+  Future<Either<RouteFailures, FirebaseAuthModel>> loginWithGoogle() {
+    return authRepo.logInWithGoogle();}
 }

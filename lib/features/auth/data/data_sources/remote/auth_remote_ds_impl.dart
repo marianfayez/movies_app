@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/features/auth/data/data_sources/remote/auth_remote_ds.dart';
@@ -12,8 +13,8 @@ import 'package:movies_app/features/auth/data/models/sign_up_request_model.dart'
 class AuthRemoteDsImpl implements AuthRemoteDs {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseUserRemoteDS _userDS;
-  AuthRemoteDsImpl( this._userDS);
 
+  AuthRemoteDsImpl(this._userDS);
 
   @override
   Future<FirebaseAuthModel> logIn(
@@ -58,6 +59,7 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
         name: request.name,
         email: request.email,
         phone: request.phone,
+        avatarId: request.avatarId,
         createdAt: DateTime.now().millisecondsSinceEpoch,
       );
 
@@ -82,6 +84,7 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
       throw RemoteFailures(e.toString());
     }
   }
+
   Future<void> forgetPassword(String email) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
@@ -95,6 +98,51 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
   Future<void> logOut() async {
     try {
       await _firebaseAuth.signOut();
+    } catch (e) {
+      throw RemoteFailures(e.toString());
+    }
+  }
+
+  @override
+  Future<FirebaseAuthModel> logInWithGoogle() async {
+    try {
+      final googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        throw RemoteFailures("Google sign in cancelled");
+      }
+
+      final googleAuth = await googleUser.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final userCredential =
+          await _firebaseAuth.signInWithCredential(credential);
+
+      final user = userCredential.user!;
+
+      var firebaseUser = await _userDS.getUser(user.uid);
+
+      firebaseUser ??= FirebaseUserModel(
+        id: user.uid,
+        name: user.displayName ?? '',
+        email: user.email ?? '',
+        phone: '',
+        avatarId: 0,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+      );
+
+      await _userDS.addUser(firebaseUser);
+
+      return FirebaseAuthModel(
+        uid: user.uid,
+        email: user.email ?? '',
+        user: firebaseUser,
+      );
+    } on FirebaseAuthException catch (e) {
+      throw RemoteFailures(e.message ?? 'Google sign in failed');
     } catch (e) {
       throw RemoteFailures(e.toString());
     }

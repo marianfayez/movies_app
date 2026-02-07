@@ -35,5 +35,13 @@ class AuthRepoImpl implements AuthRepo{
 
   }
 
-
+  @override
+  Future<Either<RouteFailures, FirebaseAuthModel>> logInWithGoogle() async {
+    try {
+      final result = await authRemoteDs.logInWithGoogle();
+      return Right(result);
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
 }

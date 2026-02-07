@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:movies_app/core/resources/font_manager.dart';
 
 import '../resources/color_manager.dart';
 import '../resources/styles_manager.dart';
@@ -93,13 +92,9 @@ class _BuildTextFieldState extends State<BuildTextField> {
                 : TextInputAction.next,
             validator: (value) {
               if (widget.validation == null) {
-                setState(() {
-                  errorText = null;
-                });
+                errorText = null;
               } else {
-                setState(() {
-                  errorText = widget.validation!(value);
-                });
+                errorText = widget.validation!(value);
               }
               return errorText;
             },

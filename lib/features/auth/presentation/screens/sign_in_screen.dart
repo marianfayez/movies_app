@@ -1,13 +1,13 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
 import 'package:movies_app/core/routes/auto_route.gr.dart';
-import 'package:movies_app/core/widgets/button.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/main_text_field.dart';
 import 'package:movies_app/core/widgets/validators.dart';
@@ -28,9 +28,13 @@ class SignInScreen extends StatelessWidget {
       create: (context) => getIt<AuthBloc>(),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
+          if (Navigator.canPop(context)) {
+            Navigator.pop(context);
+          }
           if (state.logInRequestState == RequestState.loading) {
             showDialog(
                 context: context,
+                barrierDismissible: false,
                 builder: (context) => const AlertDialog(
                       title: Center(child: CircularProgressIndicator()),
                       backgroundColor: Colors.transparent,
@@ -104,7 +108,10 @@ class SignInScreen extends StatelessWidget {
                         children: [
                           const Spacer(),
                           GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                // context.read<AuthBloc>().add(());
+
+                              },
                               child: Text('Forget password?',
                                   style: getRegular2(
                                       color: ColorManager.secondary))),
@@ -180,10 +187,8 @@ class SignInScreen extends StatelessWidget {
                         textStyle: getRegularStyle2(color: ColorManager.primary),
                         label: 'Login With Google',
                         onTap: () {
-                          BlocProvider.of<AuthBloc>(context).add(LogInEvent(
-                              emailController.text,
-                              passwordController.text));
-                          },
+                          context.read<AuthBloc>().add(LogInWithGoogleEvent());
+                        },
                       )
                     ],
                   ),
