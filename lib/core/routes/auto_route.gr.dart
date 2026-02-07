@@ -8,20 +8,57 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i5;
-import 'package:flutter/material.dart' as _i6;
-import 'package:movies_app/features/auth/presentation/screens/sign_in_screen.dart'
-    as _i2;
-import 'package:movies_app/features/auth/presentation/screens/sign_up_screen.dart'
-    as _i3;
-import 'package:movies_app/features/on_boarding/presentation/screen/on_boarding_screen.dart'
+import 'package:auto_route/auto_route.dart' as _i6;
+import 'package:flutter/material.dart' as _i7;
+import 'package:movies_app/features/auth/presentation/screens/forget_password_screen.dart'
     as _i1;
-import 'package:movies_app/features/splash_screen.dart' as _i4;
+import 'package:movies_app/features/auth/presentation/screens/sign_in_screen.dart'
+    as _i3;
+import 'package:movies_app/features/auth/presentation/screens/sign_up_screen.dart'
+    as _i4;
+import 'package:movies_app/features/on_boarding/presentation/screen/on_boarding_screen.dart'
+    as _i2;
+import 'package:movies_app/features/splash_screen.dart' as _i5;
 
 /// generated route for
-/// [_i1.OnboardingScreen]
-class OnboardingRoute extends _i5.PageRouteInfo<void> {
-  const OnboardingRoute({List<_i5.PageRouteInfo>? children})
+/// [_i1.ForgetPasswordScreen]
+class ForgetPasswordRoute extends _i6.PageRouteInfo<ForgetPasswordRouteArgs> {
+  ForgetPasswordRoute({
+    _i7.Key? key,
+    List<_i6.PageRouteInfo>? children,
+  }) : super(
+          ForgetPasswordRoute.name,
+          args: ForgetPasswordRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'ForgetPasswordRoute';
+
+  static _i6.PageInfo page = _i6.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ForgetPasswordRouteArgs>(
+          orElse: () => const ForgetPasswordRouteArgs());
+      return _i1.ForgetPasswordScreen(key: args.key);
+    },
+  );
+}
+
+class ForgetPasswordRouteArgs {
+  const ForgetPasswordRouteArgs({this.key});
+
+  final _i7.Key? key;
+
+  @override
+  String toString() {
+    return 'ForgetPasswordRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [_i2.OnboardingScreen]
+class OnboardingRoute extends _i6.PageRouteInfo<void> {
+  const OnboardingRoute({List<_i6.PageRouteInfo>? children})
       : super(
           OnboardingRoute.name,
           initialChildren: children,
@@ -29,20 +66,20 @@ class OnboardingRoute extends _i5.PageRouteInfo<void> {
 
   static const String name = 'OnboardingRoute';
 
-  static _i5.PageInfo page = _i5.PageInfo(
+  static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      return const _i1.OnboardingScreen();
+      return const _i2.OnboardingScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i2.SignInScreen]
-class SignInRoute extends _i5.PageRouteInfo<SignInRouteArgs> {
+/// [_i3.SignInScreen]
+class SignInRoute extends _i6.PageRouteInfo<SignInRouteArgs> {
   SignInRoute({
-    _i6.Key? key,
-    List<_i5.PageRouteInfo>? children,
+    _i7.Key? key,
+    List<_i6.PageRouteInfo>? children,
   }) : super(
           SignInRoute.name,
           args: SignInRouteArgs(key: key),
@@ -51,12 +88,12 @@ class SignInRoute extends _i5.PageRouteInfo<SignInRouteArgs> {
 
   static const String name = 'SignInRoute';
 
-  static _i5.PageInfo page = _i5.PageInfo(
+  static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
       final args =
           data.argsAs<SignInRouteArgs>(orElse: () => const SignInRouteArgs());
-      return _i2.SignInScreen(key: args.key);
+      return _i3.SignInScreen(key: args.key);
     },
   );
 }
@@ -64,7 +101,7 @@ class SignInRoute extends _i5.PageRouteInfo<SignInRouteArgs> {
 class SignInRouteArgs {
   const SignInRouteArgs({this.key});
 
-  final _i6.Key? key;
+  final _i7.Key? key;
 
   @override
   String toString() {
@@ -73,9 +110,9 @@ class SignInRouteArgs {
 }
 
 /// generated route for
-/// [_i3.SignUpScreen]
-class SignUpRoute extends _i5.PageRouteInfo<void> {
-  const SignUpRoute({List<_i5.PageRouteInfo>? children})
+/// [_i4.SignUpScreen]
+class SignUpRoute extends _i6.PageRouteInfo<void> {
+  const SignUpRoute({List<_i6.PageRouteInfo>? children})
       : super(
           SignUpRoute.name,
           initialChildren: children,
@@ -83,18 +120,18 @@ class SignUpRoute extends _i5.PageRouteInfo<void> {
 
   static const String name = 'SignUpRoute';
 
-  static _i5.PageInfo page = _i5.PageInfo(
+  static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      return const _i3.SignUpScreen();
+      return const _i4.SignUpScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i4.SplashScreen]
-class SplashRoute extends _i5.PageRouteInfo<void> {
-  const SplashRoute({List<_i5.PageRouteInfo>? children})
+/// [_i5.SplashScreen]
+class SplashRoute extends _i6.PageRouteInfo<void> {
+  const SplashRoute({List<_i6.PageRouteInfo>? children})
       : super(
           SplashRoute.name,
           initialChildren: children,
@@ -102,10 +139,10 @@ class SplashRoute extends _i5.PageRouteInfo<void> {
 
   static const String name = 'SplashRoute';
 
-  static _i5.PageInfo page = _i5.PageInfo(
+  static _i6.PageInfo page = _i6.PageInfo(
     name,
     builder: (data) {
-      return const _i4.SplashScreen();
+      return const _i5.SplashScreen();
     },
   );
 }

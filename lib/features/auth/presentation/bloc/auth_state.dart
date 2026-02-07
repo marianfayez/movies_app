@@ -7,19 +7,23 @@ enum RequestState{init,loading,error,success}
 FirebaseAuthModel? authModel;
 RequestState? requestState;
 RequestState? logInRequestState;
+RequestState? forgetPasswordRequestState;
+
 RouteFailures? routeFailures;
 
-AuthState({this.routeFailures,this.requestState,this.logInRequestState,this.authModel});
+AuthState({this.routeFailures,this.requestState,this.logInRequestState,this.authModel,this.forgetPasswordRequestState});
 
 AuthState copyWith({FirebaseAuthModel? authModel,
 RequestState? requestState,
 RouteFailures? routeFailures,
   RequestState? logInRequestState,
+  RequestState? forgetPasswordRequestState
 }){
 
   return AuthState(requestState: requestState ?? this.requestState,
       logInRequestState: logInRequestState ?? this.logInRequestState,
-  routeFailures: routeFailures ?? this.routeFailures,
+      forgetPasswordRequestState: forgetPasswordRequestState ?? this.forgetPasswordRequestState,
+      routeFailures: routeFailures ?? this.routeFailures,
   authModel: authModel ?? this.authModel);
 }
  }

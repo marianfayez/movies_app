@@ -109,8 +109,7 @@ class SignInScreen extends StatelessWidget {
                           const Spacer(),
                           GestureDetector(
                               onTap: () {
-                                // context.read<AuthBloc>().add(());
-
+                                context.pushRoute(ForgetPasswordRoute());
                               },
                               child: Text('Forget password?',
                                   style: getRegular2(

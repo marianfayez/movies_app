@@ -36,6 +36,17 @@ class AuthRepoImpl implements AuthRepo{
   }
 
   @override
+  Future<Either<RouteFailures, void>> forgetPassword({required String email}) async{
+    try{
+      var result = await authRemoteDs.forgetPassword(email: email);
+      return Right(result);
+    }catch(e){
+      return Left(RemoteFailures(e.toString()));
+    }
+
+  }
+
+  @override
   Future<Either<RouteFailures, FirebaseAuthModel>> logInWithGoogle() async {
     try {
       final result = await authRemoteDs.logInWithGoogle();

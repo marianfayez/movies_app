@@ -67,5 +67,25 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         },
       );
     });
+    on<ForgetPasswordEvent>((event, emit) async {
+      emit(state.copyWith(requestState: RequestState.loading));
+
+      final result = await logInUseCase.forgetPassword(event.email);
+
+      result.fold(
+            (error) {
+          emit(state.copyWith(
+            requestState: RequestState.error,
+            routeFailures: error,
+          ));
+        },
+            (_) {
+          emit(state.copyWith(
+            requestState: RequestState.success,
+          ));
+        },
+      );
+    });
+
   }
 }

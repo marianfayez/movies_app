@@ -85,7 +85,8 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
     }
   }
 
-  Future<void> forgetPassword(String email) async {
+  @override
+  Future<void> forgetPassword({required String email}) async {
     try {
       await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
@@ -95,6 +96,7 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
     }
   }
 
+  @override
   Future<void> logOut() async {
     try {
       await _firebaseAuth.signOut();
