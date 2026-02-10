@@ -14,32 +14,28 @@ class CustomBottomNav extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BottomNavBloc, BottomNavState>(
       builder: (context, state) {
-        return Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16.r),
-        ),
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 8,right: 8,left: 8),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: BottomNavigationBar(
-                elevation: 0,
-                type: BottomNavigationBarType.fixed,
-                currentIndex: state.selectedIndex,
-                onTap: (index) {
-                  context.read<BottomNavBloc>()
-                      .add(ChangeTabEvent(selectedIndex: index));
-                },
-                selectedItemColor: ColorManager.secondary,
-                unselectedItemColor: Colors.white,
-                backgroundColor: ColorManager.grey,
-                items: const [
-                  BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-                  BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-                  BottomNavigationBarItem(icon: Icon(Icons.explore), label: ''),
-                  BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
-                ],
-              ),
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 8,right: 8,left: 8),
+          child: ClipRRect(
+
+            borderRadius: BorderRadius.circular(16),
+            child: BottomNavigationBar(
+              elevation: 0,
+              type: BottomNavigationBarType.fixed,
+              currentIndex: state.selectedIndex,
+              onTap: (index) {
+                context.read<BottomNavBloc>()
+                    .add(ChangeTabEvent(selectedIndex: index));
+              },
+              selectedItemColor: ColorManager.secondary,
+              unselectedItemColor: Colors.white,
+              backgroundColor: ColorManager.grey,
+              items: const [
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
+                BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
+                BottomNavigationBarItem(icon: Icon(Icons.explore), label: ''),
+                BottomNavigationBarItem(icon: Icon(Icons.person), label: ''),
+              ],
             ),
           ),
         );
