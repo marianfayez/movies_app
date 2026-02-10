@@ -128,6 +128,7 @@ class SignInScreen extends StatelessWidget {
                           BlocProvider.of<AuthBloc>(context).add(LogInEvent(
                               emailController.text,
                               passwordController.text));
+                          context.pushRoute(const MainRoute());
                         },
                       ),
                       SizedBox(
@@ -142,7 +143,7 @@ class SignInScreen extends StatelessWidget {
                             width: 8.w,
                           ),
                           GestureDetector(
-                            onTap: () => context.pushRoute(SignUpRoute()),
+                            onTap: () => context.pushRoute(const SignUpRoute()),
                             child: Text('Create Account',
                                 style:
                                     getRegular2(color: ColorManager.secondary)),
