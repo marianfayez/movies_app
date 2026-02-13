@@ -9,6 +9,7 @@ import 'package:movies_app/core/routes/auto_route.gr.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/features/on_boarding/presentation/bloc/on_boarding_bloc.dart';
 import 'package:movies_app/gen/assets.gen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatelessWidget {
   final AssetGenImage image;
@@ -113,8 +114,11 @@ class OnboardingPage extends StatelessWidget {
                         backgroundColor: ColorManager.secondary,
                         isStadiumBorder: false,
                         label: "Finish",
-                        onTap: () {
-                          context.pushRoute(SignInRoute());
+                        onTap: () async {
+                          final prefs = await SharedPreferences.getInstance();
+                          await prefs.setBool("seenOnboarding", true);
+
+                          context.router.replaceAll([SignInRoute()]);
                         }),
                     SizedBox(height: 12.h),
                     CustomElevatedButton(

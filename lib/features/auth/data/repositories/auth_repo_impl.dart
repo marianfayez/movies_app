@@ -45,7 +45,10 @@ class AuthRepoImpl implements AuthRepo{
     }
 
   }
-
+  @override
+  Future<bool> isLoggedIn() {
+    return authRemoteDs.isLoggedIn();
+  }
   @override
   Future<Either<RouteFailures, FirebaseAuthModel>> logInWithGoogle() async {
     try {
@@ -55,4 +58,17 @@ class AuthRepoImpl implements AuthRepo{
       return Left(RemoteFailures(e.toString()));
     }
   }
+
+  @override
+  Future<Either<RouteFailures, void>> logOut() async{
+    try {
+      final result = await authRemoteDs.logOut();
+      return Right(result);
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
+
+
+
 }

@@ -17,8 +17,7 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
   AuthRemoteDsImpl(this._userDS);
 
   @override
-  Future<FirebaseAuthModel> logIn(
-      {required String email, required String password}) async {
+  Future<FirebaseAuthModel> logIn({required String email, required String password}) async {
     try {
       final credential = await _firebaseAuth.signInWithEmailAndPassword(
         email: email,
@@ -26,8 +25,27 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
       );
 
       final user = credential.user!;
-      final firebaseUser = await _userDS.getUser(user.uid);
-
+      FirebaseUserModel firebaseUser;
+      try {
+        firebaseUser = await _userDS.getUser(user.uid) ??
+            FirebaseUserModel(
+              id: user.uid,
+              name: user.displayName ?? '',
+              email: user.email ?? '',
+              phone: '',
+              avatarId: 0,
+              createdAt: DateTime.now().millisecondsSinceEpoch,
+            );
+      } catch (e) {
+        firebaseUser = FirebaseUserModel(
+          id: user.uid,
+          name: user.displayName ?? '',
+          email: user.email ?? '',
+          phone: '',
+          avatarId: 0,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+        );
+      }
       return FirebaseAuthModel(
           uid: user.uid, email: user.email!, user: firebaseUser);
     } on FirebaseAuthException catch (e) {
@@ -44,8 +62,7 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
   }
 
   @override
-  Future<FirebaseAuthModel> signUp(
-      {required FirebaseSignUpRequestModel request}) async {
+  Future<FirebaseAuthModel> signUp({required FirebaseSignUpRequestModel request}) async {
     try {
       final credential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: request.email,
@@ -97,6 +114,12 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
   }
 
   @override
+  Future<bool> isLoggedIn() async {
+    final user = _firebaseAuth.currentUser;
+    return user != null;
+  }
+
+  @override
   Future<void> logOut() async {
     try {
       await _firebaseAuth.signOut();
@@ -124,17 +147,27 @@ class AuthRemoteDsImpl implements AuthRemoteDs {
           await _firebaseAuth.signInWithCredential(credential);
 
       final user = userCredential.user!;
-
-      var firebaseUser = await _userDS.getUser(user.uid);
-
-      firebaseUser ??= FirebaseUserModel(
-        id: user.uid,
-        name: user.displayName ?? '',
-        email: user.email ?? '',
-        phone: '',
-        avatarId: 0,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-      );
+      FirebaseUserModel firebaseUser;
+      try {
+        firebaseUser = await _userDS.getUser(user.uid) ??
+            FirebaseUserModel(
+              id: user.uid,
+              name: user.displayName ?? '',
+              email: user.email ?? '',
+              phone: '',
+              avatarId: 0,
+              createdAt: DateTime.now().millisecondsSinceEpoch,
+            );
+      } catch (e) {
+        firebaseUser = FirebaseUserModel(
+          id: user.uid,
+          name: user.displayName ?? '',
+          email: user.email ?? '',
+          phone: '',
+          avatarId: 0,
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+        );
+      }
 
       await _userDS.addUser(firebaseUser);
 

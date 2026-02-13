@@ -55,7 +55,7 @@ class SignInScreen extends StatelessWidget {
                       ],
                     ));
           } else if (state.logInRequestState == RequestState.success) {
-            // context.router.replaceAll([MainRoute()]);
+            context.replaceRoute(const MainRoute());
           }
         },
         builder: (context, state) {
@@ -128,7 +128,6 @@ class SignInScreen extends StatelessWidget {
                           BlocProvider.of<AuthBloc>(context).add(LogInEvent(
                               emailController.text,
                               passwordController.text));
-                          context.pushRoute(const MainRoute());
                         },
                       ),
                       SizedBox(

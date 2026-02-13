@@ -15,8 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   SignUpUseCases signUpUseCases;
   LogInUseCase logInUseCase;
 
-  AuthBloc(this.signUpUseCases, this.logInUseCase)
-      : super(AuthInitial()) {
+  AuthBloc(this.signUpUseCases, this.logInUseCase) : super(AuthInitial()) {
     on<SignUpEvent>((event, emit) async {
       emit(state.copyWith(requestState: RequestState.loading));
 
@@ -43,10 +42,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }, (data) {
         print("Success response");
         emit(state.copyWith(
-            logInRequestState: RequestState.success, authModel: data));
+            logInRequestState: RequestState.success,
+            authModel: data,
+            isLoggedIn: true));
       });
     });
-
     on<LogInWithGoogleEvent>((event, emit) async {
       emit(state.copyWith(logInRequestState: RequestState.loading));
 
@@ -73,19 +73,41 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final result = await logInUseCase.forgetPassword(event.email);
 
       result.fold(
-            (error) {
+        (error) {
           emit(state.copyWith(
             requestState: RequestState.error,
             routeFailures: error,
           ));
         },
-            (_) {
+        (_) {
           emit(state.copyWith(
             requestState: RequestState.success,
           ));
         },
       );
     });
+    on<CheckAuthStatusEvent>((event, emit) async {
+      final loggedIn = await logInUseCase.checkAuthStatus();
+      emit(state.copyWith(isLoggedIn: loggedIn));
+    });
+    on<LogOut>((event, emit) async {
+      emit(state.copyWith(requestState: RequestState.loading));
 
+      final result = await logInUseCase.logOut();
+
+      result.fold(
+        (error) {
+          emit(state.copyWith(
+            requestState: RequestState.error,
+            routeFailures: error,
+          ));
+        },
+        (_) {
+          emit(state.copyWith(
+            requestState: RequestState.success,
+          ));
+        },
+      );
+    });
   }
 }

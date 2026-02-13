@@ -15,5 +15,7 @@ class LogInUseCase {
   Future<Either<RouteFailures, FirebaseAuthModel>> loginWithGoogle() {
     return authRepo.logInWithGoogle();}
   Future<Either<RouteFailures,void>>forgetPassword(String email)=>authRepo.forgetPassword(email: email);
+  Future<bool> checkAuthStatus() => authRepo.isLoggedIn();
+  Future<Either<RouteFailures,void>> logOut() => authRepo.logOut();
 
 }

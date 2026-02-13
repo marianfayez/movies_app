@@ -8,15 +8,16 @@ FirebaseAuthModel? authModel;
 RequestState? requestState;
 RequestState? logInRequestState;
 RequestState? forgetPasswordRequestState;
-
+ bool? isLoggedIn;
 RouteFailures? routeFailures;
 
-AuthState({this.routeFailures,this.requestState,this.logInRequestState,this.authModel,this.forgetPasswordRequestState});
+AuthState({this.routeFailures,this.isLoggedIn,this.requestState,this.logInRequestState,this.authModel,this.forgetPasswordRequestState});
 
 AuthState copyWith({FirebaseAuthModel? authModel,
 RequestState? requestState,
 RouteFailures? routeFailures,
   RequestState? logInRequestState,
+  bool? isLoggedIn,
   RequestState? forgetPasswordRequestState
 }){
 
@@ -24,6 +25,7 @@ RouteFailures? routeFailures,
       logInRequestState: logInRequestState ?? this.logInRequestState,
       forgetPasswordRequestState: forgetPasswordRequestState ?? this.forgetPasswordRequestState,
       routeFailures: routeFailures ?? this.routeFailures,
+   isLoggedIn: isLoggedIn??this.isLoggedIn,
   authModel: authModel ?? this.authModel);
 }
  }

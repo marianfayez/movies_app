@@ -16,4 +16,6 @@ class ForgetPasswordEvent extends AuthEvent {
   final String email;
   ForgetPasswordEvent(this.email);
 }
+class CheckAuthStatusEvent extends AuthEvent {}
 
+class LogOut extends AuthEvent {}

@@ -9,5 +9,7 @@ abstract class AuthRepo{
  Future<Either<RouteFailures,FirebaseAuthModel>>logIn({required String email,required String password});
  Future<Either<RouteFailures, FirebaseAuthModel>> logInWithGoogle();
  Future<Either<RouteFailures, void>> forgetPassword({required String email});
+ Future<bool> isLoggedIn();
+ Future<Either<RouteFailures,void>> logOut();
 
 }
