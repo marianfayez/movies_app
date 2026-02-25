@@ -5,7 +5,7 @@ import 'package:movies_app/features/bottom_navigation_bar/presentation/bloc/bott
 import 'package:movies_app/features/bottom_navigation_bar/presentation/bloc/bottom_navigation_bar_state.dart';
 import 'package:movies_app/features/bottom_navigation_bar/presentation/screens/bottom_navigation_bar.dart';
 import 'package:movies_app/features/explore_tab.dart';
-import 'package:movies_app/features/home_screen/presentation/screens/home_tab.dart';
+import 'package:movies_app/features/home_tab/presentation/screens/home_tab.dart';
 import 'package:movies_app/features/profile_tab/presentation/pages/profile_tab.dart';
 import 'package:movies_app/features/search_tab.dart';
 
@@ -14,7 +14,7 @@ class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   static final List<Widget> tabs = [
-    const HomeTab(),
+     HomeTab(),
     SearchTab(),
     ExploreTab(),
     ProfileTab()

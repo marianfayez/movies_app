@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppConstants {
   static const String searchHint = "what do you search for?";
-  static const String baseUrl = "https://newsapi.org";
+  static const String baseUrl = "https://api.themoviedb.org";
 
   static const List<LinearGradient> onboardingGradients = [
     LinearGradient(
