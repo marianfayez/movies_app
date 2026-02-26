@@ -1,0 +1,64 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/core/resources/color_manager.dart';
+import 'package:movies_app/core/resources/styles_manager.dart';
+
+class MovieItem extends StatelessWidget {
+  int movieId;
+  String movieImage;
+  String voteAverage;
+
+  MovieItem({super.key, required this.movieId,required this.movieImage,required this.voteAverage});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.r),
+            child: GestureDetector(
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) =>
+                //         // DetailsScreen(
+                //         //   movieId: movieId,
+                //         // ),
+                //   ),
+                // );
+              },
+              child: CachedNetworkImage(imageUrl:
+              "https://image.tmdb.org/t/p/w500$movieImage" ?? "",
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8,vertical: 4),
+                margin: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: ColorManager.primary,
+                ),
+                child: Row(
+                  children: [
+                    Text("$voteAverage",
+                        style: getRegularStyle2(color: Colors.white)),
+                    Icon(Icons.star,color:ColorManager.secondary,)
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}

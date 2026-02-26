@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:movies_app/core/api/api_keys.dart';
 import 'package:movies_app/core/resources/constants_manager.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -45,7 +46,7 @@ class ApiManager {
     try {
       return await _dio.get(
         endPoint,
-        queryParameters: queryParameters,
+        queryParameters: {"api_key": ApiKeys.tmdbApiKey, ...?queryParameters},
         options: Options(headers: headers),
       );
     } catch (e) {
