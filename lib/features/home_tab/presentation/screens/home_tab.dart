@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/auth/presentation/widgets/movie_item.dart';
@@ -22,10 +23,12 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<GetMoviesBloc>()..add(GetMoviesEvent()),
+      create: (context) => getIt<GetMoviesBloc>()
+        ..add(GetMoviesEvent())
+        ..add(GetUpcomingMoviesEvent()),
       child: BlocConsumer<GetMoviesBloc, GetMoviesState>(
         listener: (context, state) {
-          if (state.requestState == RequestState.loading) {
+          if (state.getMoviesRequestState == RequestState.loading ) {
             showDialog(
                 context: context,
                 barrierDismissible: false,
@@ -33,12 +36,12 @@ class _HomeTabState extends State<HomeTab> {
                       title: Center(child: CircularProgressIndicator()),
                       backgroundColor: Colors.transparent,
                     ));
-          } else if (state.requestState == RequestState.error) {
+          } else if (state.getMoviesRequestState == RequestState.error) {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
                       title: const Text("Error"),
-                      content: Text(state.routeFailures?.message ??
+                      content: Text(state.getMoviesRouteFailures?.message ??
                           "Something went wrong"),
                       actions: [
                         ElevatedButton(
@@ -48,12 +51,32 @@ class _HomeTabState extends State<HomeTab> {
                             child: const Text("Ok"))
                       ],
                     ));
-          } else if (state.requestState == RequestState.success) {
+          } else if (state.getUpcomingMoviesRequestState ==
+              RequestState.error) {
+            showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                      title: const Text("Error"),
+                      content: Text(
+                          state.getUpcomingMoviesRouteFailures?.message ??
+                              "Something went wrong"),
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Ok"))
+                      ],
+                    ));
+          } else if (state.getMoviesRequestState == RequestState.success ||
+              state.getUpcomingMoviesRequestState == RequestState.success) {
             Navigator.pop(context);
           }
         },
         builder: (context, state) {
           var movies = state.poplarMovieModel?.results ?? [];
+          var upcomingMovies = state.upcomingMoviesModel?.results ?? [];
+
           return CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -87,8 +110,7 @@ class _HomeTabState extends State<HomeTab> {
                         ),
                       ),
                     )),
-                    Column
-                      (
+                    Column(
                       mainAxisSize: MainAxisSize.min, // ده المهم
                       children: [
                         SizedBox(
@@ -127,9 +149,9 @@ class _HomeTabState extends State<HomeTab> {
                 ),
               ),
               SliverToBoxAdapter(
-                child:  Padding(
-                  padding: const EdgeInsets.only(
-                      right: 16, left: 16, bottom: 12),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(right: 16, left: 16, bottom: 12),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -141,18 +163,39 @@ class _HomeTabState extends State<HomeTab> {
                         children: [
                           Text(
                             "See More ",
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
-                                color:
-                                Theme.of(context).primaryColor),
+                            style:
+                                getRegularStyle2(color: ColorManager.secondary),
                           ),
                           Icon(Icons.arrow_forward,
-                              color: Theme.of(context).primaryColor)
+                              color: ColorManager.secondary)
                         ],
                       )
                     ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 250.h,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final movie = upcomingMovies[index];
+                      print("Movie: ${movie.title}, ID: ${movie.id}");
+                      return SizedBox(
+                        width: 120,
+                        child: MovieItem(
+                          movieId: movie.id ?? 0,
+                          voteAverage: (upcomingMovies[index].voteAverage ?? 0)
+                              .toStringAsFixed(1),
+                          movieImage: movie.posterPath ?? "",
+                        ),
+                      );
+                    },
+                    itemCount: upcomingMovies.length,
+                    separatorBuilder: (context, index) => const SizedBox(
+                      width: 10,
+                    ),
                   ),
                 ),
               )

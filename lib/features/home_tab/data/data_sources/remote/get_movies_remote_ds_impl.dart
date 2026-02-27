@@ -5,6 +5,7 @@ import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/core/resources/endpoints.dart';
 import 'package:movies_app/features/home_tab/data/data_sources/remote/get_movies_remote_ds.dart';
 import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart';
+import 'package:movies_app/features/home_tab/data/models/upcoming_movies.dart';
 
 @Injectable(as: GetMoviesRemoteDs)
 class GetMoviesRemoteDsImpl implements GetMoviesRemoteDs {
@@ -17,6 +18,17 @@ class GetMoviesRemoteDsImpl implements GetMoviesRemoteDs {
     try {
       final result = await apiManager.getData(endPoint: EndPoints.getMovies);
       return PoplarMovieModel.fromJson(result.data);
+    } on DioException catch (e) {
+      throw RemoteFailures(e.message ?? "Server Error");
+
+    }
+  }
+
+  @override
+  Future<UpcomingMoviesModel> getUpcomingMovies() async{
+    try {
+      final result = await apiManager.getData(endPoint: EndPoints.getupComingMovies);
+      return UpcomingMoviesModel.fromJson(result.data);
     } on DioException catch (e) {
       throw RemoteFailures(e.message ?? "Server Error");
 

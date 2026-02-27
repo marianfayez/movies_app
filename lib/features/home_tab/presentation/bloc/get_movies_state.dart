@@ -1,29 +1,39 @@
 part of 'get_movies_bloc.dart';
 
-
 enum RequestState { init, loading, error, success }
 
 class GetMoviesState {
-
-  RequestState requestState;
-  RouteFailures? routeFailures;
+  RequestState? getUpcomingMoviesRequestState;
+  RouteFailures? getUpcomingMoviesRouteFailures;
+  RequestState? getMoviesRequestState;
+  RouteFailures? getMoviesRouteFailures;
   PoplarMovieModel? poplarMovieModel;
+  UpcomingMoviesModel? upcomingMoviesModel;
 
   GetMoviesState(
-      {this.routeFailures, this.requestState=RequestState.init, this.poplarMovieModel});
+      {this.getMoviesRouteFailures,
+      this.getUpcomingMoviesRequestState,
+      this.getUpcomingMoviesRouteFailures,
+      this.upcomingMoviesModel,
+      this.getMoviesRequestState = RequestState.init,
+      this.poplarMovieModel});
 
-  GetMoviesState copyWith({
-    RequestState? requestState,
-    RouteFailures? routeFailures,
-    PoplarMovieModel? poplarMovieModel
-  }) {
-    return GetMoviesState(requestState: requestState ?? this.requestState,
-        routeFailures: routeFailures ?? this.routeFailures,
+  GetMoviesState copyWith(
+      {RequestState? getMoviesRequestState,
+      RouteFailures? getMoviesRouteFailures,
+        RequestState? getUpcomingMoviesRequestState,
+        RouteFailures? getUpcomingMoviesRouteFailures,
+        UpcomingMoviesModel? upcomingMoviesModel,
+      PoplarMovieModel? poplarMovieModel}) {
+    return GetMoviesState(
+      getUpcomingMoviesRequestState: getUpcomingMoviesRequestState ?? this.getUpcomingMoviesRequestState,
+        getUpcomingMoviesRouteFailures: getUpcomingMoviesRouteFailures ?? this.getUpcomingMoviesRouteFailures,
+        getMoviesRequestState: getMoviesRequestState ?? this.getMoviesRequestState,
+        getMoviesRouteFailures: getMoviesRouteFailures ?? this.getMoviesRouteFailures,
         poplarMovieModel: poplarMovieModel ?? this.poplarMovieModel);
   }
 }
 
 final class GetMoviesInitial extends GetMoviesState {
-  GetMoviesInitial() :super(
-      requestState: RequestState.init);
+  GetMoviesInitial() : super(getMoviesRequestState: RequestState.init,getUpcomingMoviesRequestState: RequestState.init);
 }
