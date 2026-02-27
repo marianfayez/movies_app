@@ -28,6 +28,7 @@ class GetMoviesState {
     return GetMoviesState(
       getUpcomingMoviesRequestState: getUpcomingMoviesRequestState ?? this.getUpcomingMoviesRequestState,
         getUpcomingMoviesRouteFailures: getUpcomingMoviesRouteFailures ?? this.getUpcomingMoviesRouteFailures,
+        upcomingMoviesModel: upcomingMoviesModel??this.upcomingMoviesModel,
         getMoviesRequestState: getMoviesRequestState ?? this.getMoviesRequestState,
         getMoviesRouteFailures: getMoviesRouteFailures ?? this.getMoviesRouteFailures,
         poplarMovieModel: poplarMovieModel ?? this.poplarMovieModel);

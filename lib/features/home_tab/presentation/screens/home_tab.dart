@@ -28,30 +28,7 @@ class _HomeTabState extends State<HomeTab> {
         ..add(GetUpcomingMoviesEvent()),
       child: BlocConsumer<GetMoviesBloc, GetMoviesState>(
         listener: (context, state) {
-          if (state.getMoviesRequestState == RequestState.loading ) {
-            showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) => const AlertDialog(
-                      title: Center(child: CircularProgressIndicator()),
-                      backgroundColor: Colors.transparent,
-                    ));
-          } else if (state.getMoviesRequestState == RequestState.error) {
-            showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                      title: const Text("Error"),
-                      content: Text(state.getMoviesRouteFailures?.message ??
-                          "Something went wrong"),
-                      actions: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text("Ok"))
-                      ],
-                    ));
-          } else if (state.getUpcomingMoviesRequestState ==
+          if (state.getUpcomingMoviesRequestState ==
               RequestState.error) {
             showDialog(
                 context: context,
@@ -68,15 +45,17 @@ class _HomeTabState extends State<HomeTab> {
                             child: const Text("Ok"))
                       ],
                     ));
-          } else if (state.getMoviesRequestState == RequestState.success ||
-              state.getUpcomingMoviesRequestState == RequestState.success) {
-            Navigator.pop(context);
           }
         },
         builder: (context, state) {
+          if (state.getMoviesRequestState == RequestState.loading ||
+              state.getUpcomingMoviesRequestState == RequestState.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           var movies = state.poplarMovieModel?.results ?? [];
           var upcomingMovies = state.upcomingMoviesModel?.results ?? [];
-
           return CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
@@ -181,20 +160,16 @@ class _HomeTabState extends State<HomeTab> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       final movie = upcomingMovies[index];
-                      print("Movie: ${movie.title}, ID: ${movie.id}");
-                      return SizedBox(
-                        width: 120,
-                        child: MovieItem(
-                          movieId: movie.id ?? 0,
-                          voteAverage: (upcomingMovies[index].voteAverage ?? 0)
-                              .toStringAsFixed(1),
-                          movieImage: movie.posterPath ?? "",
-                        ),
+                      return MovieItem(
+                        movieId: movie.id ?? 0,
+                        voteAverage: (upcomingMovies[index].voteAverage ?? 0)
+                            .toStringAsFixed(1),
+                        movieImage: movie.posterPath ?? "",
                       );
                     },
                     itemCount: upcomingMovies.length,
-                    separatorBuilder: (context, index) => const SizedBox(
-                      width: 10,
+                    separatorBuilder: (context, index) =>  SizedBox(
+                      width: 4.w,
                     ),
                   ),
                 ),
