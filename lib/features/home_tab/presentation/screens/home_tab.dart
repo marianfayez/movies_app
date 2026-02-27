@@ -28,8 +28,7 @@ class _HomeTabState extends State<HomeTab> {
         ..add(GetUpcomingMoviesEvent()),
       child: BlocConsumer<GetMoviesBloc, GetMoviesState>(
         listener: (context, state) {
-          if (state.getUpcomingMoviesRequestState ==
-              RequestState.error) {
+          if (state.getUpcomingMoviesRequestState == RequestState.error) {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
@@ -168,7 +167,7 @@ class _HomeTabState extends State<HomeTab> {
                       );
                     },
                     itemCount: upcomingMovies.length,
-                    separatorBuilder: (context, index) =>  SizedBox(
+                    separatorBuilder: (context, index) => SizedBox(
                       width: 4.w,
                     ),
                   ),
