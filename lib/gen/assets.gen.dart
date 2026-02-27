@@ -92,6 +92,9 @@ class $AssetsImagesGen {
   AssetGenImage get splashLogo =>
       const AssetGenImage('assets/images/splash_logo.png');
 
+  /// File path: assets/images/watch.png
+  AssetGenImage get watch => const AssetGenImage('assets/images/watch.png');
+
   /// File path: assets/images/🦆 icon _Identification_.png
   AssetGenImage get aIconIdentification =>
       const AssetGenImage('assets/images/🦆 icon _Identification_.png');
@@ -121,6 +124,7 @@ class $AssetsImagesGen {
         password,
         phone,
         splashLogo,
+        watch,
         aIconIdentification
       ];
 }

@@ -1,8 +1,9 @@
-import 'package:auto_route/annotations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movies_app/core/resources/styles_manager.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/auth/presentation/widgets/movie_item.dart';
 import 'package:movies_app/features/home_tab/presentation/bloc/get_movies_bloc.dart';
@@ -17,6 +18,7 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -52,67 +54,106 @@ class _HomeTabState extends State<HomeTab> {
         },
         builder: (context, state) {
           var movies = state.poplarMovieModel?.results ?? [];
-          return Stack(
-            children: [
-              Positioned.fill(
-                  child: movies.isNotEmpty
-            ? Image.network(
-            "https://image.tmdb.org/t/p/w500${movies[currentIndex].posterPath}",
-            fit: BoxFit.cover,
-          )
-              : Assets.images.onBoarding6.image(fit: BoxFit.cover)),
-              Positioned.fill(
-                  child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromRGBO(18, 19, 18, 0.8),
-                      Color.fromRGBO(18, 19, 18, 0.6),
-                      Color(0xFF121312),
-                    ],
-                    stops: [
-                      0.0,
-                      0.465,
-                      1.0,
+          return CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                        child: movies.isNotEmpty
+                            ? CachedNetworkImage(
+                                imageUrl:
+                                    "https://image.tmdb.org/t/p/w500${movies[currentIndex].posterPath}",
+                                fit: BoxFit.cover,
+                              )
+                            : Assets.images.onBoarding6
+                                .image(fit: BoxFit.cover)),
+                    Positioned.fill(
+                        child: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color.fromRGBO(18, 19, 18, 0.8),
+                            Color.fromRGBO(18, 19, 18, 0.6),
+                            Color(0xFF121312),
+                          ],
+                          stops: [
+                            0.0,
+                            0.465,
+                            1.0,
+                          ],
+                        ),
+                      ),
+                    )),
+                    Column
+                      (
+                      mainAxisSize: MainAxisSize.min, // ده المهم
+                      children: [
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                        Assets.images.availableNow.image(),
+                        CarouselSlider.builder(
+                          itemBuilder: (context, index, realIndex) {
+                            return MovieItem(
+                              movieId: movies[index].id ?? 0,
+                              voteAverage: (movies[index].voteAverage ?? 0)
+                                  .toStringAsFixed(1),
+                              movieImage: movies[index].posterPath ?? "",
+                            );
+                          },
+                          itemCount: movies.length,
+                          options: CarouselOptions(
+                            height: 325.h,
+                            autoPlay: false,
+                            enlargeCenterPage: true,
+                            enableInfiniteScroll: false,
+                            scrollDirection: Axis.horizontal,
+                            viewportFraction: 0.50,
+                            enlargeFactor: 0.2,
+                            onPageChanged: (index, reason) {
+                              setState(() {
+                                currentIndex = index;
+                              });
+                            },
+                          ),
+                        ),
+                        Assets.images.watch.image(),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              SliverToBoxAdapter(
+                child:  Padding(
+                  padding: const EdgeInsets.only(
+                      right: 16, left: 16, bottom: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Action",
+                        style: getRegularStyle3(color: Colors.white),
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            "See More ",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                color:
+                                Theme.of(context).primaryColor),
+                          ),
+                          Icon(Icons.arrow_forward,
+                              color: Theme.of(context).primaryColor)
+                        ],
+                      )
                     ],
                   ),
-                ),
-              )),
-              Align(
-                alignment: Alignment.topCenter,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 8.h,
-                    ),
-                    Assets.images.availableNow.image(),
-                    CarouselSlider.builder(
-                      itemBuilder: (context, index, realIndex) {
-                        return MovieItem(
-                          movieId: movies[index].id ?? 0,
-                          voteAverage:( movies[index].voteAverage ?? 0).toStringAsFixed(1),
-                          movieImage: movies[index].posterPath ?? "",
-                        );
-                      },
-                      itemCount: movies.length,
-                      options: CarouselOptions(
-                        height: 440.h,
-                        autoPlay: false,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false,
-                        scrollDirection: Axis.horizontal,
-                        viewportFraction: 0.50,
-                        enlargeFactor: 0.2,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            currentIndex = index;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
                 ),
               )
             ],
