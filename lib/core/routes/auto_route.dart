@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:movies_app/core/routes/auto_route.gr.dart';
+import 'package:movies_app/features/home_tab/presentation/screens/upcoming_movies.dart';
 
 
 @AutoRouterConfig()
@@ -14,6 +15,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: SignInRoute.page),
     AutoRoute(page: ForgetPasswordRoute.page),
     AutoRoute(page: MainRoute.page),
+    AutoRoute(page: UpcomingMoviesRoute.page),
 
 
   ];

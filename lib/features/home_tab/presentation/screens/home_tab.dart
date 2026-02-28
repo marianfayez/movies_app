@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
+import 'package:movies_app/core/routes/auto_route.dart';
+import 'package:movies_app/core/routes/auto_route.gr.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/auth/presentation/widgets/movie_item.dart';
 import 'package:movies_app/features/home_tab/presentation/bloc/get_movies_bloc.dart';
@@ -129,7 +132,7 @@ class _HomeTabState extends State<HomeTab> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding:
-                   EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                   child: Column(
                     children: [
                       Row(
@@ -142,13 +145,14 @@ class _HomeTabState extends State<HomeTab> {
                           Row(
                             children: [
                               GestureDetector(
-                                onTap:(){
-
+                                onTap: () {
+                                  context
+                                      .pushRoute(const UpcomingMoviesRoute());
                                 },
                                 child: Text(
                                   "See More ",
-                                  style:
-                                      getRegularStyle2(color: ColorManager.secondary),
+                                  style: getRegularStyle2(
+                                      color: ColorManager.secondary),
                                 ),
                               ),
                               Icon(Icons.arrow_forward,
@@ -157,7 +161,9 @@ class _HomeTabState extends State<HomeTab> {
                           )
                         ],
                       ),
-                      SizedBox(height: 8.h,),
+                      SizedBox(
+                        height: 8.h,
+                      ),
                       SizedBox(
                         height: 250.h,
                         child: ListView.separated(
@@ -168,8 +174,9 @@ class _HomeTabState extends State<HomeTab> {
                               width: 180.w,
                               child: MovieItem(
                                 movieId: movie.id ?? 0,
-                                voteAverage: (upcomingMovies[index].voteAverage ?? 0)
-                                    .toStringAsFixed(1),
+                                voteAverage:
+                                    (upcomingMovies[index].voteAverage ?? 0)
+                                        .toStringAsFixed(1),
                                 movieImage: movie.posterPath ?? "",
                               ),
                             );
@@ -184,7 +191,6 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                 ),
               ),
-
             ],
           );
         },

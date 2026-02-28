@@ -19,8 +19,8 @@ import 'package:movies_app/gen/assets.gen.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
 
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+  final  emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

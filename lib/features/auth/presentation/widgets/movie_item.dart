@@ -5,11 +5,11 @@ import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
 
 class MovieItem extends StatelessWidget {
-  int movieId;
-  String movieImage;
-  String voteAverage;
+  final int movieId;
+  final String movieImage;
+  final String voteAverage;
 
-  MovieItem({super.key, required this.movieId,required this.movieImage,required this.voteAverage});
+  const MovieItem({super.key, required this.movieId,required this.movieImage,required this.voteAverage});
 
   @override
   Widget build(BuildContext context) {
