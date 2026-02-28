@@ -129,50 +129,62 @@ class _HomeTabState extends State<HomeTab> {
               SliverToBoxAdapter(
                 child: Padding(
                   padding:
-                      const EdgeInsets.only(right: 16, left: 16, bottom: 12),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                   EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                  child: Column(
                     children: [
-                      Text(
-                        "Action",
-                        style: getRegularStyle3(color: Colors.white),
-                      ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "See More ",
-                            style:
-                                getRegularStyle2(color: ColorManager.secondary),
+                            "Action",
+                            style: getRegularStyle3(color: Colors.white),
                           ),
-                          Icon(Icons.arrow_forward,
-                              color: ColorManager.secondary)
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap:(){
+
+                                },
+                                child: Text(
+                                  "See More ",
+                                  style:
+                                      getRegularStyle2(color: ColorManager.secondary),
+                                ),
+                              ),
+                              Icon(Icons.arrow_forward,
+                                  color: ColorManager.secondary)
+                            ],
+                          )
                         ],
-                      )
+                      ),
+                      SizedBox(height: 8.h,),
+                      SizedBox(
+                        height: 250.h,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final movie = upcomingMovies[index];
+                            return SizedBox(
+                              width: 180.w,
+                              child: MovieItem(
+                                movieId: movie.id ?? 0,
+                                voteAverage: (upcomingMovies[index].voteAverage ?? 0)
+                                    .toStringAsFixed(1),
+                                movieImage: movie.posterPath ?? "",
+                              ),
+                            );
+                          },
+                          itemCount: upcomingMovies.length,
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 4.w,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 250.h,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      final movie = upcomingMovies[index];
-                      return MovieItem(
-                        movieId: movie.id ?? 0,
-                        voteAverage: (upcomingMovies[index].voteAverage ?? 0)
-                            .toStringAsFixed(1),
-                        movieImage: movie.posterPath ?? "",
-                      );
-                    },
-                    itemCount: upcomingMovies.length,
-                    separatorBuilder: (context, index) => SizedBox(
-                      width: 4.w,
-                    ),
-                  ),
-                ),
-              )
+
             ],
           );
         },

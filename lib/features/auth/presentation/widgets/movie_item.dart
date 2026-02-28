@@ -15,26 +15,30 @@ class MovieItem extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding:  EdgeInsets.symmetric(horizontal: 8.h),
       child: Stack(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(20.r),
-            child: GestureDetector(
-              onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) =>
-                //         // DetailsScreen(
-                //         //   movieId: movieId,
-                //         // ),
-                //   ),
-                // );
-              },
-              child: CachedNetworkImage(imageUrl:
-              "https://image.tmdb.org/t/p/w500$movieImage" ?? "",
-                fit: BoxFit.fill,
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: GestureDetector(
+                onTap: () {
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) =>
+                  //         // DetailsScreen(
+                  //         //   movieId: movieId,
+                  //         // ),
+                  //   ),
+                  // );
+                },
+                child: CachedNetworkImage(imageUrl:
+                "https://image.tmdb.org/t/p/w500$movieImage" ?? "",
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
