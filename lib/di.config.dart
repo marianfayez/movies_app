@@ -32,6 +32,18 @@ import 'features/home_tab/data/repositories/get_movies_repo_impl.dart' as _i782;
 import 'features/home_tab/domain/repositories/get_movies_repo.dart' as _i1065;
 import 'features/home_tab/domain/use_cases/get_movies_use_case.dart' as _i437;
 import 'features/home_tab/presentation/bloc/get_movies_bloc.dart' as _i404;
+import 'features/movie_details/data/data_sources/remote/get_movies_details_remote_ds.dart'
+    as _i1028;
+import 'features/movie_details/data/data_sources/remote/get_movies_details_remote_ds_impl.dart'
+    as _i83;
+import 'features/movie_details/data/repositories/get_movies_details_repo_impl.dart'
+    as _i523;
+import 'features/movie_details/domain/repositories/get_movies_details_repo.dart'
+    as _i423;
+import 'features/movie_details/domain/use_cases/movie_details_use_cases.dart'
+    as _i325;
+import 'features/movie_details/presentation/bloc/movie_details_bloc.dart'
+    as _i965;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -45,10 +57,14 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.lazySingleton<_i237.ApiManager>(() => _i237.ApiManager());
+    gh.factory<_i1028.GetMoviesDetailsRemoteDs>(
+        () => _i83.GetMoviesRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i581.GetMoviesRemoteDs>(
         () => _i290.GetMoviesRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i888.FirebaseUserRemoteDS>(
         () => _i9.FirebaseUserRemoteDSImpl());
+    gh.factory<_i423.GetMoviesDetailsRepo>(() =>
+        _i523.GetMoviesDetailsRepoImpl(gh<_i1028.GetMoviesDetailsRemoteDs>()));
     gh.factory<_i1065.GetMoviesRepo>(
         () => _i782.GetMoviesRepoImpl(gh<_i581.GetMoviesRemoteDs>()));
     gh.factory<_i437.GetMoviesUseCase>(
@@ -57,8 +73,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i404.GetMoviesBloc(gh<_i437.GetMoviesUseCase>()));
     gh.factory<_i981.AuthRemoteDs>(
         () => _i393.AuthRemoteDsImpl(gh<_i888.FirebaseUserRemoteDS>()));
+    gh.factory<_i325.MoviesDetailsUseCase>(
+        () => _i325.MoviesDetailsUseCase(gh<_i423.GetMoviesDetailsRepo>()));
     gh.factory<_i416.AuthRepo>(
         () => _i426.AuthRepoImpl(gh<_i981.AuthRemoteDs>()));
+    gh.factory<_i965.MovieDetailsBloc>(
+        () => _i965.MovieDetailsBloc(gh<_i325.MoviesDetailsUseCase>()));
     gh.factory<_i871.LogInUseCase>(
         () => _i871.LogInUseCase(gh<_i416.AuthRepo>()));
     gh.factory<_i606.SignUpUseCases>(

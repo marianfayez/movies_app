@@ -6,11 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
-import 'package:movies_app/core/routes/auto_route.dart';
 import 'package:movies_app/core/routes/auto_route.gr.dart';
 import 'package:movies_app/di.dart';
-import 'package:movies_app/features/auth/presentation/widgets/movie_item.dart';
 import 'package:movies_app/features/home_tab/presentation/bloc/get_movies_bloc.dart';
+import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 
 class HomeTab extends StatefulWidget {

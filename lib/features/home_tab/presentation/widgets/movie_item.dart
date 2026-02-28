@@ -1,8 +1,12 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
+import 'package:movies_app/core/routes/auto_route.dart';
+import 'package:movies_app/core/routes/auto_route.gr.dart';
+import 'package:movies_app/features/movie_details/presentation/screens/movie_details_screen.dart';
 
 class MovieItem extends StatelessWidget {
   final int movieId;
@@ -25,15 +29,8 @@ class MovieItem extends StatelessWidget {
               height: double.infinity,
               child: GestureDetector(
                 onTap: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) =>
-                  //         // DetailsScreen(
-                  //         //   movieId: movieId,
-                  //         // ),
-                  //   ),
-                  // );
+                  context.pushRoute(MovieDetailsRoute(movieId: movieId.toString(),
+                  ));
                 },
                 child: CachedNetworkImage(imageUrl:
                 "https://image.tmdb.org/t/p/w500$movieImage" ?? "",

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/di.dart';
-import 'package:movies_app/features/auth/presentation/widgets/movie_item.dart';
 import 'package:movies_app/features/home_tab/presentation/bloc/get_movies_bloc.dart';
+import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 
 @RoutePage()
 class UpcomingMoviesScreen extends StatelessWidget {
