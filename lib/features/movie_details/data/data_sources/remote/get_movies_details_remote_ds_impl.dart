@@ -3,10 +3,10 @@ import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/api/api_manager.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/core/resources/endpoints.dart';
-import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart';
-import 'package:movies_app/features/home_tab/data/models/upcoming_movies.dart';
 import 'package:movies_app/features/movie_details/data/data_sources/remote/get_movies_details_remote_ds.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_model.dart';
+import 'package:movies_app/features/movie_details/data/models/movie_screen_shot_model.dart';
+import 'package:movies_app/features/movie_details/data/models/similar_movie_model.dart';
 
 @Injectable(as: GetMoviesDetailsRemoteDs)
 class GetMoviesRemoteDsImpl implements GetMoviesDetailsRemoteDs {
@@ -15,7 +15,7 @@ class GetMoviesRemoteDsImpl implements GetMoviesDetailsRemoteDs {
   GetMoviesRemoteDsImpl(this.apiManager);
 
   @override
-  Future<MovieDetailsModel> getMoviesDetails(String movieId) async {
+  Future<MovieDetailsModel> getMoviesDetails(int movieId) async {
     try {
       final result = await apiManager.getData(
         endPoint: EndPoints.getMoviesDetails(movieId),
@@ -25,6 +25,30 @@ class GetMoviesRemoteDsImpl implements GetMoviesDetailsRemoteDs {
         },
       );
       return MovieDetailsModel.fromJson(result.data);
+    } on DioException catch (e) {
+      throw RemoteFailures(e.message ?? "Server Error");
+    }
+  }
+
+  @override
+  Future<MovieScreenShotModel> getMovieScreenShot(int movieId) async{
+    try {
+      final result = await apiManager.getData(
+        endPoint: EndPoints.getMovieScreenShot(movieId),
+      );
+      return MovieScreenShotModel.fromJson(result.data);
+    } on DioException catch (e) {
+      throw RemoteFailures(e.message ?? "Server Error");
+    }
+  }
+
+  @override
+  Future<SimilarMoviesModel> getSimilarMovie(int movieId) async{
+    try {
+      final result = await apiManager.getData(
+        endPoint: EndPoints.getSimilarMovies(movieId),
+      );
+      return SimilarMoviesModel.fromJson(result.data);
     } on DioException catch (e) {
       throw RemoteFailures(e.message ?? "Server Error");
     }

@@ -83,7 +83,7 @@ class MainRoute extends _i9.PageRouteInfo<void> {
 /// [_i3.MovieDetailsScreen]
 class MovieDetailsRoute extends _i9.PageRouteInfo<MovieDetailsRouteArgs> {
   MovieDetailsRoute({
-    required String movieId,
+    required int movieId,
     _i10.Key? key,
     List<_i9.PageRouteInfo>? children,
   }) : super(
@@ -115,7 +115,7 @@ class MovieDetailsRouteArgs {
     this.key,
   });
 
-  final String movieId;
+  final int movieId;
 
   final _i10.Key? key;
 

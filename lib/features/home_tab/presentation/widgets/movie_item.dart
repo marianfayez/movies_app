@@ -29,7 +29,7 @@ class MovieItem extends StatelessWidget {
               height: double.infinity,
               child: GestureDetector(
                 onTap: () {
-                  context.pushRoute(MovieDetailsRoute(movieId: movieId.toString(),
+                  context.pushRoute(MovieDetailsRoute(movieId: movieId,
                   ));
                 },
                 child: CachedNetworkImage(imageUrl:

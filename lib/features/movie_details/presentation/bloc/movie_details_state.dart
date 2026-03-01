@@ -7,22 +7,52 @@ class MoviesDetailsState {
   RouteFailures? moviesDetailsRouteFailures;
   MovieDetailsModel? movieDetailsModel;
 
-  MoviesDetailsState({
-    this.moviesDetailsRouteFailures,
-    this.moviesDetailsRequestState = RequestState.init,
-    this.movieDetailsModel});
+  RequestState? movieScreenShotRequestState;
+  RouteFailures? movieScreenShotRouteFailures;
+  MovieScreenShotModel? movieScreenShotModel;
 
-  MoviesDetailsState copyWith({RequestState? moviesDetailsRequestState,
+  RequestState? similarMoviesRequestState;
+  RouteFailures? similarMoviesRouteFailures;
+  SimilarMoviesModel? similarMoviesModel;
+
+  MoviesDetailsState(
+      {this.moviesDetailsRouteFailures,
+      this.similarMoviesModel,
+      this.similarMoviesRequestState,
+      this.similarMoviesRouteFailures,
+      this.movieScreenShotModel,
+      this.movieScreenShotRequestState,
+      this.movieScreenShotRouteFailures,
+      this.moviesDetailsRequestState = RequestState.init,
+      this.movieDetailsModel});
+
+  MoviesDetailsState copyWith({
+    RequestState? moviesDetailsRequestState,
     RouteFailures? moviesDetailsRouteFailures,
     MovieDetailsModel? movieDetailsModel,
+    RequestState? similarMoviesRequestState,
+    RouteFailures? similarMoviesRouteFailures,
+    SimilarMoviesModel? similarMoviesModel,
+    RequestState? movieScreenShotRequestState,
+    RouteFailures? movieScreenShotRouteFailures,
+    MovieScreenShotModel? movieScreenShotModel,
   }) {
     return MoviesDetailsState(
-      moviesDetailsRequestState: moviesDetailsRequestState ??
-          this.moviesDetailsRequestState,
-      moviesDetailsRouteFailures: moviesDetailsRouteFailures ??
-          this.moviesDetailsRouteFailures,
+      moviesDetailsRequestState:
+          moviesDetailsRequestState ?? this.moviesDetailsRequestState,
+      moviesDetailsRouteFailures:
+          moviesDetailsRouteFailures ?? this.moviesDetailsRouteFailures,
       movieDetailsModel: movieDetailsModel ?? this.movieDetailsModel,
-
+     similarMoviesRequestState:
+     similarMoviesRequestState ?? this.similarMoviesRequestState,
+     similarMoviesRouteFailures:
+     similarMoviesRouteFailures ?? this.similarMoviesRouteFailures,
+      similarMoviesModel: similarMoviesModel ?? this.similarMoviesModel,
+      movieScreenShotRequestState:
+          movieScreenShotRequestState ?? this.movieScreenShotRequestState,
+      movieScreenShotRouteFailures:
+          movieScreenShotRouteFailures ?? this.movieScreenShotRouteFailures,
+      movieScreenShotModel: movieScreenShotModel ?? this.movieScreenShotModel,
     );
   }
 }
