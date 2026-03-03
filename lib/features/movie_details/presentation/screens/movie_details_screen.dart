@@ -14,6 +14,7 @@ import 'package:movies_app/features/movie_details/presentation/bloc/movie_detail
 import 'package:movies_app/features/movie_details/presentation/widgets/cast_item.dart';
 import 'package:movies_app/features/movie_details/presentation/widgets/info_container.dart';
 import 'package:movies_app/gen/assets.gen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class MovieDetailsScreen extends StatelessWidget {
@@ -140,7 +141,25 @@ class MovieDetailsScreen extends StatelessWidget {
                           isStadiumBorder: false,
                           backgroundColor: const Color(0xFFE82626),
                           label: "Watch",
-                          onTap: () {}),
+                          onTap: () async {
+                            final link = movie?.homepage;
+                            print(link);
+                            if (link != null && link.isNotEmpty) {
+                              final Uri url = Uri.parse(link);
+                              if (!await launchUrl(
+                                url,
+                                mode: LaunchMode.externalApplication,
+                              )) {
+                                debugPrint("Could not launch $link");
+                              }
+                            } else {
+                              debugPrint("No homepage available");
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("No watch link available")),
+                              );
+                            }
+                          }),
                     ),
                     SizedBox(
                       height: 16.h,
