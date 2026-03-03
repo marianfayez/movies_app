@@ -4,6 +4,7 @@ import 'package:movies_app/core/api/api_manager.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/core/resources/endpoints.dart';
 import 'package:movies_app/features/movie_details/data/data_sources/remote/get_movies_details_remote_ds.dart';
+import 'package:movies_app/features/movie_details/data/models/movie_cast_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_screen_shot_model.dart';
 import 'package:movies_app/features/movie_details/data/models/similar_movie_model.dart';
@@ -49,6 +50,18 @@ class GetMoviesRemoteDsImpl implements GetMoviesDetailsRemoteDs {
         endPoint: EndPoints.getSimilarMovies(movieId),
       );
       return SimilarMoviesModel.fromJson(result.data);
+    } on DioException catch (e) {
+      throw RemoteFailures(e.message ?? "Server Error");
+    }
+  }
+
+  @override
+  Future<MovieCastModel> getMovieCast(int movieId) async{
+    try {
+      final result = await apiManager.getData(
+        endPoint: EndPoints.getMovieCast(movieId),
+      );
+      return MovieCastModel.fromJson(result.data);
     } on DioException catch (e) {
       throw RemoteFailures(e.message ?? "Server Error");
     }

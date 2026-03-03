@@ -1,17 +1,18 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
-import 'package:movies_app/core/routes/auto_route.dart';
 import 'package:movies_app/core/routes/auto_route.gr.dart';
 import 'package:movies_app/core/widgets/app_bar.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/movie_details/presentation/bloc/movie_details_bloc.dart';
+import 'package:movies_app/features/movie_details/presentation/widgets/cast_item.dart';
 import 'package:movies_app/features/movie_details/presentation/widgets/info_container.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 
@@ -26,7 +27,7 @@ class MovieDetailsScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => getIt<MovieDetailsBloc>()
         ..add(GetMoviesDetailsEvent(movieId))
-        ..add(GetMovieScreenShotEvent(movieId))..add(GetSimilarMoviesEvent(movieId)),
+        ..add(GetMovieScreenShotEvent(movieId))..add(GetSimilarMoviesEvent(movieId))..add(GetMovieCastEvent(movieId)),
       child: BlocConsumer<MovieDetailsBloc, MoviesDetailsState>(
         listener: (context, state) {
           if (state.moviesDetailsRequestState == RequestState.error) {
@@ -55,6 +56,7 @@ class MovieDetailsScreen extends StatelessWidget {
           var movie = state.movieDetailsModel;
           final screenShot = state.movieScreenShotModel?.backdrops ?? [];
           final similarMovies = state.similarMoviesModel?.results??[];
+          final movieCast = state.movieCastModel?.cast??[];
 
           return Scaffold(
             backgroundColor: ColorManager.primary,
@@ -259,8 +261,26 @@ class MovieDetailsScreen extends StatelessWidget {
                         ),
                       )),
 
-
-
+                  SizedBox(
+                    height: 200.h,
+                    child: ListView.separated(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final cast = movieCast[index];
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: CastItem(image:cast.profilePath != null
+                                ? "https://image.tmdb.org/t/p/w500${cast.profilePath}"
+                                : null
+                                , name: "Name: ${cast.name??""}", character: "Character: ${cast.character??""}"),
+                          );
+                        },
+                        separatorBuilder: (context, index) => SizedBox(
+                          height: 6.w,
+                        ),
+                        itemCount: movieCast.length),
+                  ),
 
 
                 ],

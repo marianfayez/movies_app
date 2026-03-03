@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
+import 'package:movies_app/features/movie_details/data/models/movie_cast_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_screen_shot_model.dart';
 import 'package:movies_app/features/movie_details/data/models/similar_movie_model.dart';
@@ -70,6 +71,19 @@ class MovieDetailsBloc extends Bloc<MoviesDetailsEvent, MoviesDetailsState> {
             similarMoviesModel: data));
       });
     });
-
+    on<GetMovieCastEvent>((event, emit) async {
+      emit(state.copyWith(movieCastRequestState: RequestState.loading));
+      var result = await moviesDetailsUseCase.getMovieCast(event.movieId);
+      return result.fold((error) {
+        print("error response");
+        emit(state.copyWith(
+            movieCastRequestState: RequestState.error,
+            movieCastRouteFailures: error));
+      }, (data) {
+        print("Success response");
+        emit(state.copyWith(
+            movieCastRequestState: RequestState.success, movieCastModel: data));
+      });
+    });
   }
 }

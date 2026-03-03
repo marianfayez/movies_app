@@ -7,4 +7,6 @@ class EndPoints {
       "/3/movie/$movieId/images?";
   static String getSimilarMovies(int movieId) =>
       "/3/movie/$movieId/similar?";
+  static String getMovieCast(int movieId) =>
+      "/3/movie/$movieId/credits?";
 }

@@ -14,3 +14,7 @@ class GetSimilarMoviesEvent extends MoviesDetailsEvent {
   int movieId;
   GetSimilarMoviesEvent(this.movieId);
 }
+class GetMovieCastEvent extends MoviesDetailsEvent {
+  int movieId;
+  GetMovieCastEvent(this.movieId);
+}

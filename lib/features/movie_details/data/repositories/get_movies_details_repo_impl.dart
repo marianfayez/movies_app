@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/features/movie_details/data/data_sources/remote/get_movies_details_remote_ds.dart';
+import 'package:movies_app/features/movie_details/data/models/movie_cast_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_screen_shot_model.dart';
 import 'package:movies_app/features/movie_details/data/models/similar_movie_model.dart';
@@ -38,6 +39,16 @@ class GetMoviesDetailsRepoImpl implements GetMoviesDetailsRepo {
   Future<Either<RouteFailures, SimilarMoviesModel>> getSimilarMovie(int movieId) async{
     try {
       final result = await getMoviesDetailsRemoteDs.getSimilarMovie(movieId);
+      return Right(result);
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<RouteFailures, MovieCastModel>> getMovieCast(int movieId) async{
+    try {
+      final result = await getMoviesDetailsRemoteDs.getMovieCast(movieId);
       return Right(result);
     } catch (e) {
       return Left(RemoteFailures(e.toString()));

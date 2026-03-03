@@ -15,10 +15,17 @@ class MoviesDetailsState {
   RouteFailures? similarMoviesRouteFailures;
   SimilarMoviesModel? similarMoviesModel;
 
+  RequestState? movieCastRequestState;
+  RouteFailures? movieCastRouteFailures;
+  MovieCastModel? movieCastModel;
+
   MoviesDetailsState(
       {this.moviesDetailsRouteFailures,
       this.similarMoviesModel,
       this.similarMoviesRequestState,
+      this.movieCastModel,
+      this.movieCastRequestState,
+      this.movieCastRouteFailures,
       this.similarMoviesRouteFailures,
       this.movieScreenShotModel,
       this.movieScreenShotRequestState,
@@ -30,6 +37,9 @@ class MoviesDetailsState {
     RequestState? moviesDetailsRequestState,
     RouteFailures? moviesDetailsRouteFailures,
     MovieDetailsModel? movieDetailsModel,
+    RequestState? movieCastRequestState,
+    RouteFailures? movieCastRouteFailures,
+    MovieCastModel? movieCastModel,
     RequestState? similarMoviesRequestState,
     RouteFailures? similarMoviesRouteFailures,
     SimilarMoviesModel? similarMoviesModel,
@@ -43,10 +53,15 @@ class MoviesDetailsState {
       moviesDetailsRouteFailures:
           moviesDetailsRouteFailures ?? this.moviesDetailsRouteFailures,
       movieDetailsModel: movieDetailsModel ?? this.movieDetailsModel,
-     similarMoviesRequestState:
-     similarMoviesRequestState ?? this.similarMoviesRequestState,
-     similarMoviesRouteFailures:
-     similarMoviesRouteFailures ?? this.similarMoviesRouteFailures,
+      movieCastRequestState:
+          movieCastRequestState ?? this.movieCastRequestState,
+      movieCastRouteFailures:
+          movieCastRouteFailures ?? this.movieCastRouteFailures,
+      movieCastModel: movieCastModel ?? this.movieCastModel,
+      similarMoviesRequestState:
+          similarMoviesRequestState ?? this.similarMoviesRequestState,
+      similarMoviesRouteFailures:
+          similarMoviesRouteFailures ?? this.similarMoviesRouteFailures,
       similarMoviesModel: similarMoviesModel ?? this.similarMoviesModel,
       movieScreenShotRequestState:
           movieScreenShotRequestState ?? this.movieScreenShotRequestState,
