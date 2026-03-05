@@ -26,7 +26,7 @@ class SearchMovieBloc extends Bloc<SearchMovieEvent, SearchState> {
 
   Future<void> _getMovieByName(
       GetMovieByNameEvent event, Emitter<SearchState> emit) async {
-    if (event.name.isEmpty) {
+    if (event.name.length < 3) {
       emit(state.copyWith(
         searchMovieRequestState: RequestState.init,
         poplarMovieModel: PoplarMovieModel(results: []),

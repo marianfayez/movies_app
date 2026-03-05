@@ -42,4 +42,5 @@ class FirebaseUserRemoteDSImpl implements FirebaseUserRemoteDS {
       throw RemoteFailures("Failed to update user: $e");
     }
   }
+
 }
