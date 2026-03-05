@@ -7,7 +7,7 @@ import 'package:movies_app/features/bottom_navigation_bar/presentation/screens/b
 import 'package:movies_app/features/explore_tab.dart';
 import 'package:movies_app/features/home_tab/presentation/screens/home_tab.dart';
 import 'package:movies_app/features/profile_tab/presentation/pages/profile_tab.dart';
-import 'package:movies_app/features/search_tab.dart';
+import 'package:movies_app/features/search_tab/presentation/screens/search_tab.dart';
 
 @RoutePage()
 class MainScreen extends StatelessWidget {

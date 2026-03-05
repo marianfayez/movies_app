@@ -88,9 +88,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/phone.png
   AssetGenImage get phone => const AssetGenImage('assets/images/phone.png');
 
-  /// File path: assets/images/play_icon.png
-  AssetGenImage get playIcon =>
-      const AssetGenImage('assets/images/play_icon.png');
+  /// File path: assets/images/search_pop_corn.png
+  AssetGenImage get searchPopCorn =>
+      const AssetGenImage('assets/images/search_pop_corn.png');
 
   /// File path: assets/images/splash_logo.png
   AssetGenImage get splashLogo =>
@@ -127,7 +127,7 @@ class $AssetsImagesGen {
         onBoarding6,
         password,
         phone,
-        playIcon,
+        searchPopCorn,
         splashLogo,
         watch,
         aIconIdentification

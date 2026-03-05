@@ -9,4 +9,6 @@ class EndPoints {
       "/3/movie/$movieId/similar?";
   static String getMovieCast(int movieId) =>
       "/3/movie/$movieId/credits?";
+  static String getMovieByName(String name) =>
+      "/3/search/movie?query=${Uri.encodeComponent(name)}";
 }

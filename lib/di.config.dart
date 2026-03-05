@@ -44,6 +44,14 @@ import 'features/movie_details/domain/use_cases/movie_details_use_cases.dart'
     as _i325;
 import 'features/movie_details/presentation/bloc/movie_details_bloc.dart'
     as _i965;
+import 'features/search_tab/data/data_sources/remote/search_remote_ds.dart'
+    as _i247;
+import 'features/search_tab/data/data_sources/remote/search_remote_ds_impl.dart'
+    as _i241;
+import 'features/search_tab/data/repositories/search_repo_impl.dart' as _i229;
+import 'features/search_tab/domain/repositories/search_repo.dart' as _i1003;
+import 'features/search_tab/domain/use_cases/search_use_case.dart' as _i811;
+import 'features/search_tab/presentation/bloc/search_bloc.dart' as _i499;
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -61,18 +69,26 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i83.GetMoviesRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i581.GetMoviesRemoteDs>(
         () => _i290.GetMoviesRemoteDsImpl(gh<_i237.ApiManager>()));
+    gh.factory<_i247.SearchRemoteDs>(
+        () => _i241.SearchRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i888.FirebaseUserRemoteDS>(
         () => _i9.FirebaseUserRemoteDSImpl());
     gh.factory<_i423.GetMoviesDetailsRepo>(() =>
         _i523.GetMoviesDetailsRepoImpl(gh<_i1028.GetMoviesDetailsRemoteDs>()));
+    gh.factory<_i1003.SearchRepo>(
+        () => _i229.SearchRepoImpl(gh<_i247.SearchRemoteDs>()));
     gh.factory<_i1065.GetMoviesRepo>(
         () => _i782.GetMoviesRepoImpl(gh<_i581.GetMoviesRemoteDs>()));
     gh.factory<_i437.GetMoviesUseCase>(
         () => _i437.GetMoviesUseCase(gh<_i1065.GetMoviesRepo>()));
     gh.factory<_i404.GetMoviesBloc>(
         () => _i404.GetMoviesBloc(gh<_i437.GetMoviesUseCase>()));
+    gh.factory<_i811.SearchUseCase>(
+        () => _i811.SearchUseCase(gh<_i1003.SearchRepo>()));
     gh.factory<_i981.AuthRemoteDs>(
         () => _i393.AuthRemoteDsImpl(gh<_i888.FirebaseUserRemoteDS>()));
+    gh.factory<_i499.SearchMovieBloc>(
+        () => _i499.SearchMovieBloc(gh<_i811.SearchUseCase>()));
     gh.factory<_i325.MoviesDetailsUseCase>(
         () => _i325.MoviesDetailsUseCase(gh<_i423.GetMoviesDetailsRepo>()));
     gh.factory<_i416.AuthRepo>(

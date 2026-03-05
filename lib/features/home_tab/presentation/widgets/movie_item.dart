@@ -34,7 +34,13 @@ class MovieItem extends StatelessWidget {
                 },
                 child: CachedNetworkImage(imageUrl:
                 "https://image.tmdb.org/t/p/w500$movieImage" ?? "",
+
                   fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+
+                  errorWidget: (context, url, error) =>
+                  const Icon(Icons.broken_image, color: Colors.grey, size: 40),
                 ),
               ),
             ),
