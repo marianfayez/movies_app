@@ -35,7 +35,7 @@ class UserRepoImpl implements UserRepo {
     }
   }
   @override
-  Future<Either<RouteFailures, List<Results>>> getHistory(String userId) async {
+  Future<Either<RouteFailures, List<int>>> getHistory(String userId) async {
     try {
       final result = await firebaseUserRemoteDS.getHistory(userId);
       return Right(result);

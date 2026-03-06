@@ -50,6 +50,14 @@ import 'features/movie_details/domain/use_cases/movie_details_use_cases.dart'
     as _i325;
 import 'features/movie_details/presentation/bloc/movie_details_bloc.dart'
     as _i965;
+import 'features/profile_tab/data/data_sources/remote/get_movie_remote_ds.dart'
+    as _i121;
+import 'features/profile_tab/data/data_sources/remote/get_movie_remote_ds_impl.dart'
+    as _i121;
+import 'features/profile_tab/data/repositories/get_movie_repo_impl.dart'
+    as _i574;
+import 'features/profile_tab/domain/repositories/get_movie_repo.dart' as _i161;
+import 'features/profile_tab/domain/use_cases/get_movie_use_case.dart' as _i382;
 import 'features/profile_tab/presentation/bloc/profile_bloc.dart' as _i593;
 import 'features/search_tab/data/data_sources/remote/search_remote_ds.dart'
     as _i247;
@@ -72,6 +80,8 @@ extension GetItInjectableX on _i174.GetIt {
       environmentFilter,
     );
     gh.lazySingleton<_i237.ApiManager>(() => _i237.ApiManager());
+    gh.factory<_i121.GetMovieRemoteDs>(
+        () => _i121.GetMovieRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i1028.GetMoviesDetailsRemoteDs>(
         () => _i83.GetMoviesRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i581.GetMoviesRemoteDs>(
@@ -86,6 +96,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i229.SearchRepoImpl(gh<_i247.SearchRemoteDs>()));
     gh.factory<_i1065.GetMoviesRepo>(
         () => _i782.GetMoviesRepoImpl(gh<_i581.GetMoviesRemoteDs>()));
+    gh.factory<_i161.GetMovieRepo>(
+        () => _i574.GetMovieRepoImpl(gh<_i121.GetMovieRemoteDs>()));
     gh.factory<_i437.GetMoviesUseCase>(
         () => _i437.GetMoviesUseCase(gh<_i1065.GetMoviesRepo>()));
     gh.factory<_i404.GetMoviesBloc>(
@@ -94,6 +106,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i278.UserRepoImpl(gh<_i888.FirebaseUserRemoteDS>()));
     gh.factory<_i811.SearchUseCase>(
         () => _i811.SearchUseCase(gh<_i1003.SearchRepo>()));
+    gh.factory<_i382.GetMovieUseCase>(
+        () => _i382.GetMovieUseCase(gh<_i161.GetMovieRepo>()));
     gh.factory<_i981.AuthRemoteDs>(
         () => _i393.AuthRemoteDsImpl(gh<_i888.FirebaseUserRemoteDS>()));
     gh.factory<_i499.SearchMovieBloc>(
@@ -109,6 +123,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i593.ProfileBloc>(() => _i593.ProfileBloc(
           gh<_i737.AddToHistoryUseCase>(),
           gh<_i404.GetMoviesBloc>(),
+          gh<_i382.GetMovieUseCase>(),
         ));
     gh.factory<_i965.MovieDetailsBloc>(() => _i965.MovieDetailsBloc(
           gh<_i325.MoviesDetailsUseCase>(),

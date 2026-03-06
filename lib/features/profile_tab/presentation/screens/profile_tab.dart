@@ -11,31 +11,28 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      getIt<ProfileBloc>()
-        ..add(GetHistoryEvent()),
+      create: (context) => getIt<ProfileBloc>()..add(GetHistoryEvent()),
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state.getHistoryRequestState == RequestState.error) {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text("Error"),
-                  content: Text(
-                      state.getHistoryRouteFailures?.message ??
+                      title: const Text("Error"),
+                      content: Text(state.getHistoryRouteFailures?.message ??
                           "Something went wrong"),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("Ok"))
-                  ],
-                ));
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Ok"))
+                      ],
+                    ));
           }
         },
         builder: (context, state) {
-          if (state.getHistoryRequestState == RequestState.loading ) {
+          if (state.getHistoryRequestState == RequestState.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -43,24 +40,23 @@ class ProfileTab extends StatelessWidget {
           final historyMovies = state.history ?? [];
 
           return Scaffold(
-            backgroundColor: ColorManager.primary,
-            body:
-              GridView.builder(
+              backgroundColor: ColorManager.primary,
+              body: GridView.builder(
                 itemCount: historyMovies.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
+                  childAspectRatio: 2 / 3,
+
                 ),
                 itemBuilder: (context, index) {
-
                   final movie = historyMovies[index];
 
-                  return MovieItem(movieId: movie.id??0,
-                    voteAverage: (movie.voteAverage ?? 0).toStringAsFixed(1),
-                    movieImage: movie.posterPath ?? "");
-
+                  return MovieItem(
+                      movieId: movie.id ?? 0,
+                      voteAverage: (movie.voteAverage ?? 0).toStringAsFixed(1),
+                      movieImage: movie.posterPath ?? "");
                 },
-              )
-          );
+              ));
         },
       ),
     );

@@ -18,7 +18,7 @@ class AddToHistoryUseCase {
     return repo.addToHistory(userId, movieId);
   }
 
-  Future<Either<RouteFailures, List<Results>>> getHistory(String userId) {
+  Future<Either<RouteFailures, List<int>>> getHistory(String userId) {
     return repo.getHistory(userId);
   }
 }

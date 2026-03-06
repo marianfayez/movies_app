@@ -8,8 +8,7 @@ abstract class FirebaseUserRemoteDS {
   Future<FirebaseUserModel?> getUser(String id);
   Future<void> updateUser(FirebaseUserModel user);
   Future<void> addToHistory(String userId, int movieId);
-
   Future<void> toggleFavorite(String userId, int movieId, bool isFavorite);
-  Future<List<Results>> getHistory(String userId);
+  Future<List<int>> getHistory(String userId);
 
 }

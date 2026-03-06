@@ -14,7 +14,7 @@ abstract class UserRepo {
     bool isFavorite,
   );
 
-  Future<Either<RouteFailures, List<Results>>> getHistory(
+  Future<Either<RouteFailures, List<int>>> getHistory(
     String userId,
   );
 }
