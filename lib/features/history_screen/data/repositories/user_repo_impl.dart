@@ -4,6 +4,7 @@ import 'package:movies_app/core/failuers/failuers.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/features/auth/data/data_sources/remote/firebase_user_remote_ds.dart';
 import 'package:movies_app/features/history_screen/domain/repositories/user_repo.dart';
+import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart';
 
 @Injectable(as: UserRepo)
 class UserRepoImpl implements UserRepo {
@@ -28,6 +29,15 @@ class UserRepoImpl implements UserRepo {
     try {
       var result = await firebaseUserRemoteDS.toggleFavorite(
           userId, movieId, isFavorite);
+      return Right(result);
+    } catch (e) {
+      return Left(RemoteFailures(e.toString()));
+    }
+  }
+  @override
+  Future<Either<RouteFailures, List<Results>>> getHistory(String userId) async {
+    try {
+      final result = await firebaseUserRemoteDS.getHistory(userId);
       return Right(result);
     } catch (e) {
       return Left(RemoteFailures(e.toString()));

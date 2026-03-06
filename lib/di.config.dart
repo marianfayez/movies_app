@@ -50,6 +50,7 @@ import 'features/movie_details/domain/use_cases/movie_details_use_cases.dart'
     as _i325;
 import 'features/movie_details/presentation/bloc/movie_details_bloc.dart'
     as _i965;
+import 'features/profile_tab/presentation/bloc/profile_bloc.dart' as _i593;
 import 'features/search_tab/data/data_sources/remote/search_remote_ds.dart'
     as _i247;
 import 'features/search_tab/data/data_sources/remote/search_remote_ds_impl.dart'
@@ -105,6 +106,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i737.AddToHistoryUseCase(gh<_i1055.UserRepo>()));
     gh.factory<_i496.ToggleFavoriteUseCase>(
         () => _i496.ToggleFavoriteUseCase(gh<_i1055.UserRepo>()));
+    gh.factory<_i593.ProfileBloc>(() => _i593.ProfileBloc(
+          gh<_i737.AddToHistoryUseCase>(),
+          gh<_i404.GetMoviesBloc>(),
+        ));
     gh.factory<_i965.MovieDetailsBloc>(() => _i965.MovieDetailsBloc(
           gh<_i325.MoviesDetailsUseCase>(),
           gh<_i737.AddToHistoryUseCase>(),
