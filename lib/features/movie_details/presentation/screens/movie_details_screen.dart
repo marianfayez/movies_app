@@ -191,7 +191,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                         onTap: () {
                           context
                               .read<MovieDetailsBloc>()
-                              .add(ToggleFavoriteEvent(widget.movieId));
+                              .add(ToggleFavoriteEvent(widget.movieId,state.isFavorite));
                         },
                         child: InfoContainer(
                             icon: Icon(
@@ -200,6 +200,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                                   : Icons.favorite_border,
                               color: Colors.red,
                             ),
+
                             value: state.isFavorite? (movie?.voteCount ?? 0)+1
                                 :movie?.voteCount ?? 0),
                       ),

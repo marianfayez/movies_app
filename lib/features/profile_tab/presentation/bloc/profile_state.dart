@@ -5,25 +5,29 @@ enum RequestState { init, loading, error, success }
 class ProfileState {
   RequestState? getHistoryRequestState;
   RouteFailures? getHistoryRouteFailures;
+  RequestState? getFavoriteRequestState;
   List<Results>? history = [];
-  Map<int, Results>? historyMoviesMap = {};
+  List<Results>? favorites =[];
 
   ProfileState(
       {this.getHistoryRequestState,
         this.history,
         this.getHistoryRouteFailures,
-        this.historyMoviesMap
+        this.favorites,this.getFavoriteRequestState
         });
 
   ProfileState copyWith(
       {RequestState? getHistoryRequestState,
         RouteFailures? getHistoryRouteFailures,
         List<Results>? history,
-        Map<int, Results>? historyMoviesMap,
+        List<Results>? favorites,
+        RequestState? getFavoriteRequestState
+
       }) {
     return ProfileState(
       history: history??this.history,
-      historyMoviesMap: historyMoviesMap ?? this.historyMoviesMap,
+      favorites: favorites ?? this.favorites,
+      getFavoriteRequestState: getFavoriteRequestState ?? this.getFavoriteRequestState,
       getHistoryRouteFailures: getHistoryRouteFailures ?? this.getHistoryRouteFailures,
         getHistoryRequestState: getHistoryRequestState ?? this.getHistoryRequestState,
     );

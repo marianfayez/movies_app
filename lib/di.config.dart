@@ -8,6 +8,7 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 
@@ -50,13 +51,21 @@ import 'features/movie_details/domain/use_cases/movie_details_use_cases.dart'
     as _i325;
 import 'features/movie_details/presentation/bloc/movie_details_bloc.dart'
     as _i965;
+import 'features/profile_tab/data/data_sources/remote/favorite_remote_ds.dart'
+    as _i774;
+import 'features/profile_tab/data/data_sources/remote/favorite_remote_ds_impl.dart'
+    as _i931;
 import 'features/profile_tab/data/data_sources/remote/get_movie_remote_ds.dart'
     as _i121;
 import 'features/profile_tab/data/data_sources/remote/get_movie_remote_ds_impl.dart'
     as _i121;
+import 'features/profile_tab/data/repositories/favorite_repo_impl.dart'
+    as _i298;
 import 'features/profile_tab/data/repositories/get_movie_repo_impl.dart'
     as _i574;
+import 'features/profile_tab/domain/repositories/favorite_repo.dart' as _i415;
 import 'features/profile_tab/domain/repositories/get_movie_repo.dart' as _i161;
+import 'features/profile_tab/domain/use_cases/favorite_use_cases.dart' as _i202;
 import 'features/profile_tab/domain/use_cases/get_movie_use_case.dart' as _i382;
 import 'features/profile_tab/presentation/bloc/profile_bloc.dart' as _i593;
 import 'features/search_tab/data/data_sources/remote/search_remote_ds.dart'
@@ -86,12 +95,16 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i83.GetMoviesRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i581.GetMoviesRemoteDs>(
         () => _i290.GetMoviesRemoteDsImpl(gh<_i237.ApiManager>()));
+    gh.factory<_i415.FavoriteRepo>(
+        () => _i298.FavoriteRepoImpl(gh<InvalidType>()));
     gh.factory<_i247.SearchRemoteDs>(
         () => _i241.SearchRemoteDsImpl(gh<_i237.ApiManager>()));
     gh.factory<_i888.FirebaseUserRemoteDS>(
         () => _i9.FirebaseUserRemoteDSImpl());
     gh.factory<_i423.GetMoviesDetailsRepo>(() =>
         _i523.GetMoviesDetailsRepoImpl(gh<_i1028.GetMoviesDetailsRemoteDs>()));
+    gh.factory<_i774.FavoriteRemoteDs>(
+        () => _i931.FavoriteRemoteDsImpl(gh<_i974.FirebaseFirestore>()));
     gh.factory<_i1003.SearchRepo>(
         () => _i229.SearchRepoImpl(gh<_i247.SearchRemoteDs>()));
     gh.factory<_i1065.GetMoviesRepo>(
@@ -104,6 +117,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i404.GetMoviesBloc(gh<_i437.GetMoviesUseCase>()));
     gh.factory<_i1055.UserRepo>(
         () => _i278.UserRepoImpl(gh<_i888.FirebaseUserRemoteDS>()));
+    gh.factory<_i202.FavoriteUseCases>(
+        () => _i202.FavoriteUseCases(gh<_i415.FavoriteRepo>()));
     gh.factory<_i811.SearchUseCase>(
         () => _i811.SearchUseCase(gh<_i1003.SearchRepo>()));
     gh.factory<_i382.GetMovieUseCase>(
@@ -125,15 +140,16 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i404.GetMoviesBloc>(),
           gh<_i382.GetMovieUseCase>(),
         ));
-    gh.factory<_i965.MovieDetailsBloc>(() => _i965.MovieDetailsBloc(
-          gh<_i325.MoviesDetailsUseCase>(),
-          gh<_i737.AddToHistoryUseCase>(),
-          gh<_i496.ToggleFavoriteUseCase>(),
-        ));
     gh.factory<_i871.LogInUseCase>(
         () => _i871.LogInUseCase(gh<_i416.AuthRepo>()));
     gh.factory<_i606.SignUpUseCases>(
         () => _i606.SignUpUseCases(gh<_i416.AuthRepo>()));
+    gh.factory<_i965.MovieDetailsBloc>(() => _i965.MovieDetailsBloc(
+          gh<_i325.MoviesDetailsUseCase>(),
+          gh<_i737.AddToHistoryUseCase>(),
+          gh<_i202.FavoriteUseCases>(),
+          gh<_i496.ToggleFavoriteUseCase>(),
+        ));
     gh.factory<_i363.AuthBloc>(() => _i363.AuthBloc(
           gh<_i606.SignUpUseCases>(),
           gh<_i871.LogInUseCase>(),

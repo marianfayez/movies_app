@@ -3,11 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart';
-import 'package:movies_app/features/movie_details/data/data_sources/remote/get_movies_details_remote_ds.dart';
-import 'package:movies_app/features/movie_details/data/models/movie_cast_model.dart';
-import 'package:movies_app/features/movie_details/data/models/movie_model.dart';
-import 'package:movies_app/features/movie_details/data/models/movie_screen_shot_model.dart';
-import 'package:movies_app/features/movie_details/data/models/similar_movie_model.dart';
 import 'package:movies_app/features/profile_tab/data/data_sources/remote/get_movie_remote_ds.dart';
 import 'package:movies_app/features/profile_tab/domain/repositories/get_movie_repo.dart';
 

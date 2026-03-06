@@ -34,6 +34,13 @@ class AddToHistoryEvent extends MoviesDetailsEvent {
 
 class ToggleFavoriteEvent extends MoviesDetailsEvent {
   final int movieId;
+  final bool isFavorite;
 
-  ToggleFavoriteEvent(this.movieId);
+  ToggleFavoriteEvent(this.movieId,this.isFavorite);
+}
+
+class CheckFavoriteEvent extends MoviesDetailsEvent {
+  final int movieId;
+
+  CheckFavoriteEvent(this.movieId);
 }

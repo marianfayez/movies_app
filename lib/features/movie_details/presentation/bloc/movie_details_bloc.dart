@@ -10,6 +10,7 @@ import 'package:movies_app/features/movie_details/data/models/movie_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_screen_shot_model.dart';
 import 'package:movies_app/features/movie_details/data/models/similar_movie_model.dart';
 import 'package:movies_app/features/movie_details/domain/use_cases/movie_details_use_cases.dart';
+import 'package:movies_app/features/profile_tab/domain/use_cases/favorite_use_cases.dart';
 
 part 'movie_details_event.dart';
 
@@ -19,10 +20,11 @@ part 'movie_details_state.dart';
 class MovieDetailsBloc extends Bloc<MoviesDetailsEvent, MoviesDetailsState> {
   final MoviesDetailsUseCase moviesDetailsUseCase;
   final AddToHistoryUseCase addToHistoryUseCase;
+  final FavoriteUseCases favoriteUseCases;
   final ToggleFavoriteUseCase toggleFavoriteUseCase;
 
   MovieDetailsBloc(this.moviesDetailsUseCase, this.addToHistoryUseCase,
-      this.toggleFavoriteUseCase)
+      this.favoriteUseCases,this.toggleFavoriteUseCase)
       : super(MoviesDetailsInitial()) {
     on<GetMoviesDetailsEvent>((event, emit) async {
       emit(state.copyWith(moviesDetailsRequestState: RequestState.loading));
@@ -111,19 +113,36 @@ class MovieDetailsBloc extends Bloc<MoviesDetailsEvent, MoviesDetailsState> {
       final userId = FirebaseAuth.instance.currentUser?.uid;
 
       if (userId == null) return;
-      final newValue = !state.isFavorite;
-      emit(state.copyWith(isFavorite: newValue));
+      // final newValue = !state.isFavorite;
+      // emit(state.copyWith(isFavorite: newValue));
 
       var result =
-          await toggleFavoriteUseCase(userId, event.movieId, state.isFavorite);
+          await toggleFavoriteUseCase(userId, event.movieId, event.isFavorite);
 
       result.fold(
         (error) {
           emit(state.copyWith(
-              isFavorite: !newValue,
+              isFavorite: !event.isFavorite,
               addToFavoriteRouteFailures: error));
         },
         (_) => print("favorite updated"),
+      );
+    });
+
+    on<CheckFavoriteEvent>((event, emit) async {
+
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+
+      final result = await favoriteUseCases.getFavorite(userId);
+
+      result.fold(
+            (error) {},
+            (favorites) {
+
+          final isFav = favorites.contains(event.movieId);
+
+          emit(state.copyWith(isFavorite: isFav));
+        },
       );
     });
   }
