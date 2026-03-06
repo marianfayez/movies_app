@@ -43,4 +43,33 @@ class FirebaseUserRemoteDSImpl implements FirebaseUserRemoteDS {
     }
   }
 
+  @override
+  Future<void> addToHistory(String userId, int movieId) async {
+    try {
+      await _firestore.collection("users").doc(userId).update({
+        "history": FieldValue.arrayUnion([movieId])
+      });
+    } catch (e) {
+      throw RemoteFailures("Failed to add to history: $e");
+    }
+  }
+
+  @override
+  Future<void> toggleFavorite(String userId, int movieId, bool isFavorite) async {
+    try {
+      await _firestore.collection("users").doc(userId).update({
+        "favorites": isFavorite
+            ? FieldValue.arrayRemove([movieId])
+            : FieldValue.arrayUnion([movieId])
+      });
+    } catch (e) {
+      throw RemoteFailures("Failed to update favorites: $e");
+    }
+  }
+  @override
+  Stream<FirebaseUserModel?> watchUser(String userId) {
+    return _users.doc(userId).snapshots().map((snapshot) {
+      return snapshot.data();
+    });
+  }
 }

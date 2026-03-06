@@ -24,6 +24,12 @@ import 'features/auth/domain/repositories/auth_repo.dart' as _i416;
 import 'features/auth/domain/use_cases/log_in_use_case.dart' as _i871;
 import 'features/auth/domain/use_cases/sign_up_use_cases.dart' as _i606;
 import 'features/auth/presentation/bloc/auth_bloc.dart' as _i363;
+import 'features/history_screen/data/repositories/user_repo_impl.dart' as _i278;
+import 'features/history_screen/domain/repositories/user_repo.dart' as _i1055;
+import 'features/history_screen/domain/use_cases/add_to_history_use_case.dart'
+    as _i737;
+import 'features/history_screen/domain/use_cases/toggle_favorite_use_case.dart'
+    as _i496;
 import 'features/home_tab/data/data_sources/remote/get_movies_remote_ds.dart'
     as _i581;
 import 'features/home_tab/data/data_sources/remote/get_movies_remote_ds_impl.dart'
@@ -83,6 +89,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i437.GetMoviesUseCase(gh<_i1065.GetMoviesRepo>()));
     gh.factory<_i404.GetMoviesBloc>(
         () => _i404.GetMoviesBloc(gh<_i437.GetMoviesUseCase>()));
+    gh.factory<_i1055.UserRepo>(
+        () => _i278.UserRepoImpl(gh<_i888.FirebaseUserRemoteDS>()));
     gh.factory<_i811.SearchUseCase>(
         () => _i811.SearchUseCase(gh<_i1003.SearchRepo>()));
     gh.factory<_i981.AuthRemoteDs>(
@@ -93,8 +101,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i325.MoviesDetailsUseCase(gh<_i423.GetMoviesDetailsRepo>()));
     gh.factory<_i416.AuthRepo>(
         () => _i426.AuthRepoImpl(gh<_i981.AuthRemoteDs>()));
-    gh.factory<_i965.MovieDetailsBloc>(
-        () => _i965.MovieDetailsBloc(gh<_i325.MoviesDetailsUseCase>()));
+    gh.factory<_i737.AddToHistoryUseCase>(
+        () => _i737.AddToHistoryUseCase(gh<_i1055.UserRepo>()));
+    gh.factory<_i496.ToggleFavoriteUseCase>(
+        () => _i496.ToggleFavoriteUseCase(gh<_i1055.UserRepo>()));
+    gh.factory<_i965.MovieDetailsBloc>(() => _i965.MovieDetailsBloc(
+          gh<_i325.MoviesDetailsUseCase>(),
+          gh<_i737.AddToHistoryUseCase>(),
+          gh<_i496.ToggleFavoriteUseCase>(),
+        ));
     gh.factory<_i871.LogInUseCase>(
         () => _i871.LogInUseCase(gh<_i416.AuthRepo>()));
     gh.factory<_i606.SignUpUseCases>(

@@ -17,19 +17,35 @@ import 'package:movies_app/gen/assets.gen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
-class MovieDetailsScreen extends StatelessWidget {
+class MovieDetailsScreen extends StatefulWidget {
   const MovieDetailsScreen({required this.movieId, super.key});
 
   final int movieId;
 
   @override
+  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
+}
+
+class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
+  late MovieDetailsBloc bloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    bloc = getIt<MovieDetailsBloc>();
+
+    bloc.add(AddToHistoryEvent(widget.movieId));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => getIt<MovieDetailsBloc>()
-        ..add(GetMoviesDetailsEvent(movieId))
-        ..add(GetMovieScreenShotEvent(movieId))
-        ..add(GetSimilarMoviesEvent(movieId))
-        ..add(GetMovieCastEvent(movieId)),
+        ..add(GetMoviesDetailsEvent(widget.movieId))
+        ..add(GetMovieScreenShotEvent(widget.movieId))
+        ..add(GetSimilarMoviesEvent(widget.movieId))
+        ..add(GetMovieCastEvent(widget.movieId)),
       child: BlocConsumer<MovieDetailsBloc, MoviesDetailsState>(
         listener: (context, state) {
           if (state.moviesDetailsRequestState == RequestState.error) {
@@ -172,11 +188,20 @@ class MovieDetailsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          context
+                              .read<MovieDetailsBloc>()
+                              .add(ToggleFavoriteEvent(widget.movieId));
+                        },
                         child: InfoContainer(
-                            icon: Icon(Icons.favorite,
-                                color: ColorManager.secondary),
-                            value: movie?.voteCount ?? 0),
+                            icon: Icon(
+                              state.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.red,
+                            ),
+                            value: state.isFavorite? (movie?.voteCount ?? 0)+1
+                                :movie?.voteCount ?? 0),
                       ),
                       InfoContainer(
                           icon: Icon(Icons.timer_outlined,
