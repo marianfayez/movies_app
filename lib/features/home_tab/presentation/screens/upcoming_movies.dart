@@ -7,6 +7,8 @@ import 'package:movies_app/di.dart';
 import 'package:movies_app/features/home_tab/presentation/bloc/get_movies_bloc.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 
+import '../../../../core/resources/request_state.dart';
+
 @RoutePage()
 class UpcomingMoviesScreen extends StatelessWidget {
   const UpcomingMoviesScreen({super.key});

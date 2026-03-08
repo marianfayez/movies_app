@@ -13,3 +13,10 @@ class ToggleFavoriteEvent extends ProfileEvent {
   final bool isFavorite;
   ToggleFavoriteEvent(this.movieId, this.isFavorite);
 }
+class AddToHistoryEvent extends ProfileEvent {
+  final int movieId;
+
+  AddToHistoryEvent(this.movieId);
+}
+
+

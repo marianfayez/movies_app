@@ -5,6 +5,8 @@ import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart
 import 'package:movies_app/features/home_tab/data/models/upcoming_movies.dart';
 import 'package:movies_app/features/home_tab/domain/use_cases/get_movies_use_case.dart';
 
+import '../../../../core/resources/request_state.dart';
+
 part 'get_movies_event.dart';
 
 part 'get_movies_state.dart';

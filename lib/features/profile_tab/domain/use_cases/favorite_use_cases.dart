@@ -9,6 +9,12 @@ class FavoriteUseCases {
 
   FavoriteUseCases(this.favoriteRepo);
 
-  Future<Either<RouteFailures,List<int> >> getFavorite(int userId)=>favoriteRepo.getFavorite(userId);
-
+  Future<Either<RouteFailures,List<int> >> getFavorite(String userId)=>favoriteRepo.getFavorite(userId);
+  Future<Either<RouteFailures, void>> call(
+      String userId,
+      int movieId,
+      bool isFavorite,
+      ) {
+    return favoriteRepo.toggleFavorite(userId, movieId, isFavorite);
+  }
 }

@@ -5,6 +5,8 @@ import 'package:movies_app/di.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 import 'package:movies_app/features/profile_tab/presentation/bloc/profile_bloc.dart';
 
+import '../../../../core/resources/request_state.dart';
+
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
 

@@ -26,21 +26,4 @@ class GetMovieCastEvent extends MoviesDetailsEvent {
   GetMovieCastEvent(this.movieId);
 }
 
-class AddToHistoryEvent extends MoviesDetailsEvent {
-  final int movieId;
 
-  AddToHistoryEvent(this.movieId);
-}
-
-class ToggleFavoriteEvent extends MoviesDetailsEvent {
-  final int movieId;
-  final bool isFavorite;
-
-  ToggleFavoriteEvent(this.movieId,this.isFavorite);
-}
-
-class CheckFavoriteEvent extends MoviesDetailsEvent {
-  final int movieId;
-
-  CheckFavoriteEvent(this.movieId);
-}

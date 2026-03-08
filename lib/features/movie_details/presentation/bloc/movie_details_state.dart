@@ -1,9 +1,8 @@
 part of 'movie_details_bloc.dart';
 
-enum RequestState { init, loading, error, success }
 
 class MoviesDetailsState {
-  RequestState moviesDetailsRequestState;
+  RequestState? moviesDetailsRequestState;
   RouteFailures? moviesDetailsRouteFailures;
   MovieDetailsModel? movieDetailsModel;
 
@@ -19,25 +18,13 @@ class MoviesDetailsState {
   RouteFailures? movieCastRouteFailures;
   MovieCastModel? movieCastModel;
 
-  RequestState? addToFavoriteRequestState;
-  RouteFailures? addToFavoriteRouteFailures;
-  PoplarMovieModel? poplarMovieModel;
 
-  RequestState? addToHistoryRequestState;
-  RouteFailures? addToHistoryRouteFailures;
-
-  bool isFavorite = false;
 
   MoviesDetailsState(
       {this.moviesDetailsRouteFailures,
-      this.isFavorite = false,
       this.similarMoviesModel,
       this.similarMoviesRequestState,
-      this.poplarMovieModel,
-      this.addToHistoryRequestState,
-      this.addToHistoryRouteFailures,
-      this.addToFavoriteRequestState,
-      this.addToFavoriteRouteFailures,
+
       this.movieCastModel,
       this.movieCastRequestState,
       this.movieCastRouteFailures,
@@ -49,12 +36,7 @@ class MoviesDetailsState {
       this.movieDetailsModel});
 
   MoviesDetailsState copyWith({
-    bool? isFavorite,
-    RequestState? addToFavoriteRequestState,
-    RouteFailures? addToFavoriteRouteFailures,
-    RequestState? addToHistoryRequestState,
-    RouteFailures? addToHistoryRouteFailures,
-    PoplarMovieModel? poplarMovieModel,
+
     RequestState? moviesDetailsRequestState,
     RouteFailures? moviesDetailsRouteFailures,
     MovieDetailsModel? movieDetailsModel,
@@ -73,17 +55,9 @@ class MoviesDetailsState {
           moviesDetailsRequestState ?? this.moviesDetailsRequestState,
       moviesDetailsRouteFailures:
           moviesDetailsRouteFailures ?? this.moviesDetailsRouteFailures,
-      addToHistoryRequestState:
-          addToHistoryRequestState ?? this.addToHistoryRequestState,
-      addToHistoryRouteFailures:
-          addToHistoryRouteFailures ?? this.addToHistoryRouteFailures,
+
       movieDetailsModel: movieDetailsModel ?? this.movieDetailsModel,
-      addToFavoriteRequestState:
-          addToFavoriteRequestState ?? this.addToFavoriteRequestState,
-      addToFavoriteRouteFailures:
-          addToFavoriteRouteFailures ?? this.addToFavoriteRouteFailures,
-      poplarMovieModel: poplarMovieModel ?? this.poplarMovieModel,
-      isFavorite: isFavorite ?? this.isFavorite,
+
       movieCastRequestState:
           movieCastRequestState ?? this.movieCastRequestState,
       movieCastRouteFailures:

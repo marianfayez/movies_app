@@ -6,19 +6,31 @@ import 'package:movies_app/features/profile_tab/data/data_sources/remote/favorit
 
 @Injectable(as: FavoriteRemoteDs)
 class FavoriteRemoteDsImpl implements FavoriteRemoteDs {
-  final FirebaseFirestore _firestore;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  FavoriteRemoteDsImpl(this._firestore);
+  FavoriteRemoteDsImpl();
 
   @override
-  Future<List<int>> getFavorite(int userId) async {
+  Future<List<int>> getFavorite(String userId) async {
     try {
       final doc = await _firestore.collection("users").doc(userId).get();
       final data = doc.data();
       final favorites = List<int>.from(data?["favorites"] ?? []);
       return favorites;
-    } on DioException catch (e) {
-      throw RemoteFailures(e.message ?? "Server Error");
+    }  catch (e) {
+      throw RemoteFailures("Server Error");
+    }
+  }
+  @override
+  Future<void> toggleFavorite(String userId, int movieId, bool isFavorite) async {
+    try {
+      await _firestore.collection("users").doc(userId).update({
+        "favorites": isFavorite
+            ? FieldValue.arrayRemove([movieId])
+            : FieldValue.arrayUnion([movieId])
+      });
+    } catch (e) {
+      throw RemoteFailures("Failed to update favorites: $e");
     }
   }
 }

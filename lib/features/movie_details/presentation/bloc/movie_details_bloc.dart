@@ -1,16 +1,13 @@
 import 'package:bloc/bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
-import 'package:movies_app/features/history_screen/domain/use_cases/add_to_history_use_case.dart';
-import 'package:movies_app/features/history_screen/domain/use_cases/toggle_favorite_use_case.dart';
-import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_cast_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_model.dart';
 import 'package:movies_app/features/movie_details/data/models/movie_screen_shot_model.dart';
 import 'package:movies_app/features/movie_details/data/models/similar_movie_model.dart';
 import 'package:movies_app/features/movie_details/domain/use_cases/movie_details_use_cases.dart';
-import 'package:movies_app/features/profile_tab/domain/use_cases/favorite_use_cases.dart';
+
+import '../../../../core/resources/request_state.dart';
 
 part 'movie_details_event.dart';
 
@@ -19,12 +16,9 @@ part 'movie_details_state.dart';
 @injectable
 class MovieDetailsBloc extends Bloc<MoviesDetailsEvent, MoviesDetailsState> {
   final MoviesDetailsUseCase moviesDetailsUseCase;
-  final AddToHistoryUseCase addToHistoryUseCase;
-  final FavoriteUseCases favoriteUseCases;
-  final ToggleFavoriteUseCase toggleFavoriteUseCase;
 
-  MovieDetailsBloc(this.moviesDetailsUseCase, this.addToHistoryUseCase,
-      this.favoriteUseCases,this.toggleFavoriteUseCase)
+
+  MovieDetailsBloc(this.moviesDetailsUseCase,)
       : super(MoviesDetailsInitial()) {
     on<GetMoviesDetailsEvent>((event, emit) async {
       emit(state.copyWith(moviesDetailsRequestState: RequestState.loading));
@@ -96,54 +90,6 @@ class MovieDetailsBloc extends Bloc<MoviesDetailsEvent, MoviesDetailsState> {
       });
     });
 
-    on<AddToHistoryEvent>((event, emit) async {
-      final userId = FirebaseAuth.instance.currentUser?.uid;
 
-      if (userId == null) return;
-
-
-      var result = await addToHistoryUseCase(userId, event.movieId);
-
-      result.fold(
-        (error) => print("add history error"),
-        (_) => print("movie added to history"),
-      );
-    });
-    on<ToggleFavoriteEvent>((event, emit) async {
-      final userId = FirebaseAuth.instance.currentUser?.uid;
-
-      if (userId == null) return;
-      // final newValue = !state.isFavorite;
-      // emit(state.copyWith(isFavorite: newValue));
-
-      var result =
-          await toggleFavoriteUseCase(userId, event.movieId, event.isFavorite);
-
-      result.fold(
-        (error) {
-          emit(state.copyWith(
-              isFavorite: !event.isFavorite,
-              addToFavoriteRouteFailures: error));
-        },
-        (_) => print("favorite updated"),
-      );
-    });
-
-    on<CheckFavoriteEvent>((event, emit) async {
-
-      final userId = FirebaseAuth.instance.currentUser!.uid;
-
-      final result = await favoriteUseCases.getFavorite(userId);
-
-      result.fold(
-            (error) {},
-            (favorites) {
-
-          final isFav = favorites.contains(event.movieId);
-
-          emit(state.copyWith(isFavorite: isFav));
-        },
-      );
-    });
   }
 }

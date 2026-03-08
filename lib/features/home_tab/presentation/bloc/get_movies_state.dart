@@ -1,6 +1,5 @@
 part of 'get_movies_bloc.dart';
 
-enum RequestState { init, loading, error, success }
 
 class GetMoviesState {
   RequestState? getUpcomingMoviesRequestState;

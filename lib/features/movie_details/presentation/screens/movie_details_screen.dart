@@ -13,8 +13,11 @@ import 'package:movies_app/di.dart';
 import 'package:movies_app/features/movie_details/presentation/bloc/movie_details_bloc.dart';
 import 'package:movies_app/features/movie_details/presentation/widgets/cast_item.dart';
 import 'package:movies_app/features/movie_details/presentation/widgets/info_container.dart';
+import 'package:movies_app/features/profile_tab/presentation/bloc/profile_bloc.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../core/resources/request_state.dart';
 
 @RoutePage()
 class MovieDetailsScreen extends StatefulWidget {
@@ -27,25 +30,34 @@ class MovieDetailsScreen extends StatefulWidget {
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
-  late MovieDetailsBloc bloc;
+  late ProfileBloc bloc;
 
   @override
   void initState() {
     super.initState();
 
-    bloc = getIt<MovieDetailsBloc>();
+    bloc = getIt<ProfileBloc>();
 
     bloc.add(AddToHistoryEvent(widget.movieId));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => getIt<MovieDetailsBloc>()
-        ..add(GetMoviesDetailsEvent(widget.movieId))
-        ..add(GetMovieScreenShotEvent(widget.movieId))
-        ..add(GetSimilarMoviesEvent(widget.movieId))
-        ..add(GetMovieCastEvent(widget.movieId)),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<MovieDetailsBloc>()
+            ..add(GetMoviesDetailsEvent(widget.movieId))
+            ..add(GetMovieScreenShotEvent(widget.movieId))
+            ..add(GetSimilarMoviesEvent(widget.movieId))
+            ..add(GetMovieCastEvent(widget.movieId)),
+        ),
+        BlocProvider(
+          create: (context) => getIt<ProfileBloc>()
+            ..add(AddToHistoryEvent(widget.movieId))
+            ..add(CheckFavoriteEvent(widget.movieId)),
+        ),
+      ],
       child: BlocConsumer<MovieDetailsBloc, MoviesDetailsState>(
         listener: (context, state) {
           if (state.moviesDetailsRequestState == RequestState.error) {
@@ -187,22 +199,26 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          context
-                              .read<MovieDetailsBloc>()
-                              .add(ToggleFavoriteEvent(widget.movieId,state.isFavorite));
+                      BlocBuilder<ProfileBloc, ProfileState>(
+                        builder: (context, profileState) {
+                          return InkWell(
+                            onTap: () {
+                              context.read<ProfileBloc>().add(
+                                  ToggleFavoriteEvent(
+                                      widget.movieId, profileState.isFavorite));
+                            },
+                            child: InfoContainer(
+                                icon: Icon(
+                                  profileState.isFavorite
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: Colors.red,
+                                ),
+                                value: profileState.isFavorite
+                                    ? (movie?.voteCount ?? 0) + 1
+                                    : movie?.voteCount ?? 0),
+                          );
                         },
-                        child: InfoContainer(
-                            icon: Icon(
-                              state.isFavorite
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: Colors.red,
-                            ),
-
-                            value: state.isFavorite? (movie?.voteCount ?? 0)+1
-                                :movie?.voteCount ?? 0),
                       ),
                       InfoContainer(
                           icon: Icon(Icons.timer_outlined,
