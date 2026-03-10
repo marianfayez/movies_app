@@ -1,11 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
+import 'package:movies_app/core/resources/request_state.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
 import 'package:movies_app/core/routes/auto_route.gr.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';

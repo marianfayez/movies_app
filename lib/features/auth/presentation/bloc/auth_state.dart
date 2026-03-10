@@ -1,6 +1,5 @@
 part of 'auth_bloc.dart';
 
-enum RequestState{init,loading,error,success}
 
  class AuthState {
 

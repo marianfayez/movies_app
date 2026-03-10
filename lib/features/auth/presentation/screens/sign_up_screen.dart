@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
+import 'package:movies_app/core/resources/request_state.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
+import 'package:movies_app/core/routes/auto_route.gr.dart';
 import 'package:movies_app/core/widgets/app_bar.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/main_text_field.dart';
@@ -250,9 +252,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           SizedBox(
                             width: 5.w,
                           ),
-                          Text(
-                            "Login",
-                            style: getRegular2(color: ColorManager.secondary),
+                          InkWell(
+                            onTap: (){
+                              context.pushRoute( SignInRoute());
+                            },
+                            child: Text(
+                              "Login",
+                              style: getRegular2(color: ColorManager.secondary),
+                            ),
                           ),
                         ],
                       )

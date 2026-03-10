@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
+import 'package:movies_app/core/resources/request_state.dart';
 import 'package:movies_app/features/auth/data/models/auth_model.dart';
 import 'package:movies_app/features/auth/data/models/firebase_sign_up_request_model.dart';
 import 'package:movies_app/features/auth/domain/use_cases/log_in_use_case.dart';

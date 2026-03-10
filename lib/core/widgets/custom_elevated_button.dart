@@ -14,6 +14,7 @@ class CustomElevatedButton extends StatelessWidget {
   final TextStyle? textStyle;
   final bool isStadiumBorder;
   final bool isOutlined;
+  final Color? textColor;
 
   const CustomElevatedButton(
       {super.key,
@@ -24,6 +25,7 @@ class CustomElevatedButton extends StatelessWidget {
       this.backgroundColor,
       this.radius,
       this.suffixIcon,
+        this.textColor,
       required this.label,
       required this.onTap});
 
@@ -57,7 +59,7 @@ class CustomElevatedButton extends StatelessWidget {
             Text(
               label,
               style: textStyle ??
-                  getMediumStyle(color: ColorManager.white)
+                  getMediumStyle(color: textColor??ColorManager.white)
                       .copyWith(fontSize: 20.sp),
             ),
             SizedBox(
