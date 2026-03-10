@@ -163,6 +163,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i363.AuthBloc>(() => _i363.AuthBloc(
           gh<_i606.SignUpUseCases>(),
           gh<_i871.LogInUseCase>(),
+          gh<_i888.FirebaseUserRemoteDS>(),
         ));
     return this;
   }

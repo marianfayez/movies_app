@@ -5,6 +5,8 @@ class ProfileState {
   RequestState? getHistoryRequestState;
   RouteFailures? getHistoryRouteFailures;
   RequestState? getFavoriteRequestState;
+  RouteFailures?getFavoriteRouteFailures;
+
   List<Results>? history = [];
   List<Results>? favorites =[];
   RequestState? addToFavoriteRequestState;
@@ -20,6 +22,7 @@ class ProfileState {
         this.history,
         this.isFavorite = false,
         this.poplarMovieModel,
+        this.getFavoriteRouteFailures,
         this.addToHistoryRequestState,
         this.addToHistoryRouteFailures,
         this.addToFavoriteRequestState,
@@ -37,6 +40,7 @@ class ProfileState {
         PoplarMovieModel? poplarMovieModel,
         RequestState? getHistoryRequestState,
         RouteFailures? getHistoryRouteFailures,
+        RouteFailures? getFavoriteRouteFailures,
         List<Results>? history,
         List<Results>? favorites,
         RequestState? getFavoriteRequestState
@@ -56,6 +60,7 @@ class ProfileState {
       history: history??this.history,
       favorites: favorites ?? this.favorites,
       getFavoriteRequestState: getFavoriteRequestState ?? this.getFavoriteRequestState,
+      getFavoriteRouteFailures: getFavoriteRouteFailures ?? this.getFavoriteRouteFailures,
       getHistoryRouteFailures: getHistoryRouteFailures ?? this.getHistoryRouteFailures,
         getHistoryRequestState: getHistoryRequestState ?? this.getHistoryRequestState,
     );

@@ -47,12 +47,10 @@ class ProfileTab extends StatelessWidget {
           final favoriteMovies = state.favorites ?? [];
 
           final authState = context.watch<AuthBloc>().state;
-          if (authState.requestState != RequestState.success || authState.authModel == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
           final user = authState.authModel?.user;
           final avatarId = user?.avatarId ?? 1;
           final userName = user?.name ?? "Guest";
+
           return SafeArea(
             child: Scaffold(
                 backgroundColor: ColorManager.primary,

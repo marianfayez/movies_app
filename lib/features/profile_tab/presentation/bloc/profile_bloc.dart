@@ -2,12 +2,12 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
+import 'package:movies_app/core/resources/request_state.dart';
 import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart';
 import 'package:movies_app/features/profile_tab/domain/use_cases/favorite_use_cases.dart';
 import 'package:movies_app/features/profile_tab/domain/use_cases/get_movie_use_case.dart';
 import 'package:movies_app/features/profile_tab/domain/use_cases/history_use_case.dart';
 
-import '../../../../core/resources/request_state.dart';
 
 part 'profile_event.dart';
 
@@ -82,5 +82,28 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         },
       );
     });
+
+    on<GetFavoriteEvent>((event, emit) async {
+      final userId = FirebaseAuth.instance.currentUser!.uid;
+      emit(state.copyWith(getFavoriteRequestState: RequestState.loading));
+      var result = await favoriteUseCases.getFavorite(userId);
+      return result.fold(
+            (error) {
+          print("error response");
+          emit(state.copyWith(
+              getFavoriteRequestState: RequestState.error,
+              getFavoriteRouteFailures: error));
+        },
+            (data) async {
+          final moviesResult = await getMovieUseCase.getMoviesDetails(data);
+          moviesResult.fold((error) {}, (movies) {
+            print("Success response");
+            emit(state.copyWith(
+                getFavoriteRequestState: RequestState.success, history: movies));
+          });
+        },
+      );
+    });
+
   }
 }

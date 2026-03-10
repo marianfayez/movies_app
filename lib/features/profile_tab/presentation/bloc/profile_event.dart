@@ -7,6 +7,8 @@ class CheckFavoriteEvent extends ProfileEvent {
   final int movieId;
   CheckFavoriteEvent(this.movieId);
 }
+class GetFavoriteEvent extends ProfileEvent {}
+
 
 class ToggleFavoriteEvent extends ProfileEvent {
   final int movieId;
