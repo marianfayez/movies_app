@@ -3,14 +3,17 @@ class EndPoints {
   static const String getUpcomingMovies = "/3/movie/upcoming";
   static const String getBrowseList = "/3/genre/movie/list";
 
-  static  String getMoviesDetails (int movieId)=> "/3/movie/$movieId?";
+  static String getMoviesDetails(int movieId) => "/3/movie/$movieId?";
 
-  static String getMovieScreenShot(int movieId) =>
-      "/3/movie/$movieId/images?";
-  static String getSimilarMovies(int movieId) =>
-      "/3/movie/$movieId/similar?";
-  static String getMovieCast(int movieId) =>
-      "/3/movie/$movieId/credits?";
+  static String getBrowseImage(int sourceId) =>
+      "/3/discover/movie?with_genres=$sourceId";
+
+  static String getMovieScreenShot(int movieId) => "/3/movie/$movieId/images?";
+
+  static String getSimilarMovies(int movieId) => "/3/movie/$movieId/similar?";
+
+  static String getMovieCast(int movieId) => "/3/movie/$movieId/credits?";
+
   static String getMovieByName(String name) =>
       "/3/search/movie?query=${Uri.encodeComponent(name)}";
 }

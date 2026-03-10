@@ -1,5 +1,3 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/api/api_manager.dart';
@@ -7,6 +5,7 @@ import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/core/resources/endpoints.dart';
 import 'package:movies_app/features/explore_tab/data/data_sources/remote/explore_remote_ds.dart';
 import 'package:movies_app/features/explore_tab/data/models/explore_list_model.dart';
+import 'package:movies_app/features/explore_tab/data/models/explore_movies_model.dart';
 
 @Injectable(as: ExploreRemoteDs)
 class ExploreRemoteDsImpl implements ExploreRemoteDs {
@@ -19,6 +18,16 @@ class ExploreRemoteDsImpl implements ExploreRemoteDs {
     try {
       final result = await apiManager.getData(endPoint: EndPoints.getBrowseList);
       return ExploreListModel.fromJson(result.data);
+    } on DioException catch (e) {
+      throw RemoteFailures(e.message ?? "Server Error");
+    }
+  }
+
+  @override
+  Future<ExploreMoviesModel> getExploreMovies(int sourceId) async{
+    try {
+      final result = await apiManager.getData(endPoint: EndPoints.getBrowseImage(sourceId));
+      return ExploreMoviesModel.fromJson(result.data);
     } on DioException catch (e) {
       throw RemoteFailures(e.message ?? "Server Error");
     }

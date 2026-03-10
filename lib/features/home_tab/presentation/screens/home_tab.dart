@@ -12,7 +12,7 @@ import 'package:movies_app/features/home_tab/presentation/bloc/get_movies_bloc.d
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 
-import '../../../../core/resources/request_state.dart';
+import 'package:movies_app/core/resources/request_state.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});

@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
 import 'package:movies_app/core/resources/request_state.dart';
 import 'package:movies_app/features/explore_tab/data/models/explore_list_model.dart';
+import 'package:movies_app/features/explore_tab/data/models/explore_movies_model.dart';
 import 'package:movies_app/features/explore_tab/domain/use_cases/explore_use_case.dart';
 
 part 'explore_event.dart';
@@ -26,6 +27,21 @@ class ExploreBloc extends Bloc<ExploreEvent, ExploreState> {
         print("Success response");
         emit(state.copyWith(
             exploreRequestState: RequestState.success, exploreListModel: data));
+      });
+    });
+    on<GetExploreMovieEvent>((event, emit) async {
+      emit(state.copyWith(exploreMovieRequestState: RequestState.loading));
+      var result = await exploreUseCase.getExploreMovies(event.sourceId);
+      return result.fold((error) {
+        print("error response");
+        emit(state.copyWith(
+            exploreMovieRequestState: RequestState.error,
+            exploreMovieRouteFailures: error));
+      }, (data) {
+        print("Success response");
+        emit(state.copyWith(
+            exploreMovieRequestState: RequestState.success,
+            exploreMoviesModel: data));
       });
     });
   }

@@ -4,22 +4,24 @@ import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
 
 class ExploreTabItem extends StatelessWidget {
-  const ExploreTabItem({super.key});
+  final String text;
+  final Color color;
+  const ExploreTabItem({required this.color,required this.text,super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.symmetric(
-            vertical: 5.h, horizontal: 13.w),
+            vertical: 6.h, horizontal: 10.w),
         decoration: BoxDecoration(
           border: Border.all(
               color: ColorManager.secondary,
               width: 3),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
         ),
         child: Text(
-          "",
-          style: getBoldTitleStyle2(color: ColorManager.secondary),
+          text,
+          style: getSemiBoldStyle(color:color),
           ),
         );
   }

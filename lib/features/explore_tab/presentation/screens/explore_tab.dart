@@ -6,6 +6,7 @@ import 'package:movies_app/core/resources/request_state.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/explore_tab/presentation/bloc/explore_bloc.dart';
 import 'package:movies_app/features/explore_tab/presentation/widgets/browse_tab_item.dart';
+import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 
 class ExploreTab extends StatefulWidget {
   const ExploreTab({super.key});
@@ -20,27 +21,24 @@ class _ExploreTabState extends State<ExploreTab> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-      getIt<ExploreBloc>()
-        ..add(GetExploreListEvent()),
+      create: (context) => getIt<ExploreBloc>()..add(GetExploreListEvent()),
       child: BlocConsumer<ExploreBloc, ExploreState>(
         listener: (context, state) {
           if (state.exploreRequestState == RequestState.error) {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
-                  title: const Text("Error"),
-                  content: Text(
-                      state.exploreRouteFailures?.message ??
+                      title: const Text("Error"),
+                      content: Text(state.exploreRouteFailures?.message ??
                           "Something went wrong"),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("Ok"))
-                  ],
-                ));
+                      actions: [
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Ok"))
+                      ],
+                    ));
           }
         },
         builder: (context, state) {
@@ -50,22 +48,88 @@ class _ExploreTabState extends State<ExploreTab> {
             );
           }
           var exploreTabs = state.exploreListModel?.genres ?? [];
+          var exploreMovies = state.exploreMoviesModel?.results ?? [];
 
-          return Scaffold(
-              backgroundColor: ColorManager.primary,
-              body: Padding(padding: EdgeInsets.only(top: 16.h),
-                child: DefaultTabController(
-                    length: exploreTabs.length, initialIndex: selectedIndex, child: Column(
-                  children: [
-                    TabBar(tabs: exploreTabs.map((genres) {
-                      bool isSelected =
-                          exploreTabs.indexOf(genres) == selectedIndex;
-                      return ExploreTabItem();
-                    }).toList()),
-                  ],
+          return SafeArea(
+            child: Scaffold(
+                backgroundColor: ColorManager.primary,
+                body: Padding(
+                  padding: EdgeInsets.only(top: 16.h),
+                  child: DefaultTabController(
+                      length: exploreTabs.length,
+                      initialIndex: selectedIndex,
+                      child: Column(
+                        children: [
+                          TabBar(
+                              onTap: (index) {
+                                setState(() {
+                                  selectedIndex = index;
+                                });
+                                final genreId = exploreTabs[index].id;
 
+                                context.read<ExploreBloc>().add(
+                                      GetExploreMovieEvent(genreId ?? 0),
+                                    );
+                              },
+                              labelPadding:
+                                  EdgeInsets.symmetric(horizontal: 6.w),
+                              dividerColor: Colors.transparent,
+                              unselectedLabelColor: ColorManager.secondary,
+                              labelColor: ColorManager.primary,
+                              indicator: BoxDecoration(
+                                color: ColorManager.secondary,
+                                borderRadius: BorderRadius.circular(16.r),
+                                border: Border.all(
+                                    color: ColorManager.secondary, width: 3),
+                              ),
+                              isScrollable: true,
+                              tabs: exploreTabs.map((genres) {
+                                bool isSelected = exploreTabs.indexOf(genres) ==
+                                    selectedIndex;
+                                return ExploreTabItem(
+                                  text: "${genres.name}",
+                                  color: isSelected
+                                      ? ColorManager.primary
+                                      : ColorManager.secondary,
+                                );
+                              }).toList()),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                   EdgeInsets.symmetric(horizontal: 16.h),
+                              child: GridView.builder(
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 12.h,
+                                  crossAxisSpacing: 12.w,
+                                  childAspectRatio: .7,
+                                ),
+                                itemBuilder: (context, index) {
+                                  return SizedBox(
+                                    width: 120,
+                                    child: MovieItem(
+                                      movieId: exploreMovies[index].id ?? 0,
+                                      voteAverage:
+                                          (exploreMovies[index].voteAverage ??
+                                                  0)
+                                              .toStringAsFixed(1),
+                                      movieImage:
+                                          exploreMovies[index].posterPath ?? "",
+                                    ),
+                                  );
+                                },
+                                itemCount: exploreMovies.length ?? 0,
+                              ),
+                            ),
+                          )
+                        ],
+                      )),
                 )),
-              ));
+          );
         },
       ),
     );
