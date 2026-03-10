@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
@@ -45,10 +46,10 @@ class ProfileTab extends StatelessWidget {
               backgroundColor: ColorManager.primary,
               body: GridView.builder(
                 itemCount: historyMovies.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
-                  childAspectRatio: 2 / 3,
-
+                  mainAxisSpacing: 10.h,
+                  childAspectRatio: .7,
                 ),
                 itemBuilder: (context, index) {
                   final movie = historyMovies[index];
