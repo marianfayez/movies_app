@@ -17,7 +17,7 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ProfileBloc>()..add(GetHistoryEvent()),
+      create: (context) => getIt<ProfileBloc>()..add(GetHistoryEvent())..add(GetFavoriteEvent()),
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state.getHistoryRequestState == RequestState.error) {
@@ -45,7 +45,7 @@ class ProfileTab extends StatelessWidget {
           }
           final historyMovies = state.history ?? [];
           final favoriteMovies = state.favorites ?? [];
-
+          print(favoriteMovies);
           final authState = context.watch<AuthBloc>().state;
           final user = authState.authModel?.user;
           final avatarId = user?.avatarId ?? 1;

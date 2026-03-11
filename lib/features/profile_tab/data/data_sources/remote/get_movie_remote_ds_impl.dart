@@ -17,22 +17,6 @@ class GetMovieRemoteDsImpl implements GetMovieRemoteDs {
   GetMovieRemoteDsImpl(this.apiManager);
 
   @override
-  Future<MovieDetailsModel> getMoviesDetails(int movieId) async {
-    try {
-      final result = await apiManager.getData(
-        endPoint: EndPoints.getMoviesDetails(movieId),
-        queryParameters: {
-          "language": "en-US",
-          "page": 1,
-        },
-      );
-      return MovieDetailsModel.fromJson(result.data);
-    } on DioException catch (e) {
-      throw RemoteFailures(e.message ?? "Server Error");
-    }
-  }
-
-  @override
   Future<Results> getMoviesById(int movieId) async{
     try {
       final result = await apiManager.getData(

@@ -99,7 +99,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           moviesResult.fold((error) {}, (movies) {
             print("Success response");
             emit(state.copyWith(
-                getFavoriteRequestState: RequestState.success, history: movies));
+                getFavoriteRequestState: RequestState.success, favorites: movies));
           });
         },
       );
