@@ -18,6 +18,7 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: MainRoute.page),
     AutoRoute(page: UpcomingMoviesRoute.page),
     AutoRoute(page: MovieDetailsRoute.page),
+    AutoRoute(page: EditProfileRoute.page),
 
 
   ];

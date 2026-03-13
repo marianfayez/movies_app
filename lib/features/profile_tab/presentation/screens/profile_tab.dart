@@ -122,7 +122,9 @@ class ProfileTab extends StatelessWidget {
                                   isStadiumBorder: false,
                                   textColor: ColorManager.primary,
                                   label: "Edit Profile",
-                                  onTap: () {},
+                                  onTap: () {
+                                    context.replaceRoute(const EditProfileRoute());
+                                  },
                                 ),
                               ),
                               SizedBox(width: 10.w),
