@@ -1,4 +1,5 @@
 
+import 'package:movies_app/features/home_tab/data/models/movie_model.dart';
 import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart';
 
 class UpcomingMoviesModel {
@@ -15,7 +16,7 @@ class UpcomingMoviesModel {
     if (json['results'] != null) {
       results = [];
       json['results'].forEach((v) {
-        results?.add(Results.fromJson(v));
+        results?.add(MovieModel.fromJson(v));
       });
     }
     totalPages = json['total_pages'];
@@ -23,7 +24,7 @@ class UpcomingMoviesModel {
   }
   Dates? dates;
   int? page;
-  List<Results>? results;
+  List<MovieModel>? results;
   int? totalPages;
   int? totalResults;
 

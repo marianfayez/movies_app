@@ -6,6 +6,7 @@ import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/home_tab/presentation/bloc/get_movies_bloc.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
+import 'package:movies_app/core/widgets/movie_grid_view.dart';
 
 import '../../../../core/resources/request_state.dart';
 
@@ -54,27 +55,8 @@ class UpcomingMoviesScreen extends StatelessWidget {
                 Expanded(
                     child: Padding(
                         padding:  EdgeInsets.symmetric(horizontal: 16.h),
-                        child: GridView.builder(
-                          gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 12.h,
-                            crossAxisSpacing: 8.w,
-                            childAspectRatio: .7,
-                          ),
-                          itemBuilder: (context, index) {
-                            return SizedBox(
-                              width: 120,
-                              child: MovieItem(
-                                movieId: upcomingMovies[index].id ?? 0,
-                                voteAverage:
-                                    (upcomingMovies[index].voteAverage ?? 0)
-                                        .toStringAsFixed(1),
-                                movieImage:
-                                    upcomingMovies[index].posterPath ?? "",
-                              ),
-                            );
-                          },
-                          itemCount: upcomingMovies.length ,
+                        child: MoviesGridView(
+                          movies: upcomingMovies,
                         )))
               ],
             )),

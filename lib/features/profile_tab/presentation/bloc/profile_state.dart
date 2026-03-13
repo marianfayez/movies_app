@@ -7,8 +7,8 @@ class ProfileState {
   RequestState? getFavoriteRequestState;
   RouteFailures?getFavoriteRouteFailures;
 
-  List<Results>? history = [];
-  List<Results>? favorites =[];
+  List<MovieModel>? history = [];
+  List<MovieModel>? favorites =[];
   RequestState? addToFavoriteRequestState;
   RouteFailures? addToFavoriteRouteFailures;
   PoplarMovieModel? poplarMovieModel;
@@ -41,8 +41,8 @@ class ProfileState {
         RequestState? getHistoryRequestState,
         RouteFailures? getHistoryRouteFailures,
         RouteFailures? getFavoriteRouteFailures,
-        List<Results>? history,
-        List<Results>? favorites,
+        List<MovieModel>? history,
+        List<MovieModel>? favorites,
         RequestState? getFavoriteRequestState
 
       }) {

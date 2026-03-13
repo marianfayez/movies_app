@@ -7,6 +7,7 @@ import 'package:movies_app/di.dart';
 import 'package:movies_app/features/explore_tab/presentation/bloc/explore_bloc.dart';
 import 'package:movies_app/features/explore_tab/presentation/widgets/browse_tab_item.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
+import 'package:movies_app/core/widgets/movie_grid_view.dart';
 
 class ExploreTab extends StatefulWidget {
   const ExploreTab({super.key});
@@ -100,30 +101,9 @@ class _ExploreTabState extends State<ExploreTab> {
                             child: Padding(
                               padding:
                                    EdgeInsets.symmetric(horizontal: 16.h),
-                              child: GridView.builder(
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 12.h,
-                                  crossAxisSpacing: 12.w,
-                                  childAspectRatio: .7,
-                                ),
-                                itemBuilder: (context, index) {
-                                  return SizedBox(
-                                    width: 120,
-                                    child: MovieItem(
-                                      movieId: exploreMovies[index].id ?? 0,
-                                      voteAverage:
-                                          (exploreMovies[index].voteAverage ??
-                                                  0)
-                                              .toStringAsFixed(1),
-                                      movieImage:
-                                          exploreMovies[index].posterPath ?? "",
-                                    ),
-                                  );
-                                },
-                                itemCount: exploreMovies.length ?? 0,
-                              ),
+                              child: MoviesGridView(
+                                movies: exploreMovies,
+                              )
                             ),
                           )
                         ],

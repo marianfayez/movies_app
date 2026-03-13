@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
+import 'package:movies_app/core/widgets/movie_grid_view.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 import 'package:movies_app/features/search_tab/presentation/bloc/search_bloc.dart';
@@ -91,24 +92,7 @@ class _SearchTabState extends State<SearchTab> {
                         if (movies.isEmpty) {
                           return Assets.images.searchPopCorn.image();
                         }
-                        return GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 0.6,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                          ),
-                          itemCount: movies.length,
-                          itemBuilder: (context, index) {
-                            return MovieItem(
-                              movieId: movies[index].id ?? 0,
-                              voteAverage: (movies[index].voteAverage ?? 0)
-                                  .toStringAsFixed(1),
-                              movieImage: movies[index].posterPath ?? "",
-                            );
-                          },
-                        );
+                        return MoviesGridView(movies: movies);
                       },
                     ),
                   )

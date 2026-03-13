@@ -1,6 +1,8 @@
+import 'package:movies_app/features/home_tab/data/models/movie_model.dart';
+
 class ExploreMoviesModel {
   int? page;
-  List<MovieResult>? results;
+  List<MovieModel>? results;
   int? totalPages;
   int? totalResults;
 
@@ -19,58 +21,8 @@ class ExploreMoviesModel {
     if (json['results'] != null) {
       results = [];
       json['results'].forEach((v) {
-        results!.add(MovieResult.fromJson(v));
+        results!.add(MovieModel.fromJson(v));
       });
     }
-  }
-}
-class MovieResult {
-  bool? adult;
-  String? backdropPath;
-  List<int>? genreIds;
-  int? id;
-  String? originalLanguage;
-  String? originalTitle;
-  String? overview;
-  double? popularity;
-  String? posterPath;
-  String? releaseDate;
-  String? title;
-  bool? video;
-  double? voteAverage;
-  int? voteCount;
-
-  MovieResult({
-    this.adult,
-    this.backdropPath,
-    this.genreIds,
-    this.id,
-    this.originalLanguage,
-    this.originalTitle,
-    this.overview,
-    this.popularity,
-    this.posterPath,
-    this.releaseDate,
-    this.title,
-    this.video,
-    this.voteAverage,
-    this.voteCount,
-  });
-
-  MovieResult.fromJson(Map<String, dynamic> json) {
-    adult = json['adult'];
-    backdropPath = json['backdrop_path'];
-    genreIds = json['genre_ids'].cast<int>();
-    id = json['id'];
-    originalLanguage = json['original_language'];
-    originalTitle = json['original_title'];
-    overview = json['overview'];
-    popularity = (json['popularity'] as num?)?.toDouble();
-    posterPath = json['poster_path'];
-    releaseDate = json['release_date'];
-    title = json['title'];
-    video = json['video'];
-    voteAverage = (json['vote_average'] as num?)?.toDouble();
-    voteCount = json['vote_count'];
   }
 }

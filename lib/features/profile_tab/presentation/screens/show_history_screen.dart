@@ -5,7 +5,7 @@ import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 import 'package:movies_app/features/profile_tab/presentation/bloc/profile_bloc.dart';
-import 'package:movies_app/features/profile_tab/presentation/widgets/movie_grid_view.dart';
+import 'package:movies_app/core/widgets/movie_grid_view.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -48,14 +48,19 @@ class HistoryScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 24.h,),
+              SizedBox(
+                height: 24.h,
+              ),
               SizedBox(
                 height: 400.h,
                 child: TabBarView(
                   children: [
-                    MoviesGridView(movies: favoriteMovies),
-                    MoviesGridView(movies: historyMovies)
-
+                    MoviesGridView(
+                      movies: favoriteMovies,
+                    ),
+                    MoviesGridView(
+                      movies: historyMovies,
+                    )
                   ],
                 ),
               ),
