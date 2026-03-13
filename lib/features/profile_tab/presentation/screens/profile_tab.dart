@@ -10,6 +10,7 @@ import 'package:movies_app/di.dart';
 import 'package:movies_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:movies_app/features/profile_tab/presentation/bloc/profile_bloc.dart';
 import 'package:movies_app/core/resources/request_state.dart';
+import 'package:movies_app/features/profile_tab/presentation/screens/show_history_screen.dart';
 
 class ProfileTab extends StatelessWidget {
   const ProfileTab({super.key});
@@ -45,7 +46,6 @@ class ProfileTab extends StatelessWidget {
           }
           final historyMovies = state.history ?? [];
           final favoriteMovies = state.favorites ?? [];
-          print(favoriteMovies);
           final authState = context.watch<AuthBloc>().state;
           final user = authState.authModel?.user;
           final avatarId = user?.avatarId ?? 1;
@@ -121,23 +121,10 @@ class ProfileTab extends StatelessWidget {
                             ],
                           ),
                         ),
+                        SizedBox(height: 30.h,),
+                        const HistoryScreen()
 
-                        // GridView.builder(
-                        //   itemCount: historyMovies.length,
-                        //   gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
-                        //     crossAxisCount: 3,
-                        //     mainAxisSpacing: 10.h,
-                        //     childAspectRatio: .7,
-                        //   ),
-                        //   itemBuilder: (context, index) {
-                        //     final movie = historyMovies[index];
-                        //
-                        //     return MovieItem(
-                        //         movieId: movie.id ?? 0,
-                        //         voteAverage: (movie.voteAverage ?? 0).toStringAsFixed(1),
-                        //         movieImage: movie.posterPath ?? "");
-                        //   },
-                        // ),
+
                       ],
                     ),
                   ),

@@ -60,21 +60,21 @@ import 'features/profile_tab/data/data_sources/remote/get_movie_remote_ds.dart'
     as _i121;
 import 'features/profile_tab/data/data_sources/remote/get_movie_remote_ds_impl.dart'
     as _i121;
-import 'features/profile_tab/data/data_sources/remote/history_remote_ds.dart'
+import 'features/profile_tab/data/data_sources/remote/get_history_remote_ds.dart'
     as _i652;
-import 'features/profile_tab/data/data_sources/remote/history_remote_ds_impl.dart'
+import 'features/profile_tab/data/data_sources/remote/get_history_remote_ds_impl.dart'
     as _i5;
 import 'features/profile_tab/data/repositories/favorite_repo_impl.dart'
     as _i298;
 import 'features/profile_tab/data/repositories/get_movie_repo_impl.dart'
     as _i574;
-import 'features/profile_tab/data/repositories/history_repo_impl.dart' as _i822;
+import 'features/profile_tab/data/repositories/get_history_repo_impl.dart' as _i822;
 import 'features/profile_tab/domain/repositories/favorite_repo.dart' as _i415;
 import 'features/profile_tab/domain/repositories/get_movie_repo.dart' as _i161;
-import 'features/profile_tab/domain/repositories/history_repo.dart' as _i658;
+import 'features/profile_tab/domain/repositories/get_history_repo.dart' as _i658;
 import 'features/profile_tab/domain/use_cases/favorite_use_cases.dart' as _i202;
 import 'features/profile_tab/domain/use_cases/get_movie_use_case.dart' as _i382;
-import 'features/profile_tab/domain/use_cases/history_use_case.dart' as _i31;
+import 'features/profile_tab/domain/use_cases/get_history_use_case.dart' as _i31;
 import 'features/profile_tab/presentation/bloc/profile_bloc.dart' as _i593;
 import 'features/search_tab/data/data_sources/remote/search_remote_ds.dart'
     as _i247;

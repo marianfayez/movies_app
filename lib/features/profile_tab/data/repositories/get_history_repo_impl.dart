@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
-import 'package:movies_app/features/profile_tab/data/data_sources/remote/history_remote_ds.dart';
-import 'package:movies_app/features/profile_tab/domain/repositories/history_repo.dart';
+import 'package:movies_app/features/profile_tab/data/data_sources/remote/get_history_remote_ds.dart';
+import 'package:movies_app/features/profile_tab/domain/repositories/get_history_repo.dart';
 
 @Injectable(as: HistoryRepo)
 class HistoryRepoImpl implements HistoryRepo {

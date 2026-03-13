@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
-import 'package:movies_app/features/profile_tab/domain/repositories/history_repo.dart';
+import 'package:movies_app/features/profile_tab/domain/repositories/get_history_repo.dart';
 
 @injectable
 class HistoryUseCase {

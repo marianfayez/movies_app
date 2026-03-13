@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
-import 'package:movies_app/features/profile_tab/data/data_sources/remote/history_remote_ds.dart';
+import 'package:movies_app/features/profile_tab/data/data_sources/remote/get_history_remote_ds.dart';
 
 @Injectable(as: HistoryRemoteDs)
 class HistoryRemoteDsImpl implements HistoryRemoteDs {

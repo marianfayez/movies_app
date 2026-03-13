@@ -4,7 +4,7 @@ import 'package:movies_app/core/failuers/failuers.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/features/auth/data/data_sources/remote/firebase_user_remote_ds.dart';
 import 'package:movies_app/features/profile_tab/data/data_sources/remote/favorite_remote_ds.dart';
-import 'package:movies_app/features/profile_tab/data/data_sources/remote/history_remote_ds.dart';
+import 'package:movies_app/features/profile_tab/data/data_sources/remote/get_history_remote_ds.dart';
 import 'package:movies_app/features/profile_tab/domain/repositories/favorite_repo.dart';
 
 @Injectable(as: FavoriteRepo)
