@@ -18,7 +18,9 @@ class ProfileTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => getIt<ProfileBloc>()..add(GetHistoryEvent())..add(GetFavoriteEvent()),
+      create: (context) => getIt<ProfileBloc>()
+        ..add(GetHistoryEvent())
+        ..add(GetFavoriteEvent()),
       child: BlocConsumer<ProfileBloc, ProfileState>(
         listener: (context, state) {
           if (state.getHistoryRequestState == RequestState.error) {
@@ -60,33 +62,49 @@ class ProfileTab extends StatelessWidget {
                     child: Column(
                       children: [
                         Padding(
-                          padding:  EdgeInsets.symmetric(horizontal: 24.h,vertical: 12.w),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24.h, vertical: 12.w),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Expanded(
                                 child: Column(
                                   children: [
-                                    Image.asset("assets/images/gamer$avatarId.png"),
-                                    SizedBox(height: 16.h,),
-                                    Text(userName,style: getBoldStyle2(color: Colors.white)),
+                                    Image.asset(
+                                        "assets/images/gamer$avatarId.png"),
+                                    SizedBox(
+                                      height: 16.h,
+                                    ),
+                                    Text(userName,
+                                        style:
+                                            getBoldStyle2(color: Colors.white)),
                                   ],
                                 ),
                               ),
                               Expanded(
                                 child: Column(
                                   children: [
-                                    Text("${favoriteMovies.length??0}",style: getBoldStyle2(color: Colors.white)),
-                                    SizedBox(height: 16.h,),
-                                    Text("Wish List",style: getBoldStyle2(color: Colors.white)),
+                                    Text("${favoriteMovies.length ?? 0}",
+                                        style:
+                                            getBoldStyle2(color: Colors.white)),
+                                    SizedBox(
+                                      height: 16.h,
+                                    ),
+                                    Text("Wish List",
+                                        style:
+                                            getBoldStyle2(color: Colors.white)),
                                   ],
                                 ),
                               ),
                               Column(
                                 children: [
-                                  Text("${historyMovies.length??0}",style: getBoldStyle2(color: Colors.white)),
+                                  Text("${historyMovies.length ?? 0}",
+                                      style:
+                                          getBoldStyle2(color: Colors.white)),
                                   SizedBox(height: 16.h),
-                                  Text("History",style: getBoldStyle2(color: Colors.white)),
+                                  Text("History",
+                                      style:
+                                          getBoldStyle2(color: Colors.white)),
                                 ],
                               )
                             ],
@@ -101,30 +119,34 @@ class ProfileTab extends StatelessWidget {
                               Expanded(
                                 child: CustomElevatedButton(
                                   backgroundColor: ColorManager.secondary,
-                                    isStadiumBorder: false,
-                                    textColor: ColorManager.primary,
-                                    label: "Edit Profile",
-                                    onTap: () {  },
-                                    ),
+                                  isStadiumBorder: false,
+                                  textColor: ColorManager.primary,
+                                  label: "Edit Profile",
+                                  onTap: () {},
+                                ),
                               ),
                               SizedBox(width: 10.w),
                               CustomElevatedButton(
                                 backgroundColor: Colors.red,
                                 isStadiumBorder: false,
-                                suffixIcon: const Icon(Icons.exit_to_app,color: Colors.white,),
-                                  label: "Exit",
-                                  onTap: () {
-                                    BlocProvider.of<AuthBloc>(context).add(LogOut());
-                                    context.replaceRoute(SignInRoute());
-                                  },)
-
+                                suffixIcon: const Icon(
+                                  Icons.exit_to_app,
+                                  color: Colors.white,
+                                ),
+                                label: "Exit",
+                                onTap: () {
+                                  BlocProvider.of<AuthBloc>(context)
+                                      .add(LogOut());
+                                  context.replaceRoute(SignInRoute());
+                                },
+                              )
                             ],
                           ),
                         ),
-                        SizedBox(height: 30.h,),
+                        SizedBox(
+                          height: 30.h,
+                        ),
                         const HistoryScreen()
-
-
                       ],
                     ),
                   ),

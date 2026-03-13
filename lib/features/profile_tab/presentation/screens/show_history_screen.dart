@@ -5,6 +5,7 @@ import 'package:movies_app/core/resources/color_manager.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
 import 'package:movies_app/features/home_tab/presentation/widgets/movie_item.dart';
 import 'package:movies_app/features/profile_tab/presentation/bloc/profile_bloc.dart';
+import 'package:movies_app/features/profile_tab/presentation/widgets/movie_grid_view.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -52,40 +53,9 @@ class HistoryScreen extends StatelessWidget {
                 height: 400.h,
                 child: TabBarView(
                   children: [
-                    GridView.builder(
-                      itemCount: favoriteMovies.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 10.h,
-                        childAspectRatio: .7,
-                      ),
-                      itemBuilder: (context, index) {
-                        final movie = favoriteMovies[index];
+                    MoviesGridView(movies: favoriteMovies),
+                    MoviesGridView(movies: historyMovies)
 
-                        return MovieItem(
-                            movieId: movie.id ?? 0,
-                            voteAverage:
-                                (movie.voteAverage ?? 0).toStringAsFixed(1),
-                            movieImage: movie.posterPath ?? "");
-                      },
-                    ),
-                    GridView.builder(
-                      itemCount: historyMovies.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 10.h,
-                        childAspectRatio: .7,
-                      ),
-                      itemBuilder: (context, index) {
-                        final movie = historyMovies[index];
-
-                        return MovieItem(
-                            movieId: movie.id ?? 0,
-                            voteAverage:
-                                (movie.voteAverage ?? 0).toStringAsFixed(1),
-                            movieImage: movie.posterPath ?? "");
-                      },
-                    ),
                   ],
                 ),
               ),
