@@ -2,13 +2,16 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/failuers.dart';
+import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/core/resources/request_state.dart';
+import 'package:movies_app/features/auth/data/data_sources/remote/firebase_user_remote_ds.dart';
+import 'package:movies_app/features/auth/data/models/auth_model.dart';
+import 'package:movies_app/features/auth/data/models/sign_up_request_model.dart';
 import 'package:movies_app/features/home_tab/data/models/movie_model.dart';
 import 'package:movies_app/features/home_tab/data/models/poplar_movie_model.dart';
 import 'package:movies_app/features/profile_tab/domain/use_cases/favorite_use_cases.dart';
 import 'package:movies_app/features/profile_tab/domain/use_cases/get_movie_use_case.dart';
 import 'package:movies_app/features/profile_tab/domain/use_cases/get_history_use_case.dart';
-
 
 part 'profile_event.dart';
 
@@ -19,8 +22,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   HistoryUseCase historyUseCase;
   GetMovieUseCase getMovieUseCase;
   FavoriteUseCases favoriteUseCases;
+  FirebaseUserRemoteDS firebaseUserRemoteDS;
+  FirebaseAuthModel firebaseAuthModel;
 
-  ProfileBloc(this.historyUseCase, this.getMovieUseCase, this.favoriteUseCases)
+  ProfileBloc(this.firebaseAuthModel, this.historyUseCase, this.getMovieUseCase,
+      this.favoriteUseCases, this.firebaseUserRemoteDS)
       : super(ProfileInitial()) {
     on<GetHistoryEvent>((event, emit) async {
       final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -89,22 +95,58 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(state.copyWith(getFavoriteRequestState: RequestState.loading));
       var result = await favoriteUseCases.getFavorite(userId);
       return result.fold(
-            (error) {
+        (error) {
           print("error response");
           emit(state.copyWith(
               getFavoriteRequestState: RequestState.error,
               getFavoriteRouteFailures: error));
         },
-            (data) async {
+        (data) async {
           final moviesResult = await getMovieUseCase.getMoviesDetails(data);
           moviesResult.fold((error) {}, (movies) {
             print("Success response");
             emit(state.copyWith(
-                getFavoriteRequestState: RequestState.success, favorites: movies));
+                getFavoriteRequestState: RequestState.success,
+                favorites: movies));
           });
         },
       );
     });
+    on<UpdateUserEvent>((event, emit) async {
+      emit(state.copyWith(updateProfileRequestState: RequestState.loading));
 
+      try {
+        final currentUser = state.firebaseAuthModel!.user!;
+
+        final updatedUser = FirebaseUserModel(
+          id: currentUser.id,
+          name: event.user.name,
+          email: currentUser.email,
+          phone: event.user.phone ?? currentUser.phone,
+          role: currentUser.role,
+          avatarId: event.user.avatarId,
+          createdAt: currentUser.createdAt,
+        );
+        await firebaseUserRemoteDS.updateUser(event.user);
+
+        emit(state.copyWith(
+          updateProfileRequestState: RequestState.success,
+          firebaseUserModel: updatedUser,
+          firebaseAuthModel: FirebaseAuthModel(
+            uid: state.firebaseAuthModel!.uid,
+            email: state.firebaseAuthModel!.email,
+            user: updatedUser,
+          ),
+        ));
+
+        print("Success: User updated");
+      } catch (e) {
+        emit(state.copyWith(
+          updateProfileRequestState: RequestState.error,
+          updateProfileRouteFailures: RemoteFailures(e.toString()),
+        ));
+        print("Error updating user: $e");
+      }
+    });
   }
 }

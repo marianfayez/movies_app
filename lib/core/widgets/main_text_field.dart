@@ -84,7 +84,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
               if (widget.nextFocus != null) {
                 FocusScope.of(context).requestFocus(widget.nextFocus);
               } else {
-                FocusScope.of(context).unfocus(); // يقفل الكيبورد فعليًا
+                FocusScope.of(context).unfocus();
               }
             },
             textInputAction: widget.nextFocus == null

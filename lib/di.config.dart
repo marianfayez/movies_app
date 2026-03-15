@@ -19,6 +19,7 @@ import 'features/auth/data/data_sources/remote/firebase_user_remote_ds.dart'
     as _i888;
 import 'features/auth/data/data_sources/remote/firebase_user_remote_ds_impl.dart'
     as _i9;
+import 'features/auth/data/models/auth_model.dart' as _i583;
 import 'features/auth/data/repositories/auth_repo_impl.dart' as _i426;
 import 'features/auth/domain/repositories/auth_repo.dart' as _i416;
 import 'features/auth/domain/use_cases/log_in_use_case.dart' as _i871;
@@ -152,9 +153,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i416.AuthRepo>(
         () => _i426.AuthRepoImpl(gh<_i981.AuthRemoteDs>()));
     gh.factory<_i593.ProfileBloc>(() => _i593.ProfileBloc(
+          gh<_i583.FirebaseAuthModel>(),
           gh<_i236.HistoryUseCase>(),
           gh<_i382.GetMovieUseCase>(),
           gh<_i202.FavoriteUseCases>(),
+          gh<_i888.FirebaseUserRemoteDS>(),
         ));
     gh.factory<_i965.MovieDetailsBloc>(
         () => _i965.MovieDetailsBloc(gh<_i325.MoviesDetailsUseCase>()));

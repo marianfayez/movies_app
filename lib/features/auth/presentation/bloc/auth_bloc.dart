@@ -6,6 +6,7 @@ import 'package:movies_app/core/resources/request_state.dart';
 import 'package:movies_app/features/auth/data/data_sources/remote/firebase_user_remote_ds.dart';
 import 'package:movies_app/features/auth/data/models/auth_model.dart';
 import 'package:movies_app/features/auth/data/models/firebase_sign_up_request_model.dart';
+import 'package:movies_app/features/auth/data/models/sign_up_request_model.dart';
 import 'package:movies_app/features/auth/domain/use_cases/log_in_use_case.dart';
 import 'package:movies_app/features/auth/domain/use_cases/sign_up_use_cases.dart';
 
