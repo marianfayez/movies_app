@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/routes/auto_route.dart';
 import 'package:movies_app/di.dart';
 import 'package:movies_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:movies_app/features/profile_tab/presentation/bloc/profile_bloc.dart';
 import 'package:movies_app/firebase_options.dart';
 
 void main() async {
@@ -15,8 +16,13 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    BlocProvider(
-      create: (context) => getIt<AuthBloc>()..add(CheckAuthStatusEvent()),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => getIt<AuthBloc>()..add(CheckAuthStatusEvent()),
+        ),
+        BlocProvider(create: (context) => getIt<ProfileBloc>()),
+      ],
       child: MyApp(),
     ),
   );

@@ -4,17 +4,16 @@ import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/features/auth/data/data_sources/remote/firebase_user_remote_ds.dart';
 import 'package:movies_app/features/auth/data/models/sign_up_request_model.dart';
 
-
 @Injectable(as: FirebaseUserRemoteDS)
 class FirebaseUserRemoteDSImpl implements FirebaseUserRemoteDS {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   CollectionReference<FirebaseUserModel> get _users =>
       _firestore.collection("users").withConverter<FirebaseUserModel>(
-        fromFirestore: (snapshot, _) =>
-            FirebaseUserModel.fromJson(snapshot.data()!),
-        toFirestore: (user, _) => user.toJson(),
-      );
+            fromFirestore: (snapshot, _) =>
+                FirebaseUserModel.fromJson(snapshot.data()!),
+            toFirestore: (user, _) => user.toJson(),
+          );
 
   @override
   Future<void> addUser(FirebaseUserModel user) async {
@@ -44,13 +43,10 @@ class FirebaseUserRemoteDSImpl implements FirebaseUserRemoteDS {
     }
   }
 
-
-
   @override
   Stream<FirebaseUserModel?> watchUser(String userId) {
     return _users.doc(userId).snapshots().map((snapshot) {
       return snapshot.data();
     });
   }
-
 }

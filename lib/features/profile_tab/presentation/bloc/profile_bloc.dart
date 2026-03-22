@@ -23,10 +23,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   GetMovieUseCase getMovieUseCase;
   FavoriteUseCases favoriteUseCases;
   FirebaseUserRemoteDS firebaseUserRemoteDS;
-  FirebaseAuthModel firebaseAuthModel;
 
-  ProfileBloc(this.firebaseAuthModel, this.historyUseCase, this.getMovieUseCase,
-      this.favoriteUseCases, this.firebaseUserRemoteDS)
+  ProfileBloc(this.historyUseCase, this.getMovieUseCase, this.favoriteUseCases,
+      this.firebaseUserRemoteDS)
       : super(ProfileInitial()) {
     on<GetHistoryEvent>((event, emit) async {
       final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -116,27 +115,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(state.copyWith(updateProfileRequestState: RequestState.loading));
 
       try {
-        final currentUser = state.firebaseAuthModel!.user!;
-
-        final updatedUser = FirebaseUserModel(
-          id: currentUser.id,
-          name: event.user.name,
-          email: currentUser.email,
-          phone: event.user.phone ?? currentUser.phone,
-          role: currentUser.role,
-          avatarId: event.user.avatarId,
-          createdAt: currentUser.createdAt,
-        );
         await firebaseUserRemoteDS.updateUser(event.user);
 
         emit(state.copyWith(
           updateProfileRequestState: RequestState.success,
-          firebaseUserModel: updatedUser,
-          firebaseAuthModel: FirebaseAuthModel(
-            uid: state.firebaseAuthModel!.uid,
-            email: state.firebaseAuthModel!.email,
-            user: updatedUser,
-          ),
+          firebaseUserModel: event.user,
         ));
 
         print("Success: User updated");

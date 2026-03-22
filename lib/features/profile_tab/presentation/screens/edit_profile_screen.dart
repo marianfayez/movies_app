@@ -1,16 +1,14 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:movies_app/core/resources/color_manager.dart';
+import 'package:movies_app/core/resources/request_state.dart';
 import 'package:movies_app/core/resources/styles_manager.dart';
-import 'package:movies_app/core/routes/auto_route.dart';
 import 'package:movies_app/core/routes/auto_route.gr.dart';
 import 'package:movies_app/core/widgets/app_bar.dart';
 import 'package:movies_app/core/widgets/custom_elevated_button.dart';
 import 'package:movies_app/core/widgets/main_text_field.dart';
-import 'package:movies_app/di.dart';
 import 'package:movies_app/features/auth/data/models/sign_up_request_model.dart';
 import 'package:movies_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:movies_app/features/profile_tab/presentation/bloc/profile_bloc.dart';
@@ -43,15 +41,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthBloc, AuthState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+    return BlocListener<ProfileBloc, ProfileState>(listener: (context, state) {
+      if (state.updateProfileRequestState == RequestState.success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Profile updated successfully!"),
+          ),
+        );
+
+      }
+
+      if (state.updateProfileRequestState == RequestState.error) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              state.updateProfileRouteFailures?.message ??
+                  "Something went wrong",
+            ),
+          ),
+        );
+      }
+    }, child: BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         final user = state.authModel?.user;
 
         if (nameController.text.isEmpty && user != null) {
-          nameController.text = user.name ?? "";
+          nameController.text = user.name;
           phoneController.text = user.phone ?? "";
         }
         return Scaffold(
@@ -130,7 +145,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       CustomElevatedButton(
                           label: "Delete Account",
                           backgroundColor: Colors.red,
@@ -143,10 +158,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           isStadiumBorder: false,
                           textColor: ColorManager.primary,
                           onTap: () {
-                            final currentUser = context
-                                .read<ProfileBloc>()
-                                .state
-                                .firebaseUserModel;
+                            final currentUser =
+                                context.read<AuthBloc>().state.authModel?.user;
                             if (currentUser == null) return;
 
                             context.read<ProfileBloc>().add(UpdateUserEvent(
@@ -170,6 +183,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
             ));
       },
-    );
+    ));
   }
 }
