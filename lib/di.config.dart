@@ -64,12 +64,16 @@ import 'features/profile_tab/data/data_sources/remote/get_movie_remote_ds.dart'
     as _i121;
 import 'features/profile_tab/data/data_sources/remote/get_movie_remote_ds_impl.dart'
     as _i121;
+import 'features/profile_tab/data/repositories/delete_profile_repo_impl.dart'
+    as _i35;
 import 'features/profile_tab/data/repositories/favorite_repo_impl.dart'
     as _i298;
 import 'features/profile_tab/data/repositories/get_history_repo_impl.dart'
     as _i622;
 import 'features/profile_tab/data/repositories/get_movie_repo_impl.dart'
     as _i574;
+import 'features/profile_tab/domain/repositories/delete_profile_repo.dart'
+    as _i997;
 import 'features/profile_tab/domain/repositories/favorite_repo.dart' as _i415;
 import 'features/profile_tab/domain/repositories/get_history_repo.dart' as _i79;
 import 'features/profile_tab/domain/repositories/get_movie_repo.dart' as _i161;
@@ -133,6 +137,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i437.GetMoviesUseCase(gh<_i1065.GetMoviesRepo>()));
     gh.factory<_i840.ExploreBloc>(
         () => _i840.ExploreBloc(gh<_i112.ExploreUseCase>()));
+    gh.factory<_i997.DeleteProfileRepo>(
+        () => _i35.DeleteProfileRepoImpl(gh<_i888.FirebaseUserRemoteDS>()));
     gh.factory<_i404.GetMoviesBloc>(
         () => _i404.GetMoviesBloc(gh<_i437.GetMoviesUseCase>()));
     gh.factory<_i202.FavoriteUseCases>(
