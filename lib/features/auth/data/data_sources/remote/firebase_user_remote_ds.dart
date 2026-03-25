@@ -6,6 +6,7 @@ abstract class FirebaseUserRemoteDS {
   Future<void> addUser(FirebaseUserModel user);
   Future<FirebaseUserModel?> getUser(String id);
   Future<void> updateUser(FirebaseUserModel user);
+  Future<void> deleteUser(String userId);
 
 
 }

@@ -30,3 +30,4 @@ class UpdateUserEvent extends ProfileEvent {
 
   UpdateUserEvent(this.user);
 }
+class DeleteUserEvent extends ProfileEvent {}

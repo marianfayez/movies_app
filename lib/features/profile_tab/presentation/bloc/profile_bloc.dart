@@ -131,5 +131,26 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         print("Error updating user: $e");
       }
     });
+
+    on<DeleteUserEvent>((event, emit) async {
+      emit(state.copyWith(deleteRequestState: RequestState.loading));
+
+      try {
+        final user = FirebaseAuth.instance.currentUser;
+
+        if (user == null) throw Exception("User not logged in");
+
+        await firebaseUserRemoteDS.deleteUser(user.uid);
+
+        await user.delete();
+
+        emit(state.copyWith(deleteRequestState: RequestState.success));
+      } catch (e) {
+        emit(state.copyWith(
+          deleteRequestState: RequestState.error,
+          deleteRouteFailures: RemoteFailures(e.toString()),
+        ));
+      }
+    });
   }
 }

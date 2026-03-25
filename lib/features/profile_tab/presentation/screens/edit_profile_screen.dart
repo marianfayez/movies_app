@@ -48,7 +48,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             content: Text("Profile updated successfully!"),
           ),
         );
-
       }
 
       if (state.updateProfileRequestState == RequestState.error) {
@@ -60,6 +59,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           ),
         );
+      }
+      if (state.deleteRequestState == RequestState.success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Account deleted")),
+        );
+
+        context.router.replaceAll([SignInRoute()]);
       }
     }, child: BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
@@ -150,7 +156,24 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           label: "Delete Account",
                           backgroundColor: Colors.red,
                           isStadiumBorder: false,
-                          onTap: () {}),
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => AlertDialog(
+                                title: const Text("Delete Account"),
+                                content: const Text("Are you sure?"),
+                                actions: [
+                                  TextButton(onPressed: () => Navigator.pop(context), child: const Text("Cancel")),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      context.read<ProfileBloc>().add(DeleteUserEvent());
+                                    },
+                                    child: const Text("Delete"),
+                                  ),
+                                ],
+                              ),
+                            );                          }),
                       SizedBox(height: 12.h),
                       CustomElevatedButton(
                           label: "Update Data",

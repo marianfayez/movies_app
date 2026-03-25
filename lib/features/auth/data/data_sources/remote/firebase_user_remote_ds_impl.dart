@@ -49,4 +49,13 @@ class FirebaseUserRemoteDSImpl implements FirebaseUserRemoteDS {
       return snapshot.data();
     });
   }
+
+  @override
+  Future<void> deleteUser(String userId) async {
+    try {
+      await _users.doc(userId).delete();
+    } catch (e) {
+      throw RemoteFailures("Failed to delete user: $e");
+    }
+  }
 }

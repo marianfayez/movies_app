@@ -15,6 +15,9 @@ class ProfileState {
   RequestState? addToHistoryRequestState;
   RouteFailures? addToHistoryRouteFailures;
 
+  RequestState? deleteRequestState;
+  RouteFailures? deleteRouteFailures;
+
   RequestState? updateProfileRequestState;
   RouteFailures? updateProfileRouteFailures;
   FirebaseAuthModel? firebaseAuthModel;
@@ -24,6 +27,8 @@ class ProfileState {
   ProfileState(
       {this.getHistoryRequestState,
       this.history,
+      this.deleteRequestState,
+      this.deleteRouteFailures,
       this.isFavorite = false,
       this.poplarMovieModel,
       this.firebaseUserModel,
@@ -43,6 +48,8 @@ class ProfileState {
       {bool? isFavorite,
       RequestState? addToFavoriteRequestState,
       RouteFailures? addToFavoriteRouteFailures,
+      RequestState? deleteRequestState,
+      RouteFailures? deleteRouteFailures,
       RequestState? addToHistoryRequestState,
       RouteFailures? addToHistoryRouteFailures,
       PoplarMovieModel? poplarMovieModel,
@@ -61,6 +68,8 @@ class ProfileState {
           addToHistoryRequestState ?? this.addToHistoryRequestState,
       addToHistoryRouteFailures:
           addToHistoryRouteFailures ?? this.addToHistoryRouteFailures,
+      deleteRequestState: deleteRequestState ?? this.deleteRequestState,
+      deleteRouteFailures: deleteRouteFailures ?? this.deleteRouteFailures,
       addToFavoriteRequestState:
           addToFavoriteRequestState ?? this.addToFavoriteRequestState,
       addToFavoriteRouteFailures:
