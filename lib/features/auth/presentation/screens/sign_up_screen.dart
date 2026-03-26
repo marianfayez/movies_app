@@ -50,6 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     Assets.images.gamer8,
   ];
   final _formKey = GlobalKey<FormState>();
+  bool isDialogShowing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,35 +58,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
       create: (context) => getIt<AuthBloc>(),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (Navigator.canPop(context)) {
-            Navigator.pop(context);
-          }
-
           if (state.requestState == RequestState.loading) {
+            isDialogShowing = true;
             showDialog(
-                barrierDismissible: false,
-                context: context,
-                builder: (context) => const AlertDialog(
-                      title: Center(child: CircularProgressIndicator()),
-                      backgroundColor: Colors.transparent,
-                    ));
-          } else if (state.requestState == RequestState.error) {
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const AlertDialog(
+                title: Center(child: CircularProgressIndicator()),
+                backgroundColor: Colors.transparent,
+              ),
+            );
+            return;
+          }
+          if (isDialogShowing) {
+            Navigator.of(context, rootNavigator: true).pop();
+            isDialogShowing = false;
+          }
+          if (state.requestState == RequestState.error) {
             showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                      title: const Text("Error"),
-                      content: Text(state.routeFailures?.message ??
-                          "Something went wrong"),
-                      actions: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text("Ok"))
-                      ],
-                    ));
-          } else if (state.requestState == RequestState.success) {
-            // context.router.replaceAll([const MainRoute()]);
+              context: context,
+              builder: (_) => AlertDialog(
+                title: const Text("Error"),
+                content: Text(
+                    state.routeFailures?.message ?? "Something went wrong"),
+              ),
+            );
+          }
+          if (state.requestState == RequestState.success) {
+            context.replaceRoute(SignInRoute());
           }
         },
         builder: (context, state) {
@@ -253,8 +253,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 5.w,
                           ),
                           InkWell(
-                            onTap: (){
-                              context.pushRoute( SignInRoute());
+                            onTap: () {
+                              context.pushRoute(SignInRoute());
                             },
                             child: Text(
                               "Login",

@@ -45,13 +45,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         print(error);
         emit(state.copyWith(
             logInRequestState: RequestState.error, routeFailures: error));
-      }, (data) {
+      }, (data) async {
+        final user = await firebaseUserRemoteDS.getUser(data.uid);
+
         print("Success response");
         print("User Name: ${data.user?.name}");
         print("AvatarId: ${data.user?.avatarId}");
         emit(state.copyWith(
             logInRequestState: RequestState.success,
-            authModel: data,
+            authModel: FirebaseAuthModel(
+              uid: data.uid,
+              email: data.email,
+              user: user,
+            ),
             isLoggedIn: true));
       });
     });
@@ -67,10 +73,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             routeFailures: error,
           ));
         },
-        (data) {
+        (data) async {
+          final user = await firebaseUserRemoteDS.getUser(data.uid);
+
           emit(state.copyWith(
             logInRequestState: RequestState.success,
-            authModel: data,
+            authModel: FirebaseAuthModel(
+              uid: data.uid,
+              email: data.email,
+              user: user,
+            ),
+            isLoggedIn: true,
           ));
         },
       );
@@ -119,21 +132,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogOut>((event, emit) async {
       emit(state.copyWith(requestState: RequestState.loading));
 
-      final result = await logInUseCase.logOut();
-
-      result.fold(
-        (error) {
-          emit(state.copyWith(
-            requestState: RequestState.error,
-            routeFailures: error,
-          ));
-        },
-        (_) {
-          emit(state.copyWith(
-            requestState: RequestState.success,
-          ));
-        },
-      );
+      await logInUseCase.logOut();
+      emit(AuthInitial());
     });
   }
 }

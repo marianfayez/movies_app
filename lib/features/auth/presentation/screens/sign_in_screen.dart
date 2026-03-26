@@ -15,11 +15,26 @@ import 'package:movies_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:movies_app/gen/assets.gen.dart';
 
 @RoutePage()
-class SignInScreen extends StatelessWidget {
-  SignInScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
-  final  emailController = TextEditingController();
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
+  bool isDialogShowing = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +42,8 @@ class SignInScreen extends StatelessWidget {
       create: (context) => getIt<AuthBloc>(),
       child: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (Navigator.canPop(context)) {
-            Navigator.pop(context);
-          }
           if (state.logInRequestState == RequestState.loading) {
+            isDialogShowing = true;
             showDialog(
                 context: context,
                 barrierDismissible: false,
@@ -38,22 +51,23 @@ class SignInScreen extends StatelessWidget {
                       title: Center(child: CircularProgressIndicator()),
                       backgroundColor: Colors.transparent,
                     ));
-          } else if (state.logInRequestState == RequestState.error) {
+            return;
+          }
+          if (isDialogShowing) {
+            Navigator.of(context, rootNavigator: true).pop();
+            isDialogShowing = false;
+          }
+
+          if (state.logInRequestState == RequestState.error) {
             showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
                       title: const Text("Error"),
                       content: Text(state.routeFailures?.message ??
                           "Something went wrong"),
-                      actions: [
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text("Ok"))
-                      ],
                     ));
-          } else if (state.logInRequestState == RequestState.success) {
+          }
+          if (state.logInRequestState == RequestState.success) {
             context.replaceRoute(const MainRoute());
           }
         },
@@ -121,12 +135,12 @@ class SignInScreen extends StatelessWidget {
                       CustomElevatedButton(
                         isStadiumBorder: false,
                         backgroundColor: ColorManager.secondary,
-                        textStyle: getRegularStyle2(color: ColorManager.primary),
+                        textStyle:
+                            getRegularStyle2(color: ColorManager.primary),
                         label: 'Login',
                         onTap: () {
                           BlocProvider.of<AuthBloc>(context).add(LogInEvent(
-                              emailController.text,
-                              passwordController.text));
+                              emailController.text, passwordController.text));
                         },
                       ),
                       SizedBox(
@@ -179,10 +193,12 @@ class SignInScreen extends StatelessWidget {
                         height: 28.h,
                       ),
                       CustomElevatedButton(
-                        prefixIcon: Assets.images.google.image(width: 25.w,height: 25.h),
+                        prefixIcon: Assets.images.google
+                            .image(width: 25.w, height: 25.h),
                         isStadiumBorder: false,
                         backgroundColor: ColorManager.secondary,
-                        textStyle: getRegularStyle2(color: ColorManager.primary),
+                        textStyle:
+                            getRegularStyle2(color: ColorManager.primary),
                         label: 'Login With Google',
                         onTap: () {
                           context.read<AuthBloc>().add(LogInWithGoogleEvent());
