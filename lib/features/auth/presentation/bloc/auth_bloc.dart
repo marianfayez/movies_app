@@ -46,8 +46,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(state.copyWith(
             logInRequestState: RequestState.error, routeFailures: error));
       }, (data) async {
-        final user = await firebaseUserRemoteDS.getUser(data.uid);
-
+        final firebaseUser = FirebaseAuth.instance.currentUser!;
+        final user =
+        await firebaseUserRemoteDS.getOrCreateUser(firebaseUser);
         print("Success response");
         print("User Name: ${data.user?.name}");
         print("AvatarId: ${data.user?.avatarId}");
@@ -74,8 +75,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ));
         },
         (data) async {
-          final user = await firebaseUserRemoteDS.getUser(data.uid);
-
+          final firebaseUser = FirebaseAuth.instance.currentUser!;
+          var user = await firebaseUserRemoteDS.getOrCreateUser(firebaseUser);
           emit(state.copyWith(
             logInRequestState: RequestState.success,
             authModel: FirebaseAuthModel(

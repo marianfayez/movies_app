@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:movies_app/core/failuers/remote_failuers.dart';
 import 'package:movies_app/features/auth/data/data_sources/remote/firebase_user_remote_ds.dart';
@@ -56,6 +57,28 @@ class FirebaseUserRemoteDSImpl implements FirebaseUserRemoteDS {
       await _users.doc(userId).delete();
     } catch (e) {
       throw RemoteFailures("Failed to delete user: $e");
+    }
+  }
+
+  @override
+  Future<FirebaseUserModel> getOrCreateUser(User firebaseUser) async {
+    try {
+      final existingUser = await getUser(firebaseUser.uid);
+      if (existingUser != null) {
+        return existingUser;
+      }
+      final newUser = FirebaseUserModel(
+        id: firebaseUser.uid,
+        name: firebaseUser.displayName ?? "No Name",
+        email: firebaseUser.email ?? "",
+        phone: firebaseUser.phoneNumber,
+        avatarId: 0,
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+      );
+      await addUser(newUser);
+      return newUser;
+    } catch (e) {
+      throw RemoteFailures("Failed in getOrCreateUser: $e");
     }
   }
 }

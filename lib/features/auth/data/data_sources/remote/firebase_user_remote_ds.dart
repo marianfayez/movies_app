@@ -1,4 +1,5 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:movies_app/features/auth/data/models/sign_up_request_model.dart';
 
 abstract class FirebaseUserRemoteDS {
@@ -8,5 +9,6 @@ abstract class FirebaseUserRemoteDS {
   Future<void> updateUser(FirebaseUserModel user);
   Future<void> deleteUser(String userId);
 
+  Future<FirebaseUserModel> getOrCreateUser(User firebaseUser);
 
 }
