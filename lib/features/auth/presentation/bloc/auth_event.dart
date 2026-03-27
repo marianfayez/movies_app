@@ -25,6 +25,9 @@ class ForgetPasswordEvent extends AuthEvent {
 
 class CheckAuthStatusEvent extends AuthEvent {}
 
-
+class UpdateUserDataEvent extends AuthEvent {
+  final FirebaseUserModel user;
+  UpdateUserDataEvent(this.user);
+}
 
 class LogOut extends AuthEvent {}

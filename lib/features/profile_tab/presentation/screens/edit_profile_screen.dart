@@ -43,6 +43,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return BlocListener<ProfileBloc, ProfileState>(listener: (context, state) {
       if (state.updateProfileRequestState == RequestState.success) {
+        context.read<AuthBloc>().add(UpdateUserDataEvent(state.firebaseUserModel!));
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text("Profile updated successfully!"),

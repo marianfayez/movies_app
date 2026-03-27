@@ -10,4 +10,15 @@ class FirebaseAuthModel {
   final String uid;
   final String email;
   final FirebaseUserModel? user;
+  FirebaseAuthModel copyWith({
+    String? uid,
+    String? email,
+    FirebaseUserModel? user,
+  }) {
+    return FirebaseAuthModel(
+      uid: uid ?? this.uid,
+      email: email ?? this.email,
+      user: user ?? this.user,
+    );
+  }
 }

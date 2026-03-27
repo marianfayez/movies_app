@@ -67,7 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
       final result = await logInUseCase.loginWithGoogle();
 
-      result.fold(
+      await result.fold(
         (error) {
           emit(state.copyWith(
             logInRequestState: RequestState.error,
@@ -128,6 +128,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         }
       } else {
         emit(state.copyWith(isLoggedIn: false));
+      }
+    });
+    on<UpdateUserDataEvent>((event, emit) {
+      if (state.authModel is FirebaseAuthModel) {
+        final currentAuthModel = state.authModel as FirebaseAuthModel;
+        emit(state.copyWith(
+          authModel: currentAuthModel.copyWith(user: event.user),
+        ));
+        print("AuthBloc updated with new user data");
       }
     });
     on<LogOut>((event, emit) async {
